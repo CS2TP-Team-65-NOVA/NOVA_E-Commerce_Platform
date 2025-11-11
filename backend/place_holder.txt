@@ -1,1 +1,2 @@
-This is a placeholder file to create the back-end folder.
+This folder contains the back-end functionality of the NOVA platform, including PHP scripts, authentication logic, and database connection files.
+
