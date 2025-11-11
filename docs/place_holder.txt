@@ -1,1 +1,2 @@
-This is a placeholder file to create the docs folder.
+This folder includes documentation and project artefacts such as the software requirements report, use case diagrams, and project management evidence.
+
