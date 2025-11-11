@@ -1,4 +1,4 @@
-# CS2TP-Team-65-NOVA
+# NOVA_E-Commerce_Platform
 
 The NOVA project was developed by Team 65 as part of the CS2TP Team Project module at Aston University. NOVA is a luxury perfume brand supported by an e-commerce platform that combines elegant branding with secure, functional web technologies. The website allows users to browse perfumes, view detailed information, and complete simulated purchases through a user-friendly interface. The project aims to integrate aesthetic design with technical functionality and demonstrates the early stages of a real-world online retail environment.
 
