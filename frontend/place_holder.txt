@@ -1,1 +1,1 @@
-This is a placeholder file to create the front-end folder.
+This folder contains the front-end components of the NOVA e-commerce platform, including HTML, CSS, and PHP files responsible for the user interface and overall design.
