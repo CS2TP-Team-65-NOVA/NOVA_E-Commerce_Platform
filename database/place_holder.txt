@@ -1,1 +1,2 @@
-This is a placeholder file to create the database folder.
+This folder will contain the NOVA MySQL database schema, entity-relationship diagrams, and SQL export files used for testing and integration.
+
