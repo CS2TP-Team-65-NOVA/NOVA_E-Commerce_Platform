@@ -1,0 +1,1 @@
+This folder contains all the pages that are available to registered and/or un-registered customers of NOVA.
