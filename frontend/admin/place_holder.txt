@@ -1,0 +1,1 @@
+This folder contains all the pages that are available to the admins of NOVA.
