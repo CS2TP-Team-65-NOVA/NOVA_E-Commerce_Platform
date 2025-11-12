@@ -1,0 +1,1 @@
+This folder will contain the about.php file which will provide the code for the about us page of the NOVA website.
