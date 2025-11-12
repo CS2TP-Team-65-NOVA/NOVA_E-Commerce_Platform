@@ -1,0 +1,1 @@
+This folder will contain the product_details.php file which will provide the code for the individual product page of the NOVA website.
