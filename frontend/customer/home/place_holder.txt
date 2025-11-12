@@ -1,0 +1,1 @@
+This folder will contain the index.php file which will provide the ocde for the home page of the NOVA website.
