@@ -1,0 +1,1 @@
+This folder will contain the register.php file which will provide the code for the register page of the NOVA website.
