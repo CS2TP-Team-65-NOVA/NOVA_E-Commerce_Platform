@@ -1,19 +1,19 @@
-# NOVA Project Overview: Alex-Gabriel Micu (Team Leader / Branding Lead & Report Coordinator)
+NOVA Project Overview: Alex-Gabriel Micu (Team Leader / Branding Lead & Report Coordinator)
 
-## Role Summary
+Role Summary
 As Team Leader, I coordinate communication, task allocation, and overall project organisation for Team 65. I also oversee the NOVA branding and contribute to front-end development and the written report.
 
-## Project Structure
+Project Structure
 - Defined the main customer pages: home, products_dashboard, product_details, register, login, logout, shopping_cart, checkout, contact, about, customer_profile.
 - Defined the main admin pages: admin_products, admin_orders, admin_promotions, admin_profile.
 - Ensured these pages align with the sitemap and section 5 use cases in the report.
 
-## Branding Decisions
+Branding Decisions
 - Selected the NOVA logo, colour palette, and typography to reflect a luxury perfume brand.
 - Agreed brand usage rules for navigation bar, buttons, headings, and imagery.
 - Ensured consistency between wireframes, favicon, and page layouts.
 
-## Coordination Notes
+Coordination Notes
 - Set up Trello lists and cards for each sprint.
 - Helped define responsibilities for front-end, back-end, and database sub-groups.
 - Monitored progress and recorded key decisions for inclusion in the report.
