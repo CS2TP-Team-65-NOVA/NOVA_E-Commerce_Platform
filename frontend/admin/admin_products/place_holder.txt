@@ -1,0 +1,1 @@
+This folder will contain the admin_products.php file which will provide the code for the admin manage products of the NOVA website.
