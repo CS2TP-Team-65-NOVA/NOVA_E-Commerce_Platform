@@ -1,0 +1,1 @@
+This folder will contain the admin_promotions.php file which will provide the code for the admin manage promotions page of the NOVA website.
