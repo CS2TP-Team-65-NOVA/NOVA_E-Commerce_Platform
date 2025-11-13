@@ -1,1 +1,20 @@
-test
+NOVA Project Overview: Shreya Manojbhai Kathiria (UI/UX Designer / Front-End Developer) 
+
+Role Summary
+As UI/UX Designer and Front-End Developer, I design the layout and navigation of the main product pages and translate them into HTML/CSS structures.
+
+Products Dashboard Layout
+- Grid of perfume cards displaying image, name, price, and quick-view link.
+- Filter bar for category and price range at the top of the page.
+- Search bar placed prominently to support the “Browse and View Products” use case.
+
+Navigation & Flow
+- From this page users can:
+  - Open product_details for more information.
+  - Add items to the shopping_cart.
+  - Return to home or navigate to other sections via the navbar.
+
+Visual Design Notes
+- Use consistent card sizes and spacing between rows and columns.
+- Apply NOVA brand colours to buttons (e.g. “Add to Cart”) and headings.
+- Maintain a balanced layout with sufficient whitespace for a luxury feel.
