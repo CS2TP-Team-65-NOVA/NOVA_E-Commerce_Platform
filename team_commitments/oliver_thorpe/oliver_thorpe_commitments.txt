@@ -1,1 +1,18 @@
-test
+NOVA Project Overview: Oliver Thorpe (Database Validation Engineer / Quality Assurance Tester)
+
+Role Summary
+As Database Validation Engineer and QA Tester, I focus on checking that the database behaves correctly and supports the required use cases.
+
+Validation Objectives
+- Confirm that foreign key relationships between users, orders, and order_items work as expected.
+- Ensure products in the catalogue can be retrieved and displayed correctly on the products_dashboard and product_details pages.
+- Verify that order totals are stored accurately.
+
+Planned Test Activities
+- Create a small set of sample users, products, and orders for testing.
+- Run SELECT queries that join users with their orders and order_items.
+- Check that deleting a user or product does not break referential integrity (e.g. via cascading rules or restrictions).
+
+QA Notes
+- Document any data issues found and report them to Malaika for schema updates.
+- Support back-end developers by confirming that test data reflects real-world scenarios described in Section 5.
