@@ -1,1 +1,19 @@
-test
+Role Summary
+As Front-End Integration Engineer, I focus on connecting the UI elements with the back-end logic and documenting how data should flow between them.
+
+Login / Log Out Behaviour
+- The login page should send email and password to the back-end authentication script.
+- On successful login, users are redirected to home or products_dashboard.
+- The logout option should clear the session and return the user to the home or login page.
+
+Front-End to Back-End Data Flow
+- Form fields:
+  - email – user’s registered email address.
+  - password – user’s password.
+- Expected responses from the server:
+  - Success message and redirect URL.
+  - Error message for invalid credentials or missing fields.
+
+Report Contribution Notes
+- Documented the “Account Management” customer use case in Section 5.
+- Helped describe how the front-end forms will connect to back-end PHP scripts during TP1.
