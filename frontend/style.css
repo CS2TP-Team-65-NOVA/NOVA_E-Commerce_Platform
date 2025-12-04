@@ -1,0 +1,629 @@
+/* -- GLOBAL WEBSITE STYLING -- */
+
+/* styling so that content fits viewport */
+html, body {
+    height: 100%; /* full height of the viewport */
+    width: 100%; /* full width of the viewport */
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden; /* prevents horizontal scroll bar */
+}
+
+/* base background colour for NOVA website */
+body {
+    background-color: rgb(242, 242, 242);
+}
+
+
+
+/* NAVBAR (GUEST / CUSTOMER / ADMIN) */
+
+/* header background */
+#main-header {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+/* full navbar container */
+#navbar {
+    max-width: 1400px;      /* wide layout, matching the design */
+    margin: 0 auto;
+    padding: 18px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+/* LEFT side group (Home, About, Perfumes) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;              /* spacing between links */
+    flex: 1;                /* takes equal space left side */
+}
+
+/* RIGHT side group (guest/admin/customer variants) */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    top: 2px;               /* tiny optical tweak so right side aligns with left */
+    flex: 1;
+    justify-content: flex-end;
+}
+
+/* centered logo container */
+.logo-link {
+    flex: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    height: 52px;           /* adjust if needed for perfect match */
+    width: auto;
+    display: block;
+}
+
+/* NAV LINKS (text buttons) */
+.nav-link {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 600;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE page (e.g. Home) – purple, NO underline */
+.nav-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.nav-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+
+
+/* BASKET ICON (PNG SWAP) */
+
+.basket-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE basket link – purple, NO underline */
+.basket-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.basket-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* both basket icons share these base dimensions */
+.basket-icon {
+    height: 25px;
+    width: auto;
+    display: block;
+}
+
+/* default black icon visible by default */
+.basket-icon-default {
+    display: block;
+    position: relative;
+    top: -2px;     /* lift icon slightly to align with text */
+}
+
+/* purple active icon hidden by default */
+.basket-icon-active {
+    display: none;
+    position: relative;
+    top: -2px;     /* same shift so swap is seamless */
+}
+
+/* swap icons on hover */
+.basket-link:hover .basket-icon-default {
+    display: none;
+}
+.basket-link:hover .basket-icon-active {
+    display: block;
+}
+
+/* swap icons on active (permanent purple) */
+.basket-link.active .basket-icon-default {
+    display: none;
+}
+.basket-link.active .basket-icon-active {
+    display: block;
+}
+
+
+
+/* ACCOUNT ICON (PNG SWAP) */
+
+.account-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE account link – purple, NO underline */
+.account-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.account-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* account icon base size */
+.account-icon {
+    height: 24px;
+    width: auto;
+    display: block;
+}
+
+/* default black icon visible normally */
+.account-icon-default {
+    display: block;
+    position: relative;
+    top: -2px;     /* lift icon for visual alignment */
+}
+
+/* purple icon hidden normally */
+.account-icon-active {
+    display: none;
+    position: relative;
+    top: -2px;     /* same shift so swap is seamless */
+}
+
+/* swap icons on hover */
+.account-link:hover .account-icon-default {
+    display: none;
+}
+.account-link:hover .account-icon-active {
+    display: block;
+}
+
+/* swap icons on active (permanent purple) */
+.account-link.active .account-icon-default {
+    display: none;
+}
+.account-link.active .account-icon-active {
+    display: block;
+}
+
+
+/* --- FULLSCREEN INTRO OVERLAY --- */
+
+#intro-overlay {
+  position: fixed;
+  inset: 0;                         /* top:0; right:0; bottom:0; left:0; */
+  background: #000;
+  display: none;                    /* hidden by default – JS shows it if needed */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;                    /* above everything */
+}
+
+/* Video fills the screen, keeps aspect ratio */
+#intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- PAGE CONTENT --- */
+
+#page-content {
+  opacity: 1;                       /* visible by default – JS sets to 0 only on first visit */
+  transition: opacity 0.8s ease-in-out;
+}
+
+
+
+/* HERO WRAPPER — adds spacing left + right */
+.hero-wrapper {
+  padding: 0 40px; /* adjust to your taste: 30px, 50px, 60px */
+  box-sizing: border-box;
+}
+
+/* HERO SECTION (STATIC BANNER) */
+.hero {
+  width: 100%;
+  height: 70vh; 
+  background-image: url('nova_home_hero_banner.png');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+
+  padding-left: 35px; /* controls text horizontal position */
+  box-sizing: border-box;
+
+  color: white;
+  border-radius: 10px; /* NEW — gives the banner a premium rounded shape */
+  overflow: hidden; /* ensures rounded corners work correctly */
+  filter: brightness(0.95);
+  
+}
+
+/* Text container */
+.hero-inner {
+  max-width: 700px; /* increased so title fits on one line */
+}
+
+/* Heading */
+.hero-title {
+  font-family: 'Belleza', sans-serif;
+  font-size: 50px;
+  margin: 0 0 20px 0;
+  white-space: nowrap; /* forces one single line */
+}
+
+/* Subtitle */
+.hero-subtitle {
+  font-size: 18px;
+  margin-bottom: 30px;
+  opacity: 0.85;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Button */
+.hero-btn {
+  background: #5e17eb;
+  color: white;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  text-decoration: none;
+
+  padding: 12px 28px;
+  border-radius: 8px;
+
+  display: inline-block;
+  transition: 0.3s ease-in-out;
+}
+
+.hero-btn:hover {
+  background: #4a12c9;
+}
+
+
+
+
+/* -- STYLING FOR REGISTER PAGE -- */
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 540px;
+  margin: 60px auto 40px auto;
+  background: white;
+  padding: 14px 30px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.register-form {
+  width: 100%;
+}
+
+/* Title + subtitle (same style as login) */
+.register-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.register-title-inside {
+  font-family: 'Belleza', Arial, Helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: medium;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.register-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Labels */
+.register-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  font-family: 'Belleza', Arial, Helvetica, sans-serif;
+  text-align: left;
+  color: #222;
+}
+
+/* Inputs match login exactly */
+.register-input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 15px;
+  border: 1px solid #d8d8d8;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.register-input:focus {
+  background-color: #e6e6e6;
+  outline: none;
+  border-color: #999;
+}
+
+/* Error message */
+.register-error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Button (identical to login) */
+.register-btn {
+  background-color: #5e17eb;
+  color: white;
+  border: none;
+  padding: 9px 15px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  transition: background 0.3s;
+  font-weight: bold;
+}
+
+.register-btn:hover {
+  background-color: #4a12c9;
+}
+
+/* Already have account */
+.register-already-user {
+  margin-top: 15px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #555;
+  text-align: left;
+}
+
+.register-already-user a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s, text-decoration 0.3s;
+  margin-left: 5px;
+}
+
+.register-already-user a:hover {
+  color: #5e17eb;
+  text-decoration: underline;
+}
+
+
+/* -- STYLING FOR LOGIN PAGE -- */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 540px;          
+  margin: 60px auto 40px auto;   /* space under navbar + above footer */
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.login-form {
+  width: 100%;
+}
+
+/* header area inside the card */
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-title {
+  font-family: 'Belleza', Arial, Helvetica, sans-serif;
+  font-size: 36px;               
+  font-weight: medium;
+  color: black;
+  margin: 0 0 6px 0;
+  margin-bottom: 15px;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* labels match register page */
+.login-form label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  font-family: 'Belleza', Arial, Helvetica, sans-serif;
+  text-align: left;
+  color: #222;
+}
+
+/* inputs identical to register page */
+.login-form input[type="email"],
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 15px;
+  border: 1px solid #d8d8d8;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+.login-form input[type="email"]:focus,
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+  background-color: #e6e6e6;
+  outline: none;
+  border-color: #999;
+}
+
+/* button – same style as register */
+.login-btn {
+  background-color: #5e17eb;
+  color: white;
+  border: none;
+  padding: 9px 15px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  transition: background 0.3s;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  background-color: #4a12c9;
+}
+
+/* error message */
+.login-error,
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* “Not registered?” text */
+.login-already-user,
+.already-user {
+  margin-top: 15px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+   color: #555;
+  margin-left: 3px;
+}
+
+.login-already-user a,
+.already-user a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s, text-decoration 0.3s;
+  margin-left: 5px;
+}
+
+.login-already-user a:hover,
+.already-user a:hover {
+  color: #5e17eb;
+  text-decoration: underline;
+}
+
+/* --- LOGOUT PAGE STYLING --- */
+
+/* Container identical to login/register */
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 480px;
+  margin: 60px auto 40px auto;
+
+  background: white;
+  padding: 25px 25px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+  text-align: center;
+}
+
+/* Title + subtitle */
+.logout-header {
+  margin-bottom: 20px;
+}
+
+.logout-title {
+  font-family: 'Belleza', Arial, Helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: medium; 
+  margin-bottom: 15px;
+  color: black;
+}
+
+.logout-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Purple button (same style as login/register but narrower) */
+.logout-btn {
+  display: block;
+  background-color: #5e17eb;
+  color: white;
+
+  text-decoration: none;
+  font-weight: bold;
+
+  padding: 10px 15px;
+
+  max-width: 180px;      /* Narrower button width */
+  width: 100%;
+  margin: 25px auto 10px auto;   /* center + spacing */
+
+  font-size: 15px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #4a12c9;
+}
+
+/* Small text under the button */
+.logout-redirect-info {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
