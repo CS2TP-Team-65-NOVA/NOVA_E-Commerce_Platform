@@ -1,0 +1,656 @@
+/* styling so that content fits viewport */
+html, body {
+    height: 100%; /* full height of the viewport */
+    width: 100%; /* full width of the viewport */
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden; /* prevents horizontal scroll bar */
+}
+
+/* base background colour for NOVA website */
+body {
+    background-color: rgb(242, 242, 242);
+}
+
+/* NAVBAR (GUEST / CUSTOMER / ADMIN) */
+
+/* header background */
+#main-header {
+    width: 100%;
+}
+
+/* full navbar container */
+#navbar {
+    max-width: 1400px;      /* wide layout, matching the design */
+    margin: 0 auto;
+    padding: 18px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+/* LEFT side group (Home, About, Perfumes) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;              /* spacing between links */
+    flex: 1;                /* takes equal space left side */
+}
+
+/* RIGHT side group (guest/admin/customer variants) */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    top: 2px;               /* tiny optical tweak so right side aligns with left */
+    flex: 1;
+    justify-content: flex-end;
+}
+
+/* centered logo container */
+.logo-link {
+    flex: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    height: 52px;           /* adjust if needed for perfect match */
+    width: auto;
+    display: block;
+}
+
+/* NAV LINKS (text buttons) */
+.nav-link {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 600;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE page (e.g. Home) – purple, NO underline */
+.nav-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.nav-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* BASKET ICON (PNG SWAP) */
+
+.basket-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE basket link – purple, NO underline */
+.basket-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.basket-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* both basket icons share these base dimensions */
+.basket-icon {
+    height: 25px;
+    width: auto;
+    display: block;
+}
+
+/* default black icon visible by default */
+.basket-icon-default {
+    display: block;
+    position: relative;
+    top: -2px;     /* lift icon slightly to align with text */
+}
+
+/* purple active icon hidden by default */
+.basket-icon-active {
+    display: none;
+    position: relative;
+    top: -2px;     /* same shift so swap is seamless */
+}
+
+/* swap icons on hover */
+.basket-link:hover .basket-icon-default {
+    display: none;
+}
+.basket-link:hover .basket-icon-active {
+    display: block;
+}
+
+/* swap icons on active (permanent purple) */
+.basket-link.active .basket-icon-default {
+    display: none;
+}
+.basket-link.active .basket-icon-active {
+    display: block;
+}
+
+/* ACCOUNT ICON (PNG SWAP) */
+
+.account-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE account link – purple, NO underline */
+.account-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.account-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* account icon base size */
+.account-icon {
+    height: 24px;
+    width: auto;
+    display: block;
+}
+
+/* default black icon visible normally */
+.account-icon-default {
+    display: block;
+    position: relative;
+    top: -2px;     /* lift icon for visual alignment */
+}
+
+/* purple icon hidden normally */
+.account-icon-active {
+    display: none;
+    position: relative;
+    top: -2px;     /* same shift so swap is seamless */
+}
+
+/* swap icons on hover */
+.account-link:hover .account-icon-default {
+    display: none;
+}
+.account-link:hover .account-icon-active {
+    display: block;
+}
+
+/* swap icons on active (permanent purple) */
+.account-link.active .account-icon-default {
+    display: none;
+}
+.account-link.active .account-icon-active {
+    display: block;
+}
+
+
+
+/* -------------------------
+   GLOBAL ADMIN STYLING
+-------------------------- */
+body {
+    margin: 0;
+    padding-top: 0px; /* FIXED: only top padding */
+    font-family: "Inter", sans-serif;
+    background: #f4f1fa;
+    color: #333;
+}
+
+/* Page Heading */
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #6a0dad;
+}
+
+.admin-layout {
+    display: flex;
+    margin-top: 0px; /* navbar height */
+}
+
+/* -------------------------
+   SIDEBAR
+-------------------------- */
+.sidebar { 
+    width: 240px; 
+    min-height: 100vh; /* allows sidebar to grow with page */
+    height: auto;  
+    background-color: #6a0dad; 
+    padding-top: 30px; /* FIXED SIDEBAR */ 
+    top: 100px; /* UNDER NAVBAR */ 
+    left: 0; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15); z-index: 1000; }
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+    padding: 15px 25px;
+    display: block;
+    transition: background 0.25s, padding-left 0.25s;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sidebar a:hover {
+    background-color: #8241c1;
+    padding-left: 35px;
+}
+
+.sidebar a.active-link {
+    background-color: #9b59b6;
+    font-weight: bold;
+}
+
+/* -------------------------
+   MAIN CONTENT
+-------------------------- */
+main {
+    flex: 1.5; 
+    padding: 35px;
+}
+
+
+/* -------------------------
+   CONTENT SECTIONS
+-------------------------- */
+.profile-section,
+.content-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    max-width: 850px;
+    margin-bottom: 40px;
+}
+
+/* -------------------------
+   FORM ELEMENTS
+-------------------------- */
+.profile-form label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+    color: #444;
+}
+
+.profile-form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.profile-form input:focus{
+    border-color: #6a0dad;
+    box-shadow: 0 0 4px rgba(106,0,218,0.4);
+    outline: none;
+}
+
+.profile-form button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.1s;
+}
+
+.profile-form button:hover {
+    background-color: #8241c1;
+    transform: translateY(-1px);
+}
+
+/* -------------------------
+   TABLES
+-------------------------- */
+.product-table-container {
+    margin-top: 25px;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+.product-table th,
+.product-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table thead {
+    background-color: #eee;
+}
+
+.product-table tbody tr:hover {
+    background-color: #f9f5ff;
+}
+
+/* Action links */
+.edit-link {
+    color: #6a0dad;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ship-link {
+    color: seagreen;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.delete-link {
+    color: crimson;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.edit-link:hover,
+.ship-link:hover,
+.delete-link:hover {
+    opacity: 0.75;
+}
+
+/* -------------------------
+   RESPONSIVE
+-------------------------- */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 200px;
+    }
+    main {
+        margin-left: 220px;
+    }
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    main {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------
+   MANAGE PRODUCTS PAGE
+-------------------------- */
+.products-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    max-width: 850px;
+    margin-bottom: 40px;
+}
+
+.product-form label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+    color: #444;
+}
+
+.product-form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.product-form input:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 4px rgba(106,0,218,0.4);
+    outline: none;
+}
+
+.product-form button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.1s;
+}
+
+.product-form button:hover {
+    background-color: #8241c1;
+    transform: translateY(-1px);
+}
+
+
+
+
+
+
+
+
+/* -------------------------
+   CHANGE PASSWORD PAGE
+-------------------------- */
+.password-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    max-width: 850px;
+    margin-bottom: 40px;
+}
+
+.password-form label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+    color: #444;
+}
+
+.password-form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.password-form input:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 4px rgba(106,0,218,0.4);
+    outline: none;
+}
+
+.password-form button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.1s;
+}
+
+.password-form button:hover {
+    background-color: #8241c1;
+    transform: translateY(-1px);
+}
+
+
+
+
+
+
+/* -------------------------
+   MANAGE PROMOTIONS PAGE
+-------------------------- */
+.promotions-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    max-width: 850px;
+    margin-bottom: 40px;
+}
+
+.promotions-form label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+    color: #444;
+}
+
+.promotions-form input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.promotions-form input:focus {
+    border-color: #6a0dad;
+    box-shadow: 0 0 4px rgba(106,0,218,0.4);
+    outline: none;
+}
+
+.promotions-form button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.1s;
+}
+
+.promotions-form button:hover {
+    background-color: #8241c1;
+    transform: translateY(-1px);
+}
+
+/* Promotions table container */
+.promotions-table-container {
+    margin-top: 25px;
+}
+
+.promotions-table-container h2 {
+    margin-bottom: 10px;
+}
+
+.popup-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.popup-content {
+    background: #fff; /* Solid white */
+    padding: 30px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Optional: subtle shadow */
+    position: relative;
+    z-index: 1001;
+}
+
+
+
+
+
+
+/* -------------------------
+   MANAGE ORDERS PAGE
+-------------------------- */
+.orders-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    max-width: 850px;
+    margin-bottom: 40px;
+}
+
+/* Orders table container */
+.orders-table-container {
+    margin-top: 20px;
+}
+
+.orders-table-container h2 {
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+
