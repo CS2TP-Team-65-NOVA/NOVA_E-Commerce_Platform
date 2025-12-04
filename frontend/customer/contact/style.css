@@ -1,0 +1,826 @@
+ /* -- GLOBAL WEBSITE STYLING -- */
+
+/* styling so that content fits viewport */
+html, body {
+    height: 100%; /* full height of the viewport */
+    width: 100%; /* full width of the viewport */
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden; /* prevents horizontal scroll bar */
+}
+
+/* base background colour for NOVA website */
+body {
+    background-color: rgb(242, 242, 242);
+}
+
+
+
+/* NAVBAR (GUEST / CUSTOMER / ADMIN) */
+
+/* header background */
+#main-header {
+    width: 100%;
+}
+
+/* full navbar container */
+#navbar {
+    max-width: 1400px;      /* wide layout, matching the design */
+    margin: 0 auto;
+    padding: 18px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+/* LEFT side group (Home, About, Perfumes) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;              /* spacing between links */
+    flex: 1;                /* takes equal space left side */
+}
+
+/* RIGHT side group (guest/admin/customer variants) */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    top: 2px;               /* tiny optical tweak so right side aligns with left */
+    flex: 1;
+    justify-content: flex-end;
+}
+
+/* centered logo container */
+.logo-link {
+    flex: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    height: 52px;           /* adjust if needed for perfect match */
+    width: auto;
+    display: block;
+}
+
+/* NAV LINKS (text buttons) */
+.nav-link {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 600;
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE page (e.g. Home) – purple, NO underline */
+.nav-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.nav-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+
+
+/* BASKET ICON (PNG SWAP) */
+
+.basket-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE basket link – purple, NO underline */
+.basket-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.basket-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* both basket icons share these base dimensions */
+.basket-icon {
+    height: 25px;
+    width: auto;
+    display: block;
+}
+
+/* default black icon visible by default */
+.basket-icon-default {
+    display: block;
+    position: relative;
+    top: -2px;     /* lift icon slightly to align with text */
+}
+
+/* purple active icon hidden by default */
+.basket-icon-active {
+    display: none;
+    position: relative;
+    top: -2px;     /* same shift so swap is seamless */
+}
+
+/* swap icons on hover */
+.basket-link:hover .basket-icon-default {
+    display: none;
+}
+.basket-link:hover .basket-icon-active {
+    display: block;
+}
+
+/* swap icons on active (permanent purple) */
+.basket-link.active .basket-icon-default {
+    display: none;
+}
+.basket-link.active .basket-icon-active {
+    display: block;
+}
+
+
+
+/* ACCOUNT ICON (PNG SWAP) */
+
+.account-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+/* ACTIVE account link – purple, NO underline */
+.account-link.active {
+    color: #5e17eb;
+    text-decoration: none;
+}
+
+/* HOVER – purple + underline */
+.account-link:hover {
+    color: #5e17eb;
+    text-decoration: underline;
+}
+
+/* account icon base size */
+.account-icon {
+    height: 24px;
+    width: auto;
+    display: block;
+}
+
+/* default black icon visible normally */
+.account-icon-default {
+    display: block;
+    position: relative;
+    top: -2px;     /* lift icon for visual alignment */
+}
+
+/* purple icon hidden normally */
+.account-icon-active {
+    display: none;
+    position: relative;
+    top: -2px;     /* same shift so swap is seamless */
+}
+
+/* swap icons on hover */
+.account-link:hover .account-icon-default {
+    display: none;
+}
+.account-link:hover .account-icon-active {
+    display: block;
+}
+
+/* swap icons on active (permanent purple) */
+.account-link.active .account-icon-default {
+    display: none;
+}
+.account-link.active .account-icon-active {
+    display: block;
+}
+
+/* ashish code */
+
+/* Main contact section wrapper */
+.contact-section {
+    max-width: 900px;              /* slightly narrower than navbar container */
+    margin: 40px auto 80px auto;   /* center section with top/bottom spacing */
+    padding: 30px 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Section heading */
+.contact-section h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #000000;
+} 
+
+/* Form layout */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Each field wrapper */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Labels */
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222222;
+}
+
+/* Red asterisk */
+.required {
+    color: #d10000;
+}
+
+/* Inputs, selects, textareas share styling */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus state – purple accent */
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #5e17eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(94, 23, 235, 0.08);
+}
+
+/* Textarea resizing */
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Helper text (e.g. message counter) */
+.helper-text {
+    font-size: 12px;
+    color: #777777;
+    margin: 0;
+}
+
+/* Error messages under fields */
+.error-message {
+    font-size: 12px;
+    color: #c21807;
+    margin: 0;
+}
+
+/* Form status (global success/error message) */
+.form-status {
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+/* Success + error banner styles */
+.form-status-success {
+    color: #0a7a28;
+}
+
+.form-status-error {
+    color: #c21807;
+}
+
+/* Submit button */
+.contact-submit-btn {
+    margin-top: 10px;
+    align-self: flex-start;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    background-color: #5e17eb;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+/* Button hover/active */
+.contact-submit-btn:hover {
+    background-color: #4a12bc;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+}
+
+.contact-submit-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Small-screen tweaks */
+@media (max-width: 600px) {
+    .contact-section {
+        margin: 20px 16px 50px 16px;
+        padding: 22px 18px;
+    }
+
+    .contact-section h1 {
+        font-size: 24px;
+    }
+}
+
+/* Grid layout for info block */
+.contact-info {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e4e4e4;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px 35px;
+}
+
+/* Section sub-heading */
+.contact-info h2 {
+    grid-column: 1 / -1;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #000000;
+}
+
+/* Each contact item: icon + text */
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+/* Icon styling */
+.contact-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Optional subtle hover effect */
+.contact-info-item:hover .contact-icon {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* Heading for each method (Email, Phone, etc.) */
+.contact-info-item h3 {
+    margin: 0 0 4px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #222222;
+}
+
+/* Paragraph text under each heading */
+.contact-info-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.5;
+}
+
+/* Links: purple brand style */
+.contact-info a {
+    text-decoration: none;
+    color: #5e17eb;
+    font-weight: 600;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+    .contact-info {
+        gap: 18px 20px;
+    }
+    .contact-icon {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* FAQ row spans full width of the grid */
+.faq-item {
+    grid-column: 1 / -1;
+}
+
+/* Empty icon: keeps spacing but is not visible */
+.contact-icon-empty {
+    visibility: hidden;   /* takes up space but not shown */
+}
+
+/* Intro text + reassurance on contact page */
+.contact-intro {
+    margin: 4px 0 6px 0;
+    font-size: 15px;
+    color: #444444;
+    line-height: 1.6;
+}
+
+.contact-response-time {
+    margin: 0 0 18px 0;
+    font-size: 14px;
+    color: #666666;
+}
+
+.contact-response-time strong {
+    font-weight: 700;
+    color: #5e17eb; /* NOVA purple accent */
+}
+
+/* ===== NOVA BANNER – FINAL CLEAN VERSION ===== */
+.nova-banner {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: visible !important;
+    height: auto !important;
+    padding-top: 20px;
+}
+
+.nova-banner-img {
+    display: block;
+    width: 100%;
+    height: auto !important;   /* keep full image, no cropping */
+    object-fit: none;          /* or simply remove this line */
+}
+
+
+/* ================================================================
+   UNIVERSAL ABOUT PAGE STYLES
+   ================================================================ */
+
+.about-heading {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111;
+    letter-spacing: 0.03em;
+}
+
+.about-story-section,
+.about-values-section,
+.about-unique-section,
+.about-craft-section,
+.about-testimonials-section {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.about-lead,
+.about-values-lead,
+.about-unique-lead,
+.about-craft-lead,
+.testimonials-lead {
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 750px;
+    color: #444;
+    margin-bottom: 28px;
+}
+
+
+/* ================================================================
+   OUR STORY — Two column layout
+   ================================================================ */
+
+.about-story-inner {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 40px;
+}
+
+.about-story-main p {
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 16px;
+    font-size: 15px;
+}
+
+.about-highlight {
+    background: #fff;
+    padding: 22px 24px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+    margin-bottom: 18px;
+}
+
+.about-highlight h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+}
+
+.about-highlight p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.founder-signoff {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #5e17eb;
+}
+
+
+/* ================================================================
+   VALUES — 4-card grid
+   ================================================================ */
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+}
+
+.value-card {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+}
+
+.value-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.value-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+
+/* ================================================================
+   WHAT MAKES NOVA UNIQUE — 4 card grid
+   ================================================================ */
+
+.unique-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+}
+
+.unique-point {
+    background: #fff;
+    padding: 26px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.unique-point:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+}
+
+.unique-point h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.unique-point p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+
+/* ================================================================
+   CRAFTSMANSHIP — 4 symmetrical cards
+   ================================================================ */
+
+.craft-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+}
+
+.craft-card {
+    background: #fff;
+    padding: 26px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.craft-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+}
+
+.craft-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #222;
+}
+
+.craft-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+
+/* ================================================================
+   RESPONSIVE ADJUSTMENTS
+   ================================================================ */
+
+@media (max-width: 900px) {
+    .about-story-inner {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .about-heading {
+        font-size: 26px;
+    }
+
+    .about-lead,
+    .about-values-lead,
+    .about-unique-lead,
+    .about-craft-lead {
+        font-size: 15px;
+    }
+}
+
+/* TRUST BADGE CHECK ROW */
+.trust-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin: 40px 0 30px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #222;
+}
+
+.trust-badges .badge-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: #fff;
+    padding: 12px 22px;
+    border-radius: 50px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.trust-badges .badge-item:hover {
+    transform: translateY(-2px);
+}
+
+.trust-badges .check {
+    font-size: 20px;
+    color: #5e17eb;
+}
+
+/* MINI TRUST BAR UNDER BADGES */
+.trust-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.trust-bar-item {
+    font-size: 15px;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.trust-bar-item:hover {
+    opacity: 1;
+}
+
+.trust-badges .badge-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: #fff;
+    padding: 12px 22px;
+    border-radius: 50px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.trust-badges .badge-item:hover {
+    transform: translateY(-2px);
+}
+
+.trust-badges .check {
+    font-size: 20px;
+    color: #5e17eb;
+}
+
+/* MINI TRUST BAR UNDER BADGES */
+.trust-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.trust-bar-item {
+    font-size: 15px;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.trust-bar-item:hover {
+    opacity: 1;
+}
+
+/* MOBILE STACKING */
+@media (max-width: 600px) {
+    .trust-badges {
+        font-size: 15px;
+    }
+    .trust-badges .badge-item {
+        padding: 10px 18px;
+    }
+    .trust-bar-item {
+        font-size: 13px;
+        gap: 12px;
+    }
+}
