@@ -10,14 +10,17 @@ if (isset($_POST['submitted'])) {
         $errorMessage = 'Please fill in both fields.';
     } else {
 
-        // Use your new local DB connection (same as register.php)
+        // Use your local NOVA DB connection
         require_once 'config.php'; // gives $conn (mysqli)
 
         $email    = trim($_POST['email']);
         $password = $_POST['password'];
 
-        // Prepared statement to fetch user by email
-        $sql = "SELECT user_id, username, role, password FROM users WHERE email = ? LIMIT 1";
+        // NOTE: your table columns are: user_id, full_name, email, password, role
+        $sql = "SELECT user_id, full_name, role, password 
+                FROM users 
+                WHERE email = ? 
+                LIMIT 1";
 
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param('s', $email);
@@ -31,7 +34,8 @@ if (isset($_POST['submitted'])) {
                 if (password_verify($password, $row['password'])) {
 
                     $_SESSION['user_id']  = (int)$row['user_id'];
-                    $_SESSION['username'] = $row['username'];
+                    // store full_name in the "username" session key so the rest of your site still works
+                    $_SESSION['username'] = $row['full_name'];
                     $_SESSION['role']     = $row['role'] ?: 'customer';
 
                     header("Location: index.php");
@@ -175,5 +179,7 @@ Not registered yet?
 
 </body>
 </html>
+
+
 
 
