@@ -1,27 +1,28 @@
 <?php
 session_start();
-require_once 'config.php';   // NEW: use your local NOVA DB connection ($conn)
+require_once 'config.php';   // uses $conn (mysqli)
 
 // Handle form submission
 if (isset($_POST['submitted'])) {
 
-    // Get and trim inputs
-    $username      = trim($_POST['username'] ?? '');
+    // Get and trim inputs from the form
+    // (field is called "username" in the form, but it maps to full_name in DB)
+    $fullName      = trim($_POST['username'] ?? '');
     $email         = trim($_POST['email'] ?? '');
     $passwordPlain = trim($_POST['password'] ?? '');
 
-    if ($username === '' || $email === '' || $passwordPlain === '') {
+    if ($fullName === '' || $email === '' || $passwordPlain === '') {
         $error_message = "All fields are required!";
     } else {
-        // Hash password
+        // Hash password (fits into VARCHAR(64))
         $passwordHashed = password_hash($passwordPlain, PASSWORD_DEFAULT);
 
-        // 1) Check if username OR email already exists
-        //    NOTE: table/column names must match your DB (adjust if needed)
-        $sqlCheck = "SELECT user_id FROM users WHERE username = ? OR email = ? LIMIT 1";
+        // 1) Check if name OR email already exists
+        //    Columns must match the DB: full_name + email
+        $sqlCheck = "SELECT user_id FROM users WHERE full_name = ? OR email = ? LIMIT 1";
 
         if ($check = $conn->prepare($sqlCheck)) {
-            $check->bind_param('ss', $username, $email);
+            $check->bind_param('ss', $fullName, $email);
             $check->execute();
             $check->store_result();
 
@@ -29,9 +30,13 @@ if (isset($_POST['submitted'])) {
                 $error_message = "Username or email is already taken.";
             } else {
                 // 2) Insert new user
-                $sqlInsert = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+                //    Map to full_name, email, password, role (customer by default)
+                $sqlInsert = "
+                    INSERT INTO users (full_name, email, password, role)
+                    VALUES (?, ?, ?, 'customer')
+                ";
                 if ($stmt = $conn->prepare($sqlInsert)) {
-                    $stmt->bind_param('sss', $username, $email, $passwordHashed);
+                    $stmt->bind_param('sss', $fullName, $email, $passwordHashed);
 
                     if ($stmt->execute()) {
                         // Success – send to login
@@ -54,7 +59,6 @@ if (isset($_POST['submitted'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -170,4 +174,7 @@ if (isset($_POST['submitted'])) {
 
 </body>
 </html>
+
+
+
 
