@@ -1471,6 +1471,7 @@ body {
 
 .basket-title {
     font-size: 28px;
+    font-family: 'Belleza', Arial, sans-serif;
     font-weight: 700;
     margin-bottom: 20px;
 }
@@ -1501,6 +1502,7 @@ body {
     align-items: center;
     padding: 12px 0;
     border-bottom: 1px solid #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .basket-item:last-child {
@@ -1517,29 +1519,36 @@ body {
 
 .basket-item-title {
     font-weight: 600;
+    font-family: 'Belleza', Arial, sans-serif;
     margin-bottom: 4px;
 }
 
+
 .basket-item-size {
     font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
     color: var(--nova-muted);
     margin-bottom: 4px;
 }
 
 .basket-item-price {
     font-size: 14px;
-    margin-bottom: 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 10px;
 }
 
 .basket-item-price strong {
-    font-size: 15px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .basket-item-qty-row {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-top: 5px;
     font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .basket-item-qty-row input[type="number"] {
@@ -1555,6 +1564,7 @@ body {
     background: none;
     color: #b30000;
     font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
     cursor: pointer;
     text-decoration: underline;
 }
@@ -1562,6 +1572,7 @@ body {
 .basket-item-total {
     font-weight: 600;
     font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Basket summary */
@@ -1571,10 +1582,18 @@ body {
     justify-content: space-between;
     margin-bottom: 8px;
     font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.basket-summary-box h2 {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
 }
 
 .summary-row strong {
     font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Basket buttons */
@@ -1793,3 +1812,5 @@ body {
     font-size: 14px;
     margin-bottom: 10px;
 }
+
+
