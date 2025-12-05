@@ -12,7 +12,8 @@ if ($conn->connect_error) {
 }
 ?>
 
-//$conn = mysqli_connect($host, $username, $password, $dbname);
+
+
 
 
 
