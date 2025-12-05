@@ -311,6 +311,246 @@ body {
   background: #4a12c9;
 }
 
+/* ================================
+   HOME: WHY NOVA SECTION
+   ================================ */
+
+.why-nova {
+  padding: 80px 40px 60px;
+  background: transparent;          /* removed coloured background */
+  box-sizing: border-box;
+}
+
+.why-nova-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+
+/* when there's no image, keep things neat */
+.why-nova-inner.no-image {
+  justify-content: flex-start;
+}
+
+.why-nova-text {
+  flex: 1.2;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.why-nova-text h2 {
+  font-family: 'Belleza', sans-serif;
+  font-size: 32px;
+  margin: 0 0 18px;
+}
+
+.why-nova-text p {
+  margin: 0 0 14px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.why-nova-list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  list-style: disc;
+  color: #333;
+}
+
+.why-nova-list li {
+  margin-bottom: 6px;
+}
+
+/* Contact button under text – reuse hero-btn, just space it nicely */
+.why-nova-contact-btn {
+  margin-top: 20px;
+  display: inline-block;
+}
+
+/* (old image styles kept in case you ever bring it back, but unused now) */
+.why-nova-image {
+  flex: 1;
+  position: relative;
+}
+
+.why-nova-image img {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.why-nova-cta {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: #ffffff;
+  color: #5e17eb;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: 50px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.why-nova-cta:hover {
+  background: #5e17eb;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+/* ================================
+   HOME: FEATURED PERFUMES
+   ================================ */
+
+.home-featured {
+  padding: 60px 40px 70px;
+  box-sizing: border-box;
+  background: transparent;          /* removed background colour */
+}
+
+.home-section-header {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.home-section-header h2 {
+  font-family: 'Belleza', sans-serif;
+  font-size: 30px;
+  margin: 0;
+}
+
+.view-all-link {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #5e17eb;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+/* Re-use existing .products-grid & .product-card styles.
+   This just constrains and centres them on the home page. */
+
+.home-products-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* ================================
+   HOME: CUSTOMER REVIEWS
+   ================================ */
+
+.home-reviews {
+  padding: 60px 40px 90px;
+  box-sizing: border-box;
+  background: transparent;          /* removed background colour */
+}
+
+.home-reviews .home-section-header {
+  margin-bottom: 28px;
+}
+
+.reviews-subtitle {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  color: #555;
+}
+
+.reviews-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.review-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.review-text {
+  margin: 0 0 14px;
+  line-height: 1.6;
+  color: #333;
+  font-size: 14px;
+}
+
+.review-author {
+  margin: 0;
+  font-weight: bold;
+  color: #5e17eb;
+  font-size: 13px;
+}
+
+
+
+/* ================================
+   RESPONSIVE TWEAKS
+   ================================ */
+
+@media (max-width: 980px) {
+  .why-nova-inner {
+    flex-direction: column;
+  }
+
+  .why-nova-image {
+    width: 100%;
+  }
+
+  .home-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reviews-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .hero-wrapper {
+    padding: 0 16px;
+  }
+
+  .why-nova {
+    padding: 50px 16px 40px;
+  }
+
+  .home-featured,
+  .home-reviews {
+    padding: 40px 16px 50px;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-nova-cta {
+    right: 14px;
+    bottom: 14px;
+    padding: 8px 18px;
+  }
+}
+
 
 /* -- STYLING FOR REGISTER PAGE -- */
 
@@ -2229,5 +2469,965 @@ body {
 
 .footer-bottom-row p {
     margin:5px 0;
+}
+
+/* admin_style.css */
+/* =============================================
+   NOVA Admin Panel Styles
+   Common styles for all admin pages
+============================================= */
+
+/* ========== ADMIN LAYOUT ========== */
+.admin-layout {
+    display: flex;
+    min-height: calc(100vh - 120px);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.sidebar {
+    width: 220px;
+    background: linear-gradient(180deg, #5e17eb 0%, #3a0e9b 100%);
+    padding: 30px 0;
+    margin-right: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(94, 23, 235, 0.2);
+}
+
+.sidebar a {
+    display: block;
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: rgba(255,255,255,0.15);
+    border-left-color: #8a5cf6;
+}
+
+.admin-main {
+    flex: 1;
+    padding-top: 20px;
+}
+
+/* ========== ADMIN HEADER ========== */
+.admin-header {
+    margin-bottom: 40px;
+}
+
+.admin-header h1 {
+    color: #5e17eb;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 28px;
+    margin: 0 0 10px 0;
+}
+
+.welcome-text {
+    color: #666;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+/* ========== STATS CARDS ========== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid var(--nova-card-border);
+    box-shadow: 0 4px 15px rgba(94, 23, 235, 0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(94, 23, 235, 0.15);
+}
+
+.stat-card .number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #5e17eb;
+    margin: 10px 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.stat-card h3 {
+    color: #666;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========== DASHBOARD PANELS ========== */
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.dashboard-panel {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--nova-card-border);
+    box-shadow: 0 4px 15px rgba(94, 23, 235, 0.08);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.panel-header h2 {
+    margin: 0;
+    color: #5e17eb;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 20px;
+}
+
+.panel-link {
+    color: #5e17eb;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.panel-link:hover {
+    text-decoration: underline;
+    color: #3a0e9b;
+}
+
+/* ========== TABLES ========== */
+.admin-table,
+.orders-table,
+.products-table,
+.reviews-table,
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.orders-table th,
+.products-table th,
+.reviews-table th,
+.users-table th {
+    background: #f8f9fa;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    border-bottom: 2px solid #eaeaea;
+}
+
+.admin-table td,
+.orders-table td,
+.products-table td,
+.reviews-table td,
+.users-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.admin-table tr:hover,
+.orders-table tr:hover,
+.products-table tr:hover,
+.reviews-table tr:hover,
+.users-table tr:hover {
+    background: #f9f5ff;
+}
+
+/* ========== ORDER STATUS BADGES ========== */
+.status-badge {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.status-processing { background: #fff3cd; color: #856404; }
+.status-pending { background: #fff3cd; color: #856404; }
+.status-shipped { background: #d1ecf1; color: #0c5460; }
+.status-delivered { background: #d4edda; color: #155724; }
+.status-paid { background: #d4edda; color: #155724; }
+.status-cancelled { background: #f8d7da; color: #721c24; }
+
+/* ========== PRODUCT STYLES ========== */
+.product-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-desc {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 6px 15px;
+    background: #f0e7ff;
+    color: #5e17eb;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.price-amount {
+    font-weight: 600;
+    color: #5e17eb;
+    font-size: 16px;
+}
+
+.price-range {
+    color: #666;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.variants-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #f8f9fa;
+    color: #666;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid #eaeaea;
+}
+
+/* ========== REVIEW STYLES ========== */
+.review-rating {
+    color: #f59e0b;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.star-rating {
+    color: #f59e0b;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin: 10px 0;
+}
+
+.review-product {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.review-user {
+    color: #666;
+    font-size: 13px;
+}
+
+.review-comment {
+    color: #333;
+    line-height: 1.5;
+    max-width: 300px;
+}
+
+.review-date {
+    color: #666;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* ========== FORM STYLES ========== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #5e17eb;
+    box-shadow: 0 0 0 3px rgba(94, 23, 235, 0.1);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submit-btn,
+.add-btn,
+.update-btn,
+.primary-btn {
+    padding: 14px 30px;
+    background: #5e17eb;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+}
+
+.submit-btn:hover,
+.add-btn:hover,
+.update-btn:hover,
+.primary-btn:hover {
+    background: #4a12c9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(94, 23, 235, 0.25);
+}
+
+.delete-btn {
+    padding: 8px 16px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+/* ========== MESSAGE STYLES ========== */
+.message {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.error-message {
+    color: #dc3545;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========== QUICK ACTIONS ========== */
+.quick-actions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.quick-actions li {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.quick-actions li:hover {
+    background: #f0e7ff;
+    transform: translateX(5px);
+}
+
+.quick-actions a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.quick-actions a:hover {
+    color: #5e17eb;
+}
+
+.action-icon {
+    width: 40px;
+    height: 40px;
+    background: #5e17eb;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+.action-text {
+    flex: 1;
+}
+
+.action-text small {
+    display: block;
+    color: #666;
+    font-weight: normal;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* ========== PROFILE STYLES ========== */
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.profile-info-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.profile-info-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.profile-info-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.info-label {
+    display: block;
+    color: #666;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.info-value {
+    display: block;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========== FORM NOTES ========== */
+.form-note {
+    margin-top: 15px;
+    color: #666;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+/* ========== BUTTON VARIANTS ========== */
+.btn-outline-purple {
+    padding: 8px 16px;
+    background: transparent;
+    color: #5e17eb;
+    border: 2px solid #5e17eb;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-purple:hover {
+    background: #5e17eb;
+    color: white;
+}
+
+/* ========== RESPONSIVE STYLES ========== */
+@media (max-width: 1024px) {
+    .dashboard-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-layout {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+    
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+        padding: 15px 0;
+    }
+    
+    .sidebar a {
+        display: inline-block;
+        margin: 0 10px;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+    }
+    
+    .sidebar a.active {
+        border-bottom-color: #8a5cf6;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    .admin-table,
+    .orders-table,
+    .products-table,
+    .reviews-table,
+    .users-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* ================================
+   CUSTOMER PROFILE PAGE (NOVA)
+   ================================ */
+
+.profile-container {
+  max-width: 1200px;
+  margin: 50px auto 70px;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.profile-header h1 {
+  color: #111111;
+  font-family: 'Belleza', Arial, sans-serif;
+  font-size: 34px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.profile-header p {
+  color: #555555;
+  font-size: 16px;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Profile Grid */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr;
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 1024px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Profile Card */
+.profile-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ece8fa;
+  padding: 22px 24px;
+}
+
+/* Card header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0eef8;
+}
+
+.card-header h2 {
+  color: #111111;
+  font-family: 'Belleza', Arial, sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5e17eb, #8a5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-right: 20px;
+    box-shadow: none; /* glow removed */
+}
+
+.user-details h3 {
+  color: #111111;
+  font-size: 20px;
+  margin: 0 0 4px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.user-details p {
+  color: #666666;
+  margin: 0;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f3f0ff;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: #777777;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.info-value {
+  color: #111111;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Forms inside profile cards */
+.profile-card .form-group {
+  margin-bottom: 18px;
+}
+
+.profile-card .form-group label {
+  display: block;
+  color: #222222;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.profile-card .form-group input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #ded9f5;
+  border-radius: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #faf9ff;
+}
+
+.profile-card .form-group input:focus {
+  outline: none;
+  border-color: #5e17eb;
+  box-shadow: 0 0 0 2px rgba(94, 23, 235, 0.18);
+  background: #ffffff;
+}
+
+/* Primary button (match hero button) */
+.btn-primary {
+  padding: 12px 28px;
+  background: #5e17eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 100%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn-primary:hover {
+  background: #4a12c9;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(94, 23, 235, 0.35);
+}
+
+/* Messages */
+.message {
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.message.success {
+  background: #dff6e6;
+  color: #17653a;
+  border: 1px solid #b8e4c5;
+}
+
+.message.error {
+  background: #fde2e4;
+  color: #8a1f2a;
+  border: 1px solid #f3b4bd;
+}
+
+/* Orders / Reviews Table */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th {
+  background: #faf8ff;
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: #6e6a86;
+  border-bottom: 1px solid #e6e1ff;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.user-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #f1eefb;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333333;
+}
+
+.user-table tr:hover {
+  background: #f8f5ff;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.status-pending {
+  background: #fff5d6;
+  color: #8b6a17;
+}
+
+.status-processing {
+  background: #e2f5fb;
+  color: #11556a;
+}
+
+.status-shipped {
+  background: #dde7ff;
+  color: #193f9c;
+}
+
+.status-delivered,
+.status-paid {
+  background: #ddf3e6;
+  color: #17613e;
+}
+
+.status-cancelled {
+  background: #fbe0e2;
+  color: #8a2630;
+}
+
+/* Star rating for reviews */
+.star-rating {
+  color: #f59e0b;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 32px 18px;
+  color: #666666;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+/* Quick links */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.quick-link {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: #faf9ff;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #333333;
+  transition: all 0.25s ease;
+  border: 1px solid #eee9ff;
+}
+
+.quick-link:hover {
+  background: #f2ecff;
+  transform: translateY(-1px);
+  color: #5e17eb;
+}
+
+.quick-link-text h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-family: 'Belleza', Arial, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.quick-link-text p {
+  margin: 0;
+  color: #777777;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Make the Logout quick-link look like a main purple CTA */
+.quick-link-logout {
+    background: #5e17eb;
+    border-color: #5e17eb;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 10px 26px rgba(94, 23, 235, 0.35);
+}
+
+.quick-link-logout .quick-link-text h4,
+.quick-link-logout .quick-link-text p {
+    color: #ffffff;
+}
+
+.quick-link-logout:hover {
+    background: #4a12c9;
+    border-color: #4a12c9;
+    box-shadow: 0 12px 30px rgba(74, 18, 201, 0.45);
 }
 
