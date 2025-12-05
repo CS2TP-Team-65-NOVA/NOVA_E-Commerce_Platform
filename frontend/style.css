@@ -312,8 +312,6 @@ body {
 }
 
 
-
-
 /* -- STYLING FOR REGISTER PAGE -- */
 
 .register-container {
@@ -614,6 +612,7 @@ body {
   font-size: 15px;
   border-radius: 8px;
   transition: background 0.3s;
+  font-family: Arial, Helvetica, sans-serif !important;
 }
 
 .logout-btn:hover {
@@ -626,4 +625,1171 @@ body {
   color: #666;
   margin-top: 5px;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ABOUT PAGE STYLING */
+
+/* Banner */
+/* ABOUT PAGE — HERO WRAPPER (matches home hero wrapper) */
+.about-hero-wrapper {
+    padding: 0 40px;
+    box-sizing: border-box;
+    margin: 40px 0 40px;
+}
+
+/* ABOUT PAGE — HERO BANNER (same style as home hero) */
+.about-hero {
+    width: 100%;
+    height: 70vh;
+
+    background-image: url('about_banner.png'); /* your about image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 10px;
+    overflow: hidden;
+
+    filter: brightness(0.95);  /* SAME brightness effect as home */
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08); /* matches overall NOVA shadow style */
+}
+
+
+/* Headings */
+.about-heading {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: medium; 
+    letter-spacing: 0.03em;
+    margin-bottom: 22px;
+    color: #000;
+}
+
+/* Generic section spacing – NO background colour */
+.about-story-section,
+.about-values-section,
+.about-unique-section,
+.about-craft-section {
+    padding: 40px 20px 50px;
+}
+
+/* Inner width */
+.about-story-inner,
+.about-values-inner,
+.about-unique-inner,
+.about-craft-inner {
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+/* STORY SECTION */
+.about-story-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 36px;
+}
+
+.about-lead {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    color: #222;
+}
+
+.about-story-main p {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* Right column cards */
+.about-story-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.about-highlight {
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.about-highlight h3 {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: medium; 
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.about-highlight p {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.founder-note {
+    padding-left: 16px;
+}
+
+.founder-signoff {
+    font-style: italic;
+    font-weight: medium; 
+    margin-top: 8px;
+    color: #555;
+}
+
+/* VALUES */
+.about-values-lead,
+.about-unique-lead,
+.about-craft-lead {
+    max-width: 760px;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 26px;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-top: 18px;
+}
+
+.value-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.value-card h3 {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.value-card p {
+    font-size: 14px;
+   font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* UNIQUE */
+.unique-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 22px;
+    margin-top: 18px;
+}
+
+.unique-point {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.unique-point h3 {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.unique-point p {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* CRAFT */
+.craft-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 22px;
+    margin-top: 18px;
+}
+
+.craft-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.craft-card h3 {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.craft-card p {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* PERFUMES PAGE STYLING */
+
+/* =========================================
+   NOVA GLOBAL VARIABLES FOR SHOP/BASKET/CHECKOUT
+   ========================================= */
+
+:root {
+    --nova-bg: #f2f2f2;
+    --nova-text: #000000;
+    --nova-muted: #777777;
+    --nova-border: #dddddd;
+    --nova-card-border: #e0e0e0;
+    --nova-card-bg: #ffffff;
+    --nova-purple: #5e17eb;
+    --nova-purple-soft: #f3e8ff;
+    --nova-shadow-soft: 0 4px 20px rgba(0,0,0,0.05);
+    --btn-radius: 10px;
+}
+
+/* Utility layout containers used by Shreya's pages */
+
+.shop-container,
+.product-page-container,
+.product-info-section,
+.basket-page,
+.checkout-page {
+    max-width: 1200px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Generic card look used across those pages */
+
+.card,
+.product-card,
+.product-detail-panel,
+.product-info-section,
+.basket-products-box,
+.basket-summary-box,
+.checkout-box,
+.review-item {
+    background: var(--nova-card-bg);
+    border-radius: 20px;
+    border: 1px solid var(--nova-card-border);
+    box-shadow: var(--nova-shadow-soft);
+}
+
+/* =========================================
+   GLOBAL BUTTON SYSTEM (used on shop/basket/checkout)
+   ========================================= */
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.view-btn,
+.apply-btn,
+.clear-btn,
+.add-review-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--btn-radius);
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    border: 1px solid transparent;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Primary purple buttons */
+
+.btn-primary,
+.view-btn,
+.apply-btn,
+.add-review-btn {
+    background: var(--nova-purple);
+    border-color: var(--nova-purple);
+    color: #ffffff;
+
+}
+
+.btn-primary:hover,
+.view-btn:hover,
+.apply-btn:hover,
+.add-review-btn:hover {
+    background: #4a12c0;
+    border-color: #4a12c0;
+}
+
+/* Secondary / outline buttons */
+
+.btn-secondary,
+.clear-btn {
+    background: #ffffff;
+    border-color: var(--nova-border);
+    color: var(--nova-text);
+}
+
+.btn-secondary:hover,
+.clear-btn:hover {
+    border-color: var(--nova-purple);
+    color: var(--nova-purple);
+}
+
+/* Disabled state */
+
+.btn-primary:disabled,
+.btn-primary[disabled],
+.btn.btn-disabled {
+    background: #cccccc;
+    border-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Local overrides */
+
+.update-row button {
+    background: #ffffff;
+    border-radius: var(--btn-radius);
+    border: 1px solid var(--nova-text);
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+/* =========================================
+   SHOP / PERFUMES LIST (perfumes.php)
+   ========================================= */
+
+.shop-title {
+    text-align: center;
+    font-size: 28px;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-weight: 700;
+    margin: 20px 0 30px;
+}
+
+/* Filter bar */
+
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--nova-border);
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    gap: 14px;
+}
+
+.filter-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-group label {
+    font-weight: 600;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.filter-group select,
+.filter-group input[type="text"] {
+    padding: 6px 12px;
+    border-radius: var(--btn-radius);
+    border: 1px solid #cccccc;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+}
+
+.filter-group input[type="text"] {
+    width: 180px;
+}
+
+.filter-group input[type="text"]:focus {
+    outline: none;
+    border-color: var(--nova-purple);
+}
+
+.filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Product grid */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.product-card {
+    padding: 12px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 28px rgba(0,0,0,0.08);
+}
+
+/* Product image area */
+
+.product-img-wrapper {
+    position: relative;
+    border-radius: 18px;
+    border: 1px solid #e4e4e4;
+    background: radial-gradient(circle at top, #ffffff 0%, #f8f8f8 45%, #f2f2f2 100%);
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.product-img-wrapper img {
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+.product-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 2;
+}
+
+.card-icon {
+    border-radius: 999px;
+    border: 1px solid #dddddd;
+    background: rgba(255,255,255,0.95);
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.card-icon:hover {
+    background: var(--nova-purple-soft);
+    border-color: var(--nova-purple);
+}
+
+.fav-toggle.is-active .heart {
+    color: #e53935;
+}
+
+.cart-form {
+    margin: 0;
+    padding: 0;
+}
+
+.cart-btn {
+    all: unset;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Product card text */
+
+.product-info {
+    padding: 4px 2px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h3 {
+    font-size: 15px;
+    margin: 0 0 4px;
+    font-weight: 600;
+    font-family: 'Belleza', Arial, sans-serif;
+}
+
+.product-category {
+    font-size: 13px;
+    color: var(--nova-muted);
+    margin: 0 0 4px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.product-desc {
+    font-size: 13px;
+    color: #444444;
+    margin: 0 0 8px;
+    min-height: 44px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.product-price {
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-footer-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.product-rating {
+    font-size: 13px;
+    color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 26px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.pagination a,
+.pagination span {
+    min-width: 28px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid #dddddd;
+    text-align: center;
+    text-decoration: none;
+    color: #333333;
+}
+
+.pagination a:hover {
+    border-color: var(--nova-purple);
+    color: var(--nova-purple);
+}
+
+.pagination .current {
+    background: var(--nova-purple);
+    color: #ffffff;
+    border-color: var(--nova-purple);
+}
+
+/* =========================================
+   PRODUCT PAGE (product_page.php)
+   ========================================= */
+
+.product-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+    gap: 32px;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+/* Gallery */
+
+.product-gallery .product-main-image {
+    border-radius: 20px;
+    border: 1px solid var(--nova-card-border);
+    background: radial-gradient(circle at top, #ffffff 0%, #f7f7f7 45%, #f1f1f1 100%);
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.product-main-image img {
+    max-width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+}
+
+.product-thumbs {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thumb-btn {
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+    padding: 4px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.thumb-btn img {
+    width: 58px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Details panel */
+
+.product-detail-panel {
+    padding: 20px 22px 24px;
+}
+
+.product-title {
+    font-size: 26px;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.product-breadcrumb {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--nova-muted);
+}
+
+.product-fragrance-family {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.product-rating-summary {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 8px;
+}
+
+.product-price-large {
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    margin: 8px 0 14px;
+}
+
+/* Purchase area */
+
+.product-purchase-form label {
+    display: inline-block;
+    margin: 6px 6px 4px 0;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.product-purchase-form select,
+.product-purchase-form input[type="number"] {
+    padding: 7px 12px;
+    border-radius: var(--btn-radius);
+    border: 1px solid #cccccc;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 8px;
+}
+
+.product-purchase-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* Section headings (scent/design story etc.) */
+
+.product-detail-panel h2 {
+    margin-top: 18px;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-family: 'Belleza', Arial, sans-serif;
+}
+
+/* Product info full-width section */
+
+.product-info-section {
+    padding: 22px 26px;
+}
+
+.info-title {
+    font-size: 22px;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.info-subtitle {
+    margin-top: 18px;
+    font-size: 18px;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-weight: 600;
+}
+
+.info-paragraph {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #444444;
+    margin-bottom: 10px;
+}
+
+.info-block p {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 4px 0;
+}
+
+.related-title {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-weight: medium;
+    margin-bottom: 20px;
+}
+
+.product-reviews p {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 12px;
+}
+
+/* Reviews */
+
+.product-reviews {
+    margin-top: 40px;
+}
+
+.product-reviews h2 {
+    font-size: 20px;
+    font-family: 'Belleza', Arial, sans-serif;
+    margin-bottom: 12px;
+}
+
+.review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+}
+
+.review-item {
+    padding: 10px 14px;
+    margin-bottom: 10px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-family: 'Belleza', Arial, sans-serif;
+}
+
+.review-rating {
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.review-comment {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 4px 0;
+}
+
+.review-date {
+    font-size: 12px;
+    color: var(--nova-muted);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.review-form-wrapper {
+    margin-top: 10px;
+    font-family: 'Belleza', Arial, sans-serif;
+}
+
+.review-form label {
+    display: block;
+    margin: 6px 0 3px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.review-form select,
+.review-form textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #cccccc;
+    padding: 8px 10px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================
+   BASKET / SHOPPING CART (shopping_cart.php)
+   ========================================= */
+
+.basket-page {
+    max-width: 1100px;
+}
+
+.basket-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.basket-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.basket-products-box,
+.basket-summary-box {
+    padding: 20px 24px;
+}
+
+.basket-empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: var(--nova-muted);
+}
+
+/* Basket items */
+
+.basket-item {
+    display: grid;
+    grid-template-columns: 96px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.basket-item:last-child {
+    border-bottom: none;
+}
+
+.basket-item img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 16px;
+    background: #fafafa;
+}
+
+.basket-item-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.basket-item-size {
+    font-size: 13px;
+    color: var(--nova-muted);
+    margin-bottom: 4px;
+}
+
+.basket-item-price {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.basket-item-price strong {
+    font-size: 15px;
+}
+
+.basket-item-qty-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.basket-item-qty-row input[type="number"] {
+    width: 60px;
+    padding: 4px 6px;
+    border-radius: 999px;
+    border: 1px solid #cccccc;
+    text-align: center;
+}
+
+.remove-btn {
+    border: none;
+    background: none;
+    color: #b30000;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.basket-item-total {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Basket summary */
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.summary-row strong {
+    font-size: 16px;
+}
+
+/* Basket buttons */
+
+.btn-primary {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-secondary {
+    width: 30%;
+    margin-top: 8px;
+}
+
+.update-row {
+    margin-top: 10px;
+    text-align: right;
+}
+
+/* =========================================
+   CHECKOUT PAGE (checkout.php)
+   ========================================= */
+
+.checkout-page {
+    max-width: 1100px;
+}
+
+.checkout-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.checkout-box {
+    padding: 20px 24px;
+}
+
+/* Make basket action buttons wider and centered */
+.basket-btn {
+    width: 80%;
+    max-width: 400px;
+    margin: 10px auto;
+    display: block;
+    text-align: center;
+}
+
+/* Make Browse Perfumes button match */
+.browse-btn {
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+}
+
+/* Sections and form controls */
+
+.checkout-section {
+    margin-bottom: 26px;
+}
+
+.checkout-section-title,
+.checkout-subtitle,
+.section-heading {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 14px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.checkout-box input,
+.checkout-box select,
+.checkout-box textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: var(--btn-radius);
+    border: 1px solid #cccccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Payment cards */
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.payment-option {
+    border-radius: 16px;
+    border: 1px solid #dddddd;
+    padding: 12px 16px;
+    cursor: pointer;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payment-option input[type="radio"] {
+    display: none;
+}
+
+.payment-option-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.payment-icon {
+    width: 40px;
+    height: auto;
+    object-fit: contain;
+}
+
+.payment-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.payment-name {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.payment-desc {
+    font-size: 13px;
+    color: var(--nova-muted);
+}
+
+.payment-option input[type="radio"]:checked + .payment-option-inner {
+    background: var(--nova-purple-soft);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(94,23,235,0.35);
+}
+
+/* Order summary in checkout */
+
+.summary-list {
+    margin-bottom: 10px;
+}
+
+.summary-item-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid #eeeeee;
+    font-size: 14px;
+}
+
+.summary-item-row:last-child {
+    border-bottom: none;
+}
+
+.summary-item-name small {
+    display: block;
+    color: var(--nova-muted);
+    font-size: 12px;
+}
+
+.summary-footer-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 15px;
+}
+
+.summary-footer-row.summary-footer-total {
+    font-weight: 600;
+}
+
+/* Make checkout button full-width in summary */
+
+.checkout-box .btn-primary {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Messages */
+
+.success-message {
+    background: #e8f9e8;
+    border-radius: 12px;
+    padding: 8px 10px;
+    color: #246b24;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    background: #ffe8e8;
+    border-radius: 12px;
+    padding: 8px 10px;
+    color: #b30000;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
