@@ -1823,3 +1823,151 @@ body {
     margin-bottom: 10px;
 }
 
+/* FOOTER STYLING */
+
+.nova-footer {
+    background: #000000;
+    color: #ffffff;
+    margin-top: 80px;
+}
+
+/* Increased padding */
+.nova-footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+    box-sizing: border-box;
+    font-size: 15px; /* larger base text */
+}
+
+/* wider columns + bigger spacing */
+.footer-top-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1.2fr 1.5fr;
+    gap: 60px;
+    border-bottom: 1px solid #333333;
+    padding-bottom: 40px;
+}
+
+/* Bigger section headings */
+.footer-col h4 {
+    font-size: 17px;
+    margin-bottom: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Bigger link text */
+.footer-col a {
+    display: block;
+    color: #cccccc;
+    font-size: 15px; 
+    margin-bottom: 8px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+    color: var(--nova-purple);
+}
+
+.footer-link-highlight {
+    color: #ff4d4d;
+    font-weight: 600;
+}
+
+/* right column with payments + rating */
+.footer-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* more spacing */
+}
+
+/* Larger payment logos */
+.footer-payments img {
+    height: 34px; /* was 26px */
+    background: #ffffff;
+    padding: 5px 8px;
+    border-radius: 10px;
+}
+
+/* Larger rating box */
+.footer-rating-card {
+    background: #111111;
+    border-radius: 12px;
+    padding: 14px 18px; 
+    display: inline-block;
+    text-align: center;
+}
+
+.footer-rating-card .rating-logo {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.footer-rating-card .rating-stars {
+    font-size: 20px;
+    color: #22c55e;
+}
+
+.footer-rating-card .rating-text {
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* membership text */
+.footer-membership-logo span {
+    font-size: 13px;
+    color: #dcdcdc;
+}
+
+/* larger app badges */
+.footer-app-badges img {
+    height: 44px; /* was 34px */
+    border-radius: 10px;
+}
+
+/* bigger social icons */
+.footer-middle-row {
+    border-bottom: 1px solid #333333;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-social {
+    display: flex;
+    gap: 16px;
+}
+
+.social-circle {
+    width: 42px; /* bigger */
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #555555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 18px;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.social-circle:hover {
+    background: var(--nova-purple);
+    border-color: var(--nova-purple);
+    transform: translateY(-1px);
+}
+
+/* bottom text larger + more spacing */
+.footer-bottom-row {
+    padding-top: 20px;
+    text-align: center;
+    color: #b5b5b5;
+    font-size: 14px;
+}
+
+.footer-bottom-row p {
+    margin:5px 0;
+}
