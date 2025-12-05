@@ -5,10 +5,88 @@ session_start();
   if(!isset($_SESSION['login_id'])) {
     header("Location: login.php");
     exit();
+
   } 
 
-  require_once('connectdb.php');
-  $logged_id=$_SESSION['login_id'];
+  if(!isset($_GET['start']) || ($_GET['start'] !== 'checkout')  ) {
+    header("Location: basket.php");
+    exit();
+
+  }
+
+  $checkout_submitted = ($_SERVER['REQUEST_METHOD'] == 'POST');
+
+  $issues= array();
+  $f_name= trim($_POST['first_name'] ?? '');
+  $l_name= trim($_POST['last_name'] ?? '');
+  $phone= trim($_POST['phone'] ?? '');
+  $email= trim($_POST['email'] ?? '');
+  $address= trim($_POST['address'] ?? '');
+  $notes= trim($_POST['notes'] ?? '');
+
+  if($checkout_submitted) {
+
+  if($f_name ==='') {
+    $issues[] = "Enter First Name";
+
+   } elseif (!preg_match('/^[a-zA-Z ]+$/', $f_name)) {
+    $issues[] = "First Name Must Contain Only Letters";
+
+  }
+
+  if($l_name ==='') {
+    $issues[] = "Enter Last Name";
+
+    } elseif (!preg_match('/^[a-zA-Z ]+$/', $l_name)) {
+    $issues[] = "Last Name Must Contain Only Letters";
+
+  }
+
+  if($address ==='') {
+    $issues[] = "Enter Address";
+
+    } elseif (strlen($address)< 5) { 
+    $issues[] = "Enter Valid Address";
+
+  }
+    
+  if($email ==='') {
+    $issues[] = "Enter Email Address";
+
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $issues[] = "Email Address Invalid";
+  }
+
+  if($phone ==='') {
+      $issues[] = "Enter Phone Number";
+
+   } elseif (!preg_match('/^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/', $phone)) {
+    $issues[] = "Enter Valid Phone Number"; 
+
+  }
+
+  if($notes !=='') {
+    if(strlen($notes)>64) {
+
+      $issues[] = "Notes Must Be Less Than 64 Characters";
+    }
+  } 
+}
+
+if (!$checkout_submitted || !empty($issues)) {
+
+  if(count($issues) >0) {
+    foreach($issues as $issue) {
+        echo "<div class='alert alert-danger' role ='alert'> $issue</div>";
+    }
+  }
+    //// THE FORM GOES HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  exit();
+}
+
+require_once('connectdb.php');
+
+$logged_id=$_SESSION['login_id'];
 
 try {
 
@@ -136,32 +214,26 @@ try {
         }
 
 
-    $create_order = $db->prepare("INSERT INTO orders (user_id, order_number, payment_status, delivery_status, currency, total_amount, shipping_amount, shipping_address, discount_amount, notes) 
-    VALUES (?, ?, ?, ? , ?, ?, ?, ?, ?, ?)"); 
-    
-     if(empty($_POST['shipping_address'])) {
+    $create_order = $db->prepare("INSERT INTO orders (user_id, order_number, first_name, last_name, phone_number, email_address, payment_status, delivery_status, currency, total_amount, shipping_amount, shipping_address, discount_amount, notes) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"); 
 
-          throw new Exception("Enter A Shipping Address");
 
-     }
-
-    if(empty($_POST['notes'])) {
+    if($notes ==='') {
 
       $order_notes = null;
 
     } else {
 
-       $order_notes = $_POST['notes'];
+       $order_notes = $notes;
 
     }
 
     $order_num = 'ON' . bin2hex(random_bytes(8));
     $currency_type = "GBP";
-    $ship_address = $_POST['shipping_address'];
     $pay_status = 'pending';
     $deliver_status = 'processing';
 
-    $create_order->execute(array($logged_id, $order_num, $pay_status, $deliver_status, $currency_type, $final_total, $shipping_total, $ship_address, $discount_total, $order_notes));
+    $create_order->execute(array($logged_id, $order_num, $f_name, $l_name, $phone, $email, $pay_status, $deliver_status, $currency_type, $final_total, $shipping_total, $address, $discount_total, $order_notes));
     $id_order = $db -> lastInsertId(); 
 
     $create_order_items = $db->prepare("INSERT INTO order_items (order_id, size_id, quantity, price, line_total)
@@ -208,5 +280,6 @@ try {
     $db->rollback();
 
   }
+
 
  ?> 

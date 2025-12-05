@@ -35,6 +35,82 @@
 
     }
 
+  $pay_submitted = ($_SERVER['REQUEST_METHOD'] == 'POST');
+  $issues= array();
+  $card_number= trim($_POST['number'] ?? '');
+  $card_holder= trim($_POST['holder'] ?? '');
+  $cvv= trim($_POST['cv'] ?? '');
+  $expiry_date= trim($_POST['expiry'] ?? '');
+
+  if($pay_submitted) {
+
+  if($card_number ==='') {
+    $issues[] = "Enter Card Number";
+
+   } elseif (!ctype_digit($card_number)) {
+    $issues[] = "Enter A Valid Card Number Format";
+
+  } else if (strlen($card_number)< 12 || strlen($card_number)> 19) {
+    $issues[] = "Enter A Valid Card Number";
+
+  }
+
+  if($card_holder ==='') {
+    $issues[] = "Enter Card Holder Name";
+
+    } elseif (!preg_match('/^[a-zA-Z ]+$/', $card_holder)) {
+    $issues[] = "Card Holder Name Must Contain Only Letters";
+
+  }
+
+  if($cvv ==='') {
+    $issues[] = "Enter CVV";
+
+    } elseif (!ctype_digit($cvv)) { 
+    $issues[] = "Unsupported CVV Format";
+
+  }elseif (strlen($cvv) <3 || strlen($cvv) > 4 ) { 
+    $issues[] = "Enter Full CVV";
+
+  }
+
+  if($expiry_date ==='') {
+    $issues[] = "Enter Expiry Date";
+
+    } elseif (!preg_match('/^(0[1-9]|1[0-2])\/([0-9]{2})$/', $expiry_date)) {
+    $issues[] = "Enter Valid Expiry Date Format";
+
+    } else {
+
+    $dates = explode('/', $expiry_date);
+    $month= $dates[0];
+    $year= $dates[1];
+
+    $new_yr= (int)$year + 2000;
+    $converted_date = DateTime::createFromFormat('Y-m-d', $new_yr . '-' . $month . '-01');
+    $converted_date->modify('last day of this month');
+
+    $today_date = new DateTime('today');
+
+    if ($today_date > $converted_date) {
+      $issues[] = "Card Expired";
+    }
+
+  }
+    
+}
+
+if (!$pay_submitted || !empty($issues)) {
+
+  if(count($issues) >0) {
+    foreach($issues as $issue) {
+        echo "<div class='alert alert-danger' role ='alert'> $issue</div>";
+    }
+  }
+    //// THE FORM GOES HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  exit();
+}
+
 try {
 
   $db->beginTransaction();
