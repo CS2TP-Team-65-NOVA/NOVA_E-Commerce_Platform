@@ -3,20 +3,22 @@ session_start();
 
 // ---- LOG OUT USER ----
 
-// Clear all session data
+// Clear session
 $_SESSION = [];
 session_unset();
 session_destroy();
 
-// Prevent cached pages from showing protected content after logout
+// Regenerate session ID for security (fresh empty session)
+session_start();
+session_regenerate_id(true);
+
+// Prevent cached pages from showing protected content
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 header("Expires: 0");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -128,3 +130,4 @@ header("Expires: 0");
 
 </body>
 </html>
+
