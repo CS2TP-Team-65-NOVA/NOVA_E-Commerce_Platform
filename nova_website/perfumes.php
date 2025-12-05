@@ -425,58 +425,94 @@ function build_page_url($page, $category, $sort, $search)
 
 </main>
 
-<script>
-// Simple localStorage-based favourites toggle for hearts on grid
-(function () {
-    const STORAGE_KEY = 'nova_favourites';
+<footer class="nova-footer">
+    <div class="nova-footer-inner">
 
-    function loadFavourites() {
-        try {
-            const raw = window.localStorage.getItem(STORAGE_KEY);
-            return raw ? JSON.parse(raw) : [];
-        } catch (e) {
-            return [];
-        }
-    }
+        <!-- TOP: 3 columns + payment / rating column -->
+        <div class="footer-top-row">
+            <!-- Help -->
+            <div class="footer-col">
+                <h4>Help</h4>
+                <a href="contact.php">Contact Us</a>
+                <a href="#" class="footer-link-highlight">Accessibility Statement</a>
+                <a href="#">Delivery Information</a>
+                <a href="#">Customer Service</a>
+                <a href="#">Returns Policy</a>
+                <a href="#">FAQs</a>
+                <a href="#">Store Finder</a>
+                <a href="#">The App</a>
+                <a href="#">Complaints Policy</a>
+            </div>
 
-    function saveFavourites(list) {
-        try {
-            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-        } catch (e) {}
-    }
+            <!-- About Us -->
+            <div class="footer-col">
+                <h4>About Us</h4>
+                <a href="about.php">Our Story</a>
+                <a href="#">Our Social Purpose</a>
+                <a href="#">Careers</a>
+                <a href="#">Student Discount</a>
+                <a href="#">VIP Rewards</a>
+                <a href="#">Charity Partners</a>
+            </div>
 
-    function updateButtonUI(btn, isActive) {
-        if (isActive) {
-            btn.classList.add('is-active');
-        } else {
-            btn.classList.remove('is-active');
-        }
-    }
+            <!-- Legal -->
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Customer Reviews Policy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">CNF or Portal Enquiries</a>
+                <a href="#">Tax Strategy</a>
+                <a href="#">Gender Pay Gap</a>
+                <a href="#">Modern Slavery Statement</a>
+                <a href="#">Corporate Governance</a>
+            </div>
 
-    const favourites = loadFavourites();
-    const buttons = document.querySelectorAll('.fav-toggle');
+            <!-- Right side: payments + rating + app badges -->
+            <div class="footer-col footer-col-right">
+                <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
+                    <img src="master_card.png" alt="Mastercard">
+                    <img src="Pay_pal.png" alt="PayPal">
+                    <img src="apple_pay.png" alt="Apple Pay">
+                    <img src="Klarna.png" alt="Klarna">
+                </div>
 
-    buttons.forEach(btn => {
-        const productId = parseInt(btn.dataset.productId, 10);
-        const isFav = favourites.includes(productId);
-        updateButtonUI(btn, isFav);
+                <div class="footer-rating-card">
+                    <div class="rating-logo">TrustScore</div>
+                    <div class="rating-stars">★★★★★</div>
+                    <div class="rating-text">4.7 | 154,224 reviews</div>
+                </div>
 
-        btn.addEventListener('click', () => {
-            const idx = favourites.indexOf(productId);
-            let nowFav;
-            if (idx === -1) {
-                favourites.push(productId);
-                nowFav = true;
-            } else {
-                favourites.splice(idx, 1);
-                nowFav = false;
-            }
-            saveFavourites(favourites);
-            updateButtonUI(btn, nowFav);
-        });
-    });
-})();
-</script>
+                <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
+                    <span>Member of NOVA Group</span>
+                </div>
 
-</body>
-</html>
+                <div class="footer-app-badges">
+                    <img src="app_store.png" alt="Download on App Store">
+                    <img src="play_store.png" alt="Download on Google Play">
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE: social icons -->
+        <div class="footer-middle-row">
+            <div class="footer-social">
+                <a href="" class="social-circle">f</a>
+                <a href="#" class="social-circle">x</a>
+                <a href="#" class="social-circle">▶</a>
+                <a href="#" class="social-circle">in</a>
+                <a href="#" class="social-circle">P</a>
+            </div>
+        </div>
+
+        <!-- BOTTOM: small print -->
+        <div class="footer-bottom-row">
+            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
+        </div>
+
+    </div>
+</footer>
