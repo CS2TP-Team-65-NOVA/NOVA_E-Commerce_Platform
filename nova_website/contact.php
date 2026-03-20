@@ -377,5 +377,6 @@ require_once 'config.php';
     });
 </script>
 
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>

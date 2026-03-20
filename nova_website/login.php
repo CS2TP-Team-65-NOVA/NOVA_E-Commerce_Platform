@@ -269,6 +269,7 @@ Not registered yet?
     </div>
 </footer>
 
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>
 

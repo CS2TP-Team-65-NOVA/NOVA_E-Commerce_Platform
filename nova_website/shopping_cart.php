@@ -469,3 +469,4 @@ if (!empty($_SESSION['cart'])) {
 
     </div>
 </footer>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>

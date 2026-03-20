@@ -436,3 +436,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </div>
 </footer>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>

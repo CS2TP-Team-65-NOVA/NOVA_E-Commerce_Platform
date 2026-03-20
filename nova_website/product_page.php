@@ -660,3 +660,4 @@ if ($stmt = $conn->prepare($relatedSql)) {
 
     </div>
 </footer>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>

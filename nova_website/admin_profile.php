@@ -451,5 +451,6 @@ document.getElementById('new_password').addEventListener('input', function(e) {
 });
 </script>
 
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>

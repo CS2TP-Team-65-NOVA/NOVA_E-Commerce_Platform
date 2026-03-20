@@ -353,6 +353,7 @@ require_once 'config.php';
     </div>
 </footer>
 
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>
 

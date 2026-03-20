@@ -516,3 +516,4 @@ function build_page_url($page, $category, $sort, $search)
 
     </div>
 </footer>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
