@@ -1,0 +1,276 @@
+<?php
+session_start();
+
+$errorMessage = '';
+
+if (isset($_POST['submitted'])) {
+
+    // Basic validation
+    if (empty($_POST['email']) || empty($_POST['password'])) {
+        $errorMessage = 'Please fill in both fields.';
+    } else {
+
+        // Use your local NOVA DB connection
+        require_once 'config.php'; // gives $conn (mysqli)
+
+        $email    = trim($_POST['email']);
+        $password = $_POST['password'];
+
+        // NOTE: your table columns are: user_id, full_name, email, password, role
+        $sql = "SELECT user_id, full_name, role, password 
+                FROM users 
+                WHERE email = ? 
+                LIMIT 1";
+
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result && $result->num_rows === 1) {
+                $row = $result->fetch_assoc();
+
+                // Verify password hash
+                if (password_verify($password, $row['password'])) {
+
+                    $_SESSION['user_id']  = (int)$row['user_id'];
+                    // store full_name in the "username" session key so the rest of your site still works
+                    $_SESSION['username'] = $row['full_name'];
+                    $_SESSION['role']     = $row['role'] ?: 'customer';
+
+                    header("Location: index.php");
+                    exit();
+
+                } else {
+                    $errorMessage = 'Password is incorrect.';
+                }
+            } else {
+                $errorMessage = 'Email not found.';
+            }
+
+            $stmt->close();
+        } else {
+            // If prepare() itself failed
+            $errorMessage = "A database error occurred.";
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<!-- Google Belleza Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
+
+<!-- CSS stylesheet -->
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<title>Log in</title>
+
+<!-- NOVA favicon -->
+<link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
+</head>
+
+<body>
+
+<header id="main-header">
+<nav id="navbar">
+
+<div class="nav-left">
+<a href="index.php" class="nav-link">Home</a>
+<a href="about.php" class="nav-link">About</a>
+<a href="perfumes.php" class="nav-link">Perfumes</a>
+</div>
+
+<a href="index.php" class="logo-link">
+<img src="nova_logo_black.png" id="logo" alt="NOVA Logo">
+</a>
+
+<div class="nav-right">
+
+<?php if (!isset($_SESSION['user_id'])): ?>
+
+<a href="register.php" class="nav-link">Register</a>
+<a href="login.php" class="nav-link active">Log in</a>
+
+<a href="shopping_cart.php" class="basket-link">
+<img src="basket_icon.png" class="basket-icon basket-icon-default">
+<img src="active_basket_icon.png" class="basket-icon basket-icon-active">
+</a>
+
+<?php else: ?>
+<?php $role = $_SESSION['role'] ?? 'customer'; ?>
+
+<?php if ($role === 'admin'): ?>
+
+<a href="admin_dashboard.php" class="nav-link">Admin Dashboard</a>
+
+<a href="admin_profile.php" class="account-link">
+<img src="account_icon.png" class="account-icon account-icon-default">
+<img src="active_account_icon.png" class="account-icon account-icon-active">
+</a>
+
+<a href="shopping_cart.php" class="basket-link">
+<img src="basket_icon.png" class="basket-icon basket-icon-default">
+<img src="active_basket_icon.png" class="basket-icon basket-icon-active">
+</a>
+
+<?php else: ?>
+
+<a href="customer_profile.php" class="account-link">
+<img src="account_icon.png" class="account-icon account-icon-default">
+<img src="active_account_icon.png" class="account-icon account-icon-active">
+</a>
+
+<a href="shopping_cart.php" class="basket-link">
+<img src="basket_icon.png" class="basket-icon basket-icon-default">
+<img src="active_basket_icon.png" class="basket-icon basket-icon-active">
+</a>
+
+<?php endif; ?>
+<?php endif; ?>
+
+</div>
+
+</nav>
+</header>
+
+
+<main>
+
+<div class="login-container">
+<form class="login-form" action="login.php" method="post">
+
+<div class="login-header">
+<h1 class="login-title">Log in</h1>
+<p class="login-subtitle">Access your NOVA account.</p>
+</div>
+
+<?php if ($errorMessage): ?>
+<p class="login-error"><?php echo $errorMessage; ?></p>
+<?php endif; ?>
+
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" placeholder="Email address" required>
+
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" placeholder="Password" required>
+
+<input type="hidden" name="submitted" value="TRUE" />
+
+<button type="submit" class="login-btn">Log in</button>
+
+<p class="login-already-user">
+Not registered yet?
+<a href="register.php">Register here</a>
+</p>
+
+</form>
+</div>
+
+
+</main>
+
+<footer class="nova-footer">
+    <div class="nova-footer-inner">
+
+        <!-- TOP: 3 columns + payment / rating column -->
+        <div class="footer-top-row">
+            <!-- Help -->
+            <div class="footer-col">
+                <h4>Help</h4>
+                <a href="contact.php">Contact Us</a>
+                <a href="#" class="footer-link-highlight">Accessibility Statement</a>
+                <a href="#">Delivery Information</a>
+                <a href="#">Customer Service</a>
+                <a href="#">Returns Policy</a>
+                <a href="#">FAQs</a>
+                <a href="#">Store Finder</a>
+                <a href="#">The App</a>
+                <a href="#">Complaints Policy</a>
+            </div>
+
+            <!-- About Us -->
+            <div class="footer-col">
+                <h4>About Us</h4>
+                <a href="about.php">Our Story</a>
+                <a href="#">Our Social Purpose</a>
+                <a href="#">Careers</a>
+                <a href="#">Student Discount</a>
+                <a href="#">VIP Rewards</a>
+                <a href="#">Charity Partners</a>
+            </div>
+
+            <!-- Legal -->
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Customer Reviews Policy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">CNF or Portal Enquiries</a>
+                <a href="#">Tax Strategy</a>
+                <a href="#">Gender Pay Gap</a>
+                <a href="#">Modern Slavery Statement</a>
+                <a href="#">Corporate Governance</a>
+            </div>
+
+            <!-- Right side: payments + rating + app badges -->
+            <div class="footer-col footer-col-right">
+                <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
+                    <img src="master_card.png" alt="Mastercard">
+                    <img src="Pay_pal.png" alt="PayPal">
+                    <img src="apple_pay.png" alt="Apple Pay">
+                    <img src="Klarna.png" alt="Klarna">
+                </div>
+
+                <div class="footer-rating-card">
+                    <div class="rating-logo">TrustScore</div>
+                    <div class="rating-stars">★★★★★</div>
+                    <div class="rating-text">4.7 | 154,224 reviews</div>
+                </div>
+
+                <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
+                    <span>Member of NOVA Group</span>
+                </div>
+
+                <div class="footer-app-badges">
+                    <img src="app_store.png" alt="Download on App Store">
+                    <img src="play_store.png" alt="Download on Google Play">
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE: social icons -->
+        <div class="footer-middle-row">
+            <div class="footer-social">
+                <a href="" class="social-circle">f</a>
+                <a href="#" class="social-circle">x</a>
+                <a href="#" class="social-circle">▶</a>
+                <a href="#" class="social-circle">in</a>
+                <a href="#" class="social-circle">P</a>
+            </div>
+        </div>
+
+        <!-- BOTTOM: small print -->
+        <div class="footer-bottom-row">
+            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+
