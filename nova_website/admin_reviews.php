@@ -94,7 +94,8 @@ function renderStars($rating) {
     <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin_style.css">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
@@ -203,76 +204,70 @@ function renderStars($rating) {
                 <h3>This Week</h3>
             </div>
         </div>
-            
-
         
-       <!-- REVIEWS TABLE -->
-<div class="dashboard-panel">
-    <div class="panel-header">
-        <h2>All Reviews</h2>
-        <span style="color: #666; font-size: 14px;">Latest first</span>
-    </div>
-    
-    <?php if ($reviewsResult && mysqli_num_rows($reviewsResult) > 0): ?>
-        <div class="users-table-container">
-            <table class="users-table">
-                <thead>
-                    <tr>
-                        <th>Review</th>
-                        <th>User</th>
-                        <th>Rating</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($reviewsResult)): ?>
+        <!-- REVIEWS TABLE -->
+        <div class="dashboard-panel">
+            <div class="panel-header">
+                <h2>All Reviews</h2>
+                <span style="color: #666; font-size: 14px;">Latest first</span>
+            </div>
+            
+            <?php if ($reviewsResult && mysqli_num_rows($reviewsResult) > 0): ?>
+                <table class="reviews-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <div class="product-name"><?php echo safe($row['product_name']); ?></div>
-                                <div class="product-desc"><?php echo safe($row['comment']); ?></div>
-                            </td>
-                            
-                            <td>
-                                <div class="product-name"><?php echo safe($row['user_name']); ?></div>
-                            </td>
-                            
-                            <td>
-                                <div class="product-desc" style="margin-bottom: 4px;">
-                                    <?php echo renderStars($row['rating']); ?>
-                                </div>
-                                <span class="variants-badge">
-                                    <?php echo (int)$row['rating']; ?>/5
-                                </span>
-                            </td>
-                            
-                            <td>
-                                <div class="product-desc">
-                                    <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
-                                </div>
-                            </td>
-                            
-                            <td>
-                                <div class="action-buttons">
+                            <th>Product</th>
+                            <th>User</th>
+                            <th>Rating</th>
+                            <th>Comment</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($reviewsResult)): ?>
+                            <tr>
+                                <td>
+                                    <div class="review-product"><?php echo safe($row['product_name']); ?></div>
+                                </td>
+                                <td>
+                                    <div class="review-user"><?php echo safe($row['user_name']); ?></div>
+                                </td>
+                                <td>
+                                    <div class="review-rating">
+                                        <?php echo renderStars($row['rating']); ?>
+                                        <div style="font-size: 12px; color: #666; margin-top: 3px;">
+                                            <?php echo $row['rating']; ?>/5
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="review-comment"><?php echo safe($row['comment']); ?></div>
+                                </td>
+                                <td>
+                                    <div class="review-date">
+                                        <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
+                                    </div>
+                                </td>
+                                <td>
                                     <button class="delete-btn" 
-                                            onclick="if(confirm('Delete this review?')) window.location.href='admin_reviews.php?delete=<?php echo (int)$row['review_id']; ?>'">
+                                            onclick="if(confirm('Delete this review?')) 
+                                            window.location.href='admin_reviews.php?delete=<?php echo (int)$row['review_id']; ?>'">
                                         Delete
                                     </button>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <div class="empty-state">
+                    <p>No reviews have been submitted yet.</p>
+                </div>
+            <?php endif; ?>
         </div>
-    <?php else: ?>
-        <div class="empty-state">
-            <p>No reviews have been submitted yet.</p>
-        </div>
-    <?php endif; ?>
-</div>
     </main>
-    </div>
+</div>
 
 <!-- GLOBAL NOVA FOOTER -->
 <footer class="nova-footer">

@@ -17,7 +17,7 @@ if (isset($_POST['submitted'])) {
         $password = $_POST['password'];
 
         // NOTE: your table columns are: user_id, full_name, email, password, role
-        $sql = "SELECT user_id, full_name, email, role, password 
+        $sql = "SELECT user_id, full_name, role, password 
                 FROM users 
                 WHERE email = ? 
                 LIMIT 1";
@@ -36,7 +36,6 @@ if (isset($_POST['submitted'])) {
                     $_SESSION['user_id']  = (int)$row['user_id'];
                     // store full_name in the "username" session key so the rest of your site still works
                     $_SESSION['username'] = $row['full_name'];
-                    $_SESSION['email'] = $row['email'];
                     $_SESSION['role']     = $row['role'] ?: 'customer';
 
                     header("Location: index.php");

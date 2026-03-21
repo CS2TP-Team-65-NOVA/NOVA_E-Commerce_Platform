@@ -119,8 +119,8 @@ function safe($val) {
     <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
     <!-- Global + admin styles -->
-    <link rel="stylesheet" type="text/css" href="style.css?v=2">
-   
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="admin_style.css">
 
     <!-- NOVA favicon -->
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
@@ -238,125 +238,127 @@ function safe($val) {
             </div>
         </div>
         
-<!-- DASHBOARD CONTENT -->
-<div class="dashboard-content" style="display: block;">
-    <!-- Products Table -->
-    <div class="dashboard-panel">
-        <div class="panel-header">
-            <h2>All Products</h2>
-            <span style="color: #666; font-size: 14px;">Newest first</span>
-        </div>
-        
-        <?php if ($productsResult && mysqli_num_rows($productsResult) > 0): ?>
-            <div class="products-table-container">
-                <table class="products-table">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Variants</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($productsResult)): ?>
+        <!-- DASHBOARD CONTENT -->
+        <div class="dashboard-content">
+            <!-- Products Table -->
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h2>All Products</h2>
+                    <span style="color: #666; font-size: 14px;">Newest first</span>
+                </div>
+                
+                <?php if ($productsResult && mysqli_num_rows($productsResult) > 0): ?>
+                    <table class="products-table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <div class="product-name"><?php echo safe($row['name']); ?></div>
-                                    <div class="product-desc"><?php echo safe($row['description']); ?></div>
-                                </td>
-                                <td>
-                                    <?php if ($row['category']): ?>
-                                        <span class="category-tag"><?php echo safe($row['category']); ?></span>
-                                    <?php else: ?>
-                                        <span style="color: #666; font-size: 13px;">Uncategorized</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <div class="price-amount">£<?php echo number_format((float)$row['base_price'], 2); ?></div>
-                                    <?php if ($row['min_version_price'] !== null): ?>
-                                        <div class="price-range">
-                                            Sizes: £<?php echo number_format((float)$row['min_version_price'], 2); ?> – 
-                                            £<?php echo number_format((float)$row['max_version_price'], 2); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <span class="variants-badge"><?php echo (int)$row['variants_count']; ?> variants</span>
-                                </td>
-                                <td>
-                                    <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
-                                </td>
-                                <td>
-                                    <button class="delete-btn" 
-                                        onclick="if(confirm('Delete this product? This will also remove its versions and reviews.')) 
-                                        window.location.href='admin_products.php?delete=<?php echo (int)$row['product_id']; ?>'">
-                                        Delete
-                                    </button>
-                                </td>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Variants</th>
+                                <th>Created</th>
+                                <th>Actions</th>
                             </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($productsResult)): ?>
+                                <tr>
+                                    <td>
+                                        <div class="product-name"><?php echo safe($row['name']); ?></div>
+                                        <div class="product-desc"><?php echo safe($row['description']); ?></div>
+                                    </td>
+                                    <td>
+                                        <?php if ($row['category']): ?>
+                                            <span class="category-tag"><?php echo safe($row['category']); ?></span>
+                                        <?php else: ?>
+                                            <span style="color: #666; font-size: 13px;">Uncategorized</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <div class="price-amount">£<?php echo number_format((float)$row['base_price'], 2); ?></div>
+                                        <?php if ($row['min_version_price'] !== null): ?>
+                                            <div class="price-range">
+                                                Sizes: £<?php echo number_format((float)$row['min_version_price'], 2); ?> – 
+                                                £<?php echo number_format((float)$row['max_version_price'], 2); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <span class="variants-badge"><?php echo (int)$row['variants_count']; ?> variants</span>
+                                    </td>
+                                    <td>
+                                        <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
+                                    </td>
+                                    <td>
+                                        <button class="delete-btn" 
+                                            onclick="if(confirm('Delete this product? This will also remove its versions and reviews.')) 
+                                            window.location.href='admin_products.php?delete=<?php echo (int)$row['product_id']; ?>'">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <div class="empty-state">
+                        <p>No products have been added yet.</p>
+                    </div>
+                <?php endif; ?>
             </div>
-        <?php else: ?>
-            <div class="empty-state">
-                <p>No products have been added yet.</p>
+            
+            <!-- Add Product Form -->
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h2>Add Product</h2>
+                    <span style="color: #666; font-size: 14px;">Create a new perfume</span>
+                </div>
+                
+                <?php if ($addMessage !== ""): ?>
+                    <div class="error-message"><?php echo safe($addMessage); ?></div>
+                <?php endif; ?>
+                
+                <form method="post" action="admin_products.php">
+                    <input type="hidden" name="action" value="add">
+                    
+                    <div class="form-group">
+                        <label for="name">Product Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter product name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price">Base Price (£) *</label>
+                        <input type="number" step="0.01" min="0" id="price" name="price" required placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category_id">Category</label>
+                        <select id="category_id" name="category_id">
+                            <option value="">– Select category –</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?php echo (int)$cat['category_id']; ?>">
+                                    <?php echo safe($cat['category']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Enter product description"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="add-btn">Add Product</button>
+                    
+                    <div class="form-note">
+                        You can manage sizes, stock and prices for each product
+                        in the <strong>product_versions</strong> table or a future
+                        "Product Versions" admin page.
+                    </div>
+                </form>
             </div>
-        <?php endif; ?>
-    </div>
+        </div>  
+    </main>
 </div>
-
-<!-- Add Product Form -->
-<div class="dashboard-panel" style="margin-top: 30px;">
-    <div class="panel-header">
-        <h2>Add Product</h2>
-        <span style="color: #666; font-size: 14px;">Create a new perfume</span>
-    </div>
-    
-    <?php if ($addMessage !== ""): ?>
-        <div class="error-message"><?php echo safe($addMessage); ?></div>
-    <?php endif; ?>
-    
-    <form method="post" action="admin_products.php">
-        <input type="hidden" name="action" value="add">
-        
-        <div class="form-group">
-            <label for="name">Product Name *</label>
-            <input type="text" id="name" name="name" required placeholder="Enter product name">
-        </div>
-        
-        <div class="form-group">
-            <label for="price">Base Price (£) *</label>
-            <input type="number" step="0.01" min="0" id="price" name="price" required placeholder="0.00">
-        </div>
-        
-        <div class="form-group">
-            <label for="category_id">Category</label>
-            <select id="category_id" name="category_id">
-                <option value="">– Select category –</option>
-                <?php foreach ($categories as $cat): ?>
-                    <option value="<?php echo (int)$cat['category_id']; ?>">
-                        <?php echo safe($cat['category']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Enter product description"></textarea>
-        </div>
-        
-        <button type="submit" class="add-btn">Add Product</button>
-        
-        
-    </form>
-</div>
-     </div>
-
 
 <!-- GLOBAL NOVA FOOTER -->
 <footer class="nova-footer">

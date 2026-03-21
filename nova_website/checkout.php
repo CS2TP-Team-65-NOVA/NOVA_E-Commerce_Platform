@@ -1,13 +1,6 @@
 <?php
 session_start();
- require_once 'config.php';
-
- /* Require User To Be Logged in */
-  if(!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-
-  } 
+require_once 'config.php';
 
 /* 1. Rebuild cart */
 
@@ -28,7 +21,6 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && !empty($_SESSION[
     $productIds = array_values(array_unique($productIds));
     $sizeIds    = array_values(array_unique($sizeIds));
 
-    // Products
     $productMap = [];
     if (!empty($productIds)) {
         $idList = implode(',', array_map('intval', $productIds));
@@ -41,7 +33,6 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && !empty($_SESSION[
         }
     }
 
-    // Sizes
     $sizeMap = [];
     if (!empty($sizeIds)) {
         $idList = implode(',', array_map('intval', $sizeIds));
@@ -93,103 +84,20 @@ $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = trim($_POST['full_name'] ?? '');
-    $email     = trim($_POST['email'] ?? '');
-    $address   = trim($_POST['address'] ?? '');
-    $city      = trim($_POST['city'] ?? '');
-    $postcode  = trim($_POST['postcode'] ?? '');
-    $payment   = trim($_POST['payment_method'] ?? '');
-
-    $issue= [];
+    $email     = trim($_POST['email']     ?? '');
+    $address   = trim($_POST['address']   ?? '');
+    $city      = trim($_POST['city']      ?? '');
+    $postcode  = trim($_POST['postcode']  ?? '');
+    $payment   = $_POST['payment_method'] ?? '';
 
     if (empty($cartItems)) {
-        $issue[] = 'Your basket is empty.';
-    }
-    if ($full_name === '') {
-        $issue[] = "Enter Full Name.";
-    }
-    if ($full_name !== '' && strlen($full_name)< 2) { 
-        $issue[] = "Full Name is too short.";
-    }
-    if ($email === '') {
-        $issue[] = "Enter An Email Address.";
-    }
-    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $issue[] = "Enter A Valid Email Address.";
-    }
-    if ($address === '') {
-        $issue[] = "Enter An Address.";
-    }
-    if ($address !== '' && strlen($address)< 5) { 
-        $issue[] = "Enter A Valid Address.";
-    }
-    if ($city === '') {
-        $issue[] = "Enter A City.";
-    }
-    if ($city !== '' && !preg_match('/^[a-zA-Z]+(?:[ -][a-zA-Z]+)*$/', $city)) {
-        $issue[] = "Enter A Valid City.";
-    }
-    if ($postcode === '') {
-        $issue[] = "Enter A Postcode.";
-    }
-    if ($postcode !== '' && !preg_match('/^([A-Z]{1,2}[0-9][A-Z0-9]?)\s?[0-9][A-Z]{2}$/i', $postcode)) {
-        $issue[] = "Enter A Valid Postcode.";
-    }
-
-    $paymentOptions = ["card", "paypal", "apple_pay", "klarna"];
-    if ($payment === '') {
-        $issue[] = "Choose A Payment Method.";
-    } else if (!in_array($payment, $paymentOptions, true)) {
-        $issue[] = "Pick A Valid Payment Method.";
-    }
-
-    if (!empty($issue)) {
-        $error_message = '<ul>';
-        foreach ($issue as $is) {
-            $error_message .= '<li>' . htmlspecialchars($is) . '</li>';
-        }
-        $error_message .= '</ul>';
-
+        $error_message = 'Your basket is empty.';
+    } elseif ($full_name === '' || $email === '' || $address === '' || $city === '' || $postcode === '' || $payment === '') {
+        $error_message = 'Please fill in all required fields.';
     } else {
-    try {
 
-    // Check Stock For All Items
-
-    $conn->begin_transaction();
-    $stockquery =$conn->prepare("SELECT stock_qty FROM inventory WHERE size_id = ?");
-
-    if (!$stockquery) {
-        throw new Exception("Failed to check stock levels.");
-    }
-
-    foreach ($cartItems as $eachItem) {
-        $s_id = (int)$eachItem['size_id'];
-        $qty = (int)$eachItem['qty'];
-
-        if($s_id <= 0) {
-            throw new Exception("Invalid Product Size.");
-        }
-        if($qty <= 0) {
-            throw new Exception("Invalid Quantity.");
-        }
-
-        $stockquery->bind_param("i", $s_id);
-        $stockquery->execute();
-        $stockResult = $stockquery->get_result();
-        $stockResultRow = $stockResult->fetch_assoc();
-
-        if (!$stockResultRow) {
-            throw new Exception($eachItem['name'] . " is currently unavailable.");
-        }
-
-        $stock = (int)$stockResultRow['stock_qty'];
-        if ($stock < $qty ) {
-            throw new Exception($eachItem['name'] . " (" . $eachItem['size_label'] . ") has only " . $stock . " in stock.");
-        }
-    }
-    $stockquery->close();
-
-            // ---- INSERT INTO orders ----
-        $userId          = (int)$_SESSION['user_id'];
+        // ---- INSERT INTO orders ----
+        $userId          = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
         $orderNumber     = 'ORD-' . strtoupper(substr(uniqid(), -6));
         $shippingAddress = $address . ', ' . $city . ', ' . $postcode;
 
@@ -207,26 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $orderId = $conn->insert_id;
                 $stmt->close();
 
-            // ---- INSERT INTO payments ----
-
-        $payStmt = $conn->prepare("
-            INSERT INTO payments
-                (order_id, payment_method, currency, total_amount,
-                 payment_status, payment_date)
-            VALUES (?, ?, 'GBP', ?, 'success', NOW())
-        ");
-
-        if (!$payStmt) {
-            throw new Exception("Could not save payment information.");
-        }
-        $payStmt->bind_param("isd", $orderId, $payment , $subtotal);
-    
-        if (!$payStmt->execute()) {
-            throw new Exception("Error saving payment information.");
-        }
-
-        $payStmt->close();
-
                 // ---- INSERT INTO order_items ----
                 $itemStmt = $conn->prepare("
                     INSERT INTO order_items
@@ -234,9 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES (?, ?, ?, ?, ?)
                 ");
 
-                if (!$itemStmt) {
-                throw new Exception("Could not create order items.");
-                }
+                if ($itemStmt) {
                     foreach ($cartItems as $item) {
                         $sid       = !empty($item['size_id']) ? (int)$item['size_id'] : null;
                         $qty       = (int)$item['qty'];
@@ -244,165 +130,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $lineTotal = (float)$item['line_total'];
 
                         $itemStmt->bind_param("iiddd", $orderId, $sid, $qty, $unitPrice, $lineTotal);
-                        if (!$itemStmt->execute()) {
-                            throw new Exception("Failed to save order items.");
-                        }
+                        $itemStmt->execute();
                     }
                     $itemStmt->close();
                 }
+
+                // ---- SUCCESS: clear cart ----
+                $order_success    = true;
+                $_SESSION['cart'] = [];
+                $cartItems        = [];
+                $subtotal         = 0.0;
+
             } else {
+                $error_message = 'Could not place order. Please try again.';
                 $stmt->close();
-                throw new Exception("Could not place order. Please try again.");
             }
-    
-    // Reduce Stock and Log Stock Changes
-
-    $reduceStock = $conn->prepare("UPDATE inventory SET stock_qty = stock_qty - ? WHERE size_id = ? AND stock_qty >= ?");
-    $logStock = $conn->prepare("INSERT INTO inventory_logs (size_id, change_type, quantity_changed, quantity_before, quantity_after, reference_type, reference_id) VALUES (?, 'sale', ?, ?, ?, 'order', ?)");
-
-    if (!$reduceStock || !$logStock) {
-        throw new Exception("Failed to update stock levels.");
-    }
-
-    foreach ($cartItems as $eachItem) {
-        $s_id = (int)$eachItem['size_id'];
-        $qty = (int)$eachItem['qty'];
-
-        $checkBeforeStock =$conn->prepare("SELECT stock_qty FROM inventory WHERE size_id = ?");
-
-    if (!$checkBeforeStock) {
-        throw new Exception("Failed to check stock levels.");
-    }
-
-    $checkBeforeStock->bind_param("i", $s_id);
-    $checkBeforeStock->execute();
-    $beforeResult = $checkBeforeStock->get_result();
-    $beforeResultRow = $beforeResult->fetch_assoc();
-
-    if (!$beforeResultRow) {
-            throw new Exception("Failed to check stock record.");
-    }
-
-    $bQty = (int)$beforeResultRow['stock_qty']; 
-    $aQty = $bQty - $qty;
-    $reduceStock->bind_param("iii", $qty, $s_id, $qty);
-    $reduceStock->execute();
-
-    if ($reduceStock->affected_rows === 0) {
-            throw new Exception($eachItem['name'] . " (" . $eachItem['size_label'] . ") isn't available in the requested quantity.");
+        } else {
+            $error_message = 'Database error. Please try again.';
         }
-
-    $logStock->bind_param("iiiii", $s_id, $qty, $bQty, $aQty, $orderId);
-
-      if (!$logStock->execute()) {
-            throw new Exception("Unable to write to the inventory log.");
-        }
-    }
-
-    $reduceStock->close();
-    $logStock->close();
-    $checkBeforeStock->close();
-    
-    $conn->commit();
-        // Finish Order and Clear the cart.
-        $order_success = true;
-        $_SESSION['cart'] = [];
-        $cartItems = [];
-        $subtotal  = 0.0;
-
-    } catch (Exception $e) {
-        $conn->rollback();
-        $error_message = '<ul><li>' . htmlspecialchars($e->getMessage()) . '</li></ul>'; 
-    }
     }
 }
-
-$chosenPayment = $_POST['payment_method'] ?? 'card';
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
     <title>Checkout</title>
-
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
-
 </head>
 <body>
 
 <header id="main-header">
-        <nav id="navbar">
-
-            <!-- LEFT SIDE: Home, About, Perfumes -->
-            <div class="nav-left">
-                <a href="index.php" class="nav-link">Home</a>
-                <a href="about.php" class="nav-link">About</a>
-                <a href="perfumes.php" class="nav-link">Perfumes</a>
-            </div>
-
-            <!-- CENTER: NOVA Logo -->
-            <a href="index.php" class="logo-link">
-                <img src="nova_logo_black.png" id="logo" alt="NOVA Logo">
-            </a>
-
-            <!-- RIGHT SIDE BASED ON USER SESSION -->
-            <div class="nav-right">
-
+    <nav id="navbar">
+        <div class="nav-left">
+            <a href="index.php"    class="nav-link">Home</a>
+            <a href="about.php"    class="nav-link">About</a>
+            <a href="perfumes.php" class="nav-link">Perfumes</a>
+        </div>
+        <a href="index.php" class="logo-link">
+            <img src="nova_logo_black.png" id="logo" alt="NOVA Logo">
+        </a>
+        <div class="nav-right">
             <?php if (!isset($_SESSION['user_id'])): ?>
-
-                <!-- GUEST -->
                 <a href="register.php" class="nav-link">Register</a>
-                <a href="login.php" class="nav-link">Log in</a>
-
+                <a href="login.php"    class="nav-link">Log in</a>
                 <a href="shopping_cart.php" class="basket-link active" aria-label="Shopping basket">
-                    <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
-                    <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
+                    <img src="basket_icon.png"        class="basket-icon basket-icon-default" alt="Basket icon"/>
+                    <img src="active_basket_icon.png" class="basket-icon basket-icon-active"  alt="Active basket icon"/>
                 </a>
-
             <?php else: ?>
                 <?php $role = $_SESSION['role'] ?? 'customer'; ?>
-
                 <?php if ($role === 'admin'): ?>
-
                     <a href="admin_dashboard.php" class="nav-link">Admin Dashboard</a>
-
                     <a href="admin_profile.php" class="account-link" aria-label="Admin account">
-                        <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
-                        <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
+                        <img src="account_icon.png"        class="account-icon account-icon-default" alt="Account icon"/>
+                        <img src="active_account_icon.png" class="account-icon account-icon-active"  alt="Active account icon"/>
                     </a>
-
                     <a href="shopping_cart.php" class="basket-link active" aria-label="Shopping basket">
-                        <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
-                        <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
+                        <img src="basket_icon.png"        class="basket-icon basket-icon-default" alt="Basket icon"/>
+                        <img src="active_basket_icon.png" class="basket-icon basket-icon-active"  alt="Active basket icon"/>
                     </a>
-
                 <?php else: ?>
-
                     <a href="customer_profile.php" class="account-link" aria-label="My account">
-                        <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
-                        <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
+                        <img src="account_icon.png"        class="account-icon account-icon-default" alt="Account icon"/>
+                        <img src="active_account_icon.png" class="account-icon account-icon-active"  alt="Active account icon"/>
                     </a>
-
                     <a href="shopping_cart.php" class="basket-link" aria-label="Shopping basket">
-                        <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
-                        <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
+                        <img src="basket_icon.png"        class="basket-icon basket-icon-default" alt="Basket icon"/>
+                        <img src="active_basket_icon.png" class="basket-icon basket-icon-active"  alt="Active basket icon"/>
                     </a>
-
                 <?php endif; ?>
             <?php endif; ?>
-
-            </div>
-
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
 <main class="checkout-page">
 
@@ -415,7 +221,7 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
         </div>
     <?php elseif ($error_message !== ''): ?>
         <div class="error-message">
-            <?php echo ($error_message); ?>
+            <?php echo htmlspecialchars($error_message); ?>
         </div>
     <?php endif; ?>
 
@@ -456,61 +262,56 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 </div>
 
                 <!-- PAYMENT METHOD -->
-<section class="checkout-section">
-    <h2 class="checkout-subtitle">Payment method</h2>
+                <section class="checkout-section">
+                    <h2 class="checkout-subtitle">Payment method</h2>
+                    <div class="payment-options">
 
-    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="card" checked>
+                            <div class="payment-option-inner">
+                                <img src="master_card.png" class="payment-icon">
+                                <div class="payment-text">
+                                    <span class="payment-name">Credit / Debit Card</span>
+                                    <span class="payment-desc">No extra fees</span>
+                                </div>
+                            </div>
+                        </label>
 
-        <!-- Credit / Debit Card -->
-        <label class="payment-option">
-            <input type="radio" name="payment_method" value="card" <?php echo $chosenPayment === 'card' ?  'checked' : ''; ?>>
-            <div class="payment-option-inner">
-                <img src="master_card.png" class="payment-icon">
-                <div class="payment-text">
-                    <span class="payment-name">Credit / Debit Card</span>
-                    <span class="payment-desc">No extra fees</span>
-                </div>
-            </div>
-        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="paypal">
+                            <div class="payment-option-inner">
+                                <img src="Pay_pal.png" class="payment-icon">
+                                <div class="payment-text">
+                                    <span class="payment-name">PayPal</span>
+                                    <span class="payment-desc">Secure online payment</span>
+                                </div>
+                            </div>
+                        </label>
 
-        <!-- PayPal -->
-        <label class="payment-option">
-            <input type="radio" name="payment_method" value="paypal" <?php echo $chosenPayment === 'paypal' ?  'checked' : ''; ?>>
-            <div class="payment-option-inner">
-                <img src="Pay_pal.png" class="payment-icon">
-                <div class="payment-text">
-                    <span class="payment-name">PayPal</span>
-                    <span class="payment-desc">Secure online payment</span>
-                </div>
-            </div>
-        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="apple_pay">
+                            <div class="payment-option-inner">
+                                <img src="apple_pay.png" class="payment-icon">
+                                <div class="payment-text">
+                                    <span class="payment-name">Apple Pay</span>
+                                    <span class="payment-desc">Pay with Apple Wallet</span>
+                                </div>
+                            </div>
+                        </label>
 
-        <!-- Apple Pay -->
-        <label class="payment-option">
-            <input type="radio" name="payment_method" value="apple_pay" <?php echo $chosenPayment === 'apple_pay' ?  'checked' : ''; ?>>
-            <div class="payment-option-inner">
-                <img src="apple_pay.png" class="payment-icon">
-                <div class="payment-text">
-                    <span class="payment-name">Apple Pay</span>
-                    <span class="payment-desc">Pay with Apple Wallet</span>
-                </div>
-            </div>
-        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" value="klarna">
+                            <div class="payment-option-inner">
+                                <img src="Klarna.png" class="payment-icon">
+                                <div class="payment-text">
+                                    <span class="payment-name">Klarna</span>
+                                    <span class="payment-desc">Pay in 3 instalments</span>
+                                </div>
+                            </div>
+                        </label>
 
-        <!-- Klarna -->
-        <label class="payment-option">
-            <input type="radio" name="payment_method" value="klarna" <?php echo $chosenPayment === 'klarna' ?  'checked' : ''; ?>>
-            <div class="payment-option-inner">
-                <img src="Klarna.png" class="payment-icon">
-                <div class="payment-text">
-                    <span class="payment-name">Klarna</span>
-                    <span class="payment-desc">Pay in 3 instalments</span>
-                </div>
-            </div>
-        </label>
-
-    </div>
-</section>
+                    </div>
+                </section>
 
                 <button type="submit" class="btn-primary" <?php echo empty($cartItems) ? 'disabled' : ''; ?>>
                     Place order
@@ -520,28 +321,22 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
 
         <!-- RIGHT: summary -->
         <div class="checkout-box">
-            <h2 class="section-heading">Order Summary</h2>
+            <h2 class="section-heading">Order summary</h2>
 
             <?php if (empty($cartItems)): ?>
-                <div class="summary-list">
-                    Your basket is empty.
-                </div>
+                <div class="summary-list">Your basket is empty.</div>
             <?php else: ?>
                 <div class="summary-list">
                     <?php foreach ($cartItems as $item): ?>
                         <div class="summary-item-row">
                             <div class="summary-item-name">
                                 <?php echo htmlspecialchars($item['name']); ?>
-                                <br>
-                                <small><?php echo htmlspecialchars($item['size_label']); ?> × <?php echo $item['qty']; ?></small>
+                                <small><?php echo htmlspecialchars($item['size_label']); ?> &times; <?php echo $item['qty']; ?></small>
                             </div>
-                            <div>
-                                £<?php echo number_format($item['line_total'], 2); ?>
-                            </div>
+                            <div>£<?php echo number_format($item['line_total'], 2); ?></div>
                         </div>
                     <?php endforeach; ?>
                 </div>
-
                 <div class="summary-footer-row">
                     <span>Subtotal</span>
                     <span>£<?php echo number_format($subtotal, 2); ?></span>
@@ -550,11 +345,10 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                     <span>Delivery</span>
                     <span>Free</span>
                 </div>
-<div class="summary-footer-row summary-footer-total">
-    <span>Total</span>
-    <span>£<?php echo number_format($subtotal, 2); ?></span>
-</div>
-
+                <div class="summary-footer-row summary-footer-total">
+                    <span>Total</span>
+                    <span>£<?php echo number_format($subtotal, 2); ?></span>
+                </div>
             <?php endif; ?>
         </div>
 
@@ -563,10 +357,7 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
 
 <footer class="nova-footer">
     <div class="nova-footer-inner">
-
-        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
-            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
@@ -579,8 +370,6 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 <a href="#">The App</a>
                 <a href="#">Complaints Policy</a>
             </div>
-
-            <!-- About Us -->
             <div class="footer-col">
                 <h4>About Us</h4>
                 <a href="about.php">Our Story</a>
@@ -590,8 +379,6 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 <a href="#">VIP Rewards</a>
                 <a href="#">Charity Partners</a>
             </div>
-
-            <!-- Legal -->
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a href="#">Terms &amp; Conditions</a>
@@ -604,51 +391,40 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 <a href="#">Modern Slavery Statement</a>
                 <a href="#">Corporate Governance</a>
             </div>
-
-            <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
-                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
-                    <img src="Pay_pal.png" alt="PayPal">
-                    <img src="apple_pay.png" alt="Apple Pay">
-                    <img src="Klarna.png" alt="Klarna">
+                    <img src="Pay_pal.png"     alt="PayPal">
+                    <img src="apple_pay.png"   alt="Apple Pay">
+                    <img src="Klarna.png"      alt="Klarna">
                 </div>
-
                 <div class="footer-rating-card">
                     <div class="rating-logo">TrustScore</div>
-                    <div class="rating-stars">★★★★★</div>
+                    <div class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                     <div class="rating-text">4.7 | 154,224 reviews</div>
                 </div>
-
-                <div class="footer-membership-logo">
-                    <!-- membership / group logo -->
-                    <span>Member of NOVA Group</span>
-                </div>
-
+                <div class="footer-membership-logo"><span>Member of NOVA Group</span></div>
                 <div class="footer-app-badges">
-                    <img src="app_store.png" alt="Download on App Store">
+                    <img src="app_store.png"  alt="Download on App Store">
                     <img src="play_store.png" alt="Download on Google Play">
                 </div>
             </div>
         </div>
-
-        <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
+                <a href="#" class="social-circle">f</a>
                 <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
+                <a href="#" class="social-circle">&#9658;</a>
                 <a href="#" class="social-circle">in</a>
                 <a href="#" class="social-circle">P</a>
             </div>
         </div>
-
-        <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright &copy; 2025 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
-
     </div>
 </footer>
+
+</body>
+</html>

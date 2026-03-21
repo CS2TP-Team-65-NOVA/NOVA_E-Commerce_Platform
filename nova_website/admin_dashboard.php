@@ -61,8 +61,8 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
     <!-- Global + admin styles -->
-    <link rel="stylesheet" type="text/css" href="style.css?v=2">
-   
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="admin_style.css">
 
     <!-- NOVA favicon -->
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
