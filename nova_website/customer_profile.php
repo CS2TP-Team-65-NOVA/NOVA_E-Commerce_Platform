@@ -220,6 +220,9 @@ function formatStatus($status) {
             <img src="nova_logo_black.png" id="logo" alt="NOVA Logo">
         </a>
         <div class="nav-right">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
             <a href="customer_profile.php" class="account-link active" aria-label="My account">
                 <img src="account_icon.png"        class="account-icon account-icon-default" alt="Account icon">
                 <img src="active_account_icon.png" class="account-icon account-icon-active"  alt="Active account icon">
@@ -561,5 +564,6 @@ document.querySelectorAll('.cp-nav-link[href^="#"]').forEach(function(link) {
     });
 });
 </script>
+<script src="theme.js"></script>
 </body>
 </html>
