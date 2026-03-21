@@ -145,7 +145,9 @@ function safe($val) {
 
         <!-- RIGHT SIDE (role-based, same pattern as other pages) -->
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <!-- Guest -->
@@ -450,6 +452,6 @@ function safe($val) {
 
     </div>
 </footer>
-
+<script src="theme.js"></script>
 </body>
 </html>
