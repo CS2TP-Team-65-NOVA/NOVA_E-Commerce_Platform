@@ -1,1 +1,19 @@
-test
+NOVA Project Overview: Amirah Begum (UI/UX Engineer / Front-End Quality Assurance Engineer)
+
+Role Summary
+As UI/UX Engineer and Front-End QA, I focus on usability, consistency, and basic testing for the customer-facing pages.
+
+Contact Page Design Goals
+- Provide a simple form for user enquiries (name, email, message).
+- Keep layout uncluttered with clear spacing and headings.
+- Ensure the design matches NOVA’s colour palette and typography.
+
+Usability & Accessibility
+- All input fields should have visible labels and helpful placeholders.
+- Error messages must be clear if required fields are left blank.
+- Text and button colours must provide sufficient contrast for readability.
+
+ QA Checklist
+- Verify the page displays correctly on desktop and tablet.
+- Check that form fields are keyboard accessible in a logical order.
+- Confirm that the header and footer match the rest of the site.

@@ -235,7 +235,6 @@ require_once 'config.php';
             </div>
         </div>
     </section>
-    
     <!-- MEET OUR TEAM -->
     <section class="about-team-section">
 

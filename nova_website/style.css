@@ -1591,39 +1591,6 @@ body {
     display: block;
 }
 
-/* NAV ICON SIZE */
-/* NAV ICONS */
-.account-icon,
-.basket-icon {
-    width: 22px;
-    height: 22px;
-}
-
-/* default state */
-.account-icon-default,
-.basket-icon-default {
-    display: block;
-}
-
-.account-icon-active,
-.basket-icon-active {
-    display: none;
-}
-
-/* hover or active page = purple */
-.account-link:hover .account-icon-default,
-.basket-link:hover .basket-icon-default,
-.account-link.active .account-icon-default,
-.basket-link.active .basket-icon-default {
-    display: none;
-}
-
-.account-link:hover .account-icon-active,
-.basket-link:hover .basket-icon-active,
-.account-link.active .account-icon-active,
-.basket-link.active .basket-icon-active {
-    display: block;
-}
 
 /* --- FULLSCREEN INTRO OVERLAY --- */
 
@@ -1871,18 +1838,15 @@ body {
   background: transparent;          /* removed background colour */
 }
 
-.home-reviews .home-section-header h2 {
-    text-align: center;
-    margin-bottom: 10px;
+.home-reviews .home-section-header {
+  margin-bottom: 28px;
 }
 
 .reviews-subtitle {
-    text-align: center;
-    color: #666;
-    max-width: 700px;
-    margin: 0 auto 50px;
-    font-size: 17px;
-    line-height: 1.8;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  color: #555;
 }
 
 .reviews-grid {
@@ -1890,36 +1854,29 @@ body {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
+  gap: 24px;
 }
 
 .review-card {
-    background: #ffffff;
-    border-radius: 24px;
-    padding: 30px 26px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.review-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 22px 42px rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 24px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .review-text {
-    font-size: 16px;
-    line-height: 1.9;
-    color: #333;
-    margin-bottom: 18px;
+  margin: 0 0 14px;
+  line-height: 1.6;
+  color: #333;
+  font-size: 14px;
 }
 
 .review-author {
   margin: 0;
   font-weight: bold;
   color: #5e17eb;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 
@@ -2318,11 +2275,12 @@ body {
 
 /* Headings */
 .about-heading {
-    font-size: clamp(32px, 4vw, 52px);
-    line-height: 1.1;
-    margin-bottom: 18px;
-    letter-spacing: 0.02em;
-    text-align: center;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 36px;
+    font-weight: medium; 
+    letter-spacing: 0.03em;
+    margin-bottom: 22px;
+    color: #000;
 }
 
 /* Generic section spacing – NO background colour */
@@ -2334,22 +2292,13 @@ body {
 }
 
 /* Inner width */
-.about-story-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 60px;
-    align-items: center;
-}
-
+.about-story-inner,
 .about-values-inner,
 .about-unique-inner,
 .about-craft-inner {
     max-width: 1150px;
     margin: 0 auto;
 }
-
 
 /* STORY SECTION */
 .about-story-inner {
@@ -2359,59 +2308,64 @@ body {
 }
 
 .about-lead {
-    max-width: 760px;
-    margin: 0 auto;
-    text-align: center;
     font-size: 18px;
-    line-height: 1.9;
-    color: #555;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    color: #222;
 }
 
 .about-story-main p {
-    max-width: 680px;
-    font-size: 17px;
-    line-height: 1.95;
-    color: #555;
-    margin-bottom: 18px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 12px;
 }
 
-.about-story-image {
-    width: 100%;
+/* Right column cards */
+.about-story-highlights {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 18px;
 }
 
-.about-story-image img {
-    width: 100%;
-    max-width: 420px;
-    border-radius: 24px;
-    display: block;
-    object-fit: cover;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.10);
+.about-highlight {
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.about-highlight h3 {
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    font-weight: medium; 
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.about-highlight p {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.founder-note {
+    padding-left: 16px;
+}
+
+.founder-signoff {
+    font-style: italic;
+    font-weight: medium; 
+    margin-top: 8px;
+    color: #555;
 }
 
 /* VALUES */
 .about-values-lead,
-
-.about-values-intro {
-    max-width: 760px;
-    margin: 0 auto 50px;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.9;
-    color: #555;
-}
-
-.about-unique-lead {
-    max-width: 760px;
-    margin: 0 auto 50px;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.9;
-    color: #555;
-}
-
+.about-unique-lead,
 .about-craft-lead {
     max-width: 760px;
     font-size: 16px;
@@ -2430,29 +2384,24 @@ body {
 
 .value-card {
     background: #ffffff;
-    border-radius: 24px;
-    padding: 32px 28px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.value-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 22px 42px rgba(0, 0, 0, 0.12);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
 }
 
 .value-card h3 {
-    margin-bottom: 12px;
-    font-size: 22px;
-    color: #111;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
 }
 
 .value-card p {
-    font-size: 16px;
-    line-height: 1.85;
-    color: #555;
+    font-size: 14px;
+   font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
 /* UNIQUE */
@@ -2465,29 +2414,24 @@ body {
 
 .unique-point {
     background: #ffffff;
-    border-radius: 24px;
-    padding: 32px 28px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.unique-point:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 22px 42px rgba(0, 0, 0, 0.12);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
 }
 
 .unique-point h3 {
-    margin-bottom: 12px;
-    font-size: 22px;
-    color: #111;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
 }
 
 .unique-point p {
-    font-size: 16px;
-    line-height: 1.85;
-    color: #555;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
 /* CRAFT */
@@ -2500,127 +2444,26 @@ body {
 
 .craft-card {
     background: #ffffff;
-    border-radius: 24px;
-    padding: 32px 28px;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.craft-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 22px 42px rgba(0, 0, 0, 0.12);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
 }
 
 .craft-card h3 {
-    margin-bottom: 12px;
-    font-size: 22px;
-    color: #111;
+    font-family: 'Belleza', Arial, sans-serif;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
 }
 
 .craft-card p {
-    font-size: 16px;
-    line-height: 1.85;
-    color: #555;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
 }
 
-/* MEET OUR TEAM */
-
-.about-team-section {
-    width: 100%;
-    padding: 90px 20px 70px !important;
-}
-
-.about-team-inner {
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    display: grid !important;
-    grid-template-columns: 420px 1fr !important;
-    gap: 90px !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-
-.team-slideshow {
-    width: 420px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    margin: 0 !important;
-}
-
-.team-slide {
-    position: relative !important;
-    width: 100% !important;
-    display: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    text-align: center !important;
-}
-
-.team-slide.active {
-    display: block !important;
-}
-
-.team-slide img {
-    width: 280px !important;
-    height: 280px !important;
-    object-fit: cover !important;
-    border-radius: 50% !important;
-    display: block !important;
-    margin: 0 auto 18px !important;
-}
-
-.team-slide h4 {
-    margin: 0 0 6px !important;
-    font-size: 24px !important;
-    text-align: center !important;
-    color: #000 !important;
-}
-
-.team-slide span {
-    display: block !important;
-    text-align: center !important;
-    color: #666 !important;
-}
-
-.about-team-text {
-    max-width: 680px !important;
-    margin: 0 !important;
-    align-self: center !important;
-}
-
-.about-team-text .about-heading {
-    margin: 0 0 24px !important;
-    font-size: 44px !important;
-    line-height: 1.15 !important;
-}
-
-.about-team-text p {
-    font-size: 17px !important;
-    line-height: 1.9 !important;
-    margin: 0 0 18px !important;
-}
-
-/* Mobile */
-@media (max-width: 980px) {
-    .about-team-inner {
-        grid-template-columns: 1fr !important;
-        gap: 40px !important;
-        text-align: center !important;
-    }
-
-    .team-slideshow {
-        width: 100% !important;
-    }
-
-    .about-team-text {
-        max-width: 100% !important;
-        text-align: center !important;
-    }
-}
 /* PERFUMES PAGE STYLING */
 
 /* =========================================
@@ -3389,180 +3232,266 @@ body {
 }
 
 /* =========================================
-   CONTACT PAGE - TWO COLUMN LAYOUT
+   CHECKOUT PAGE (checkout.php)
    ========================================= */
 
-.contact-two-column {
-    max-width: 1200px;
-    margin: 50px auto 80px;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+/* CONTACT PAGE STYLING */
+
+/* Main contact section wrapper */
+.contact-section {
+    max-width: 900px;
+    margin: 40px auto 80px auto;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.contact-left-card,
-.contact-right-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    box-shadow: var(--shadow-soft);
-    padding: 32px;
-    box-sizing: border-box;
-}
-
-.contact-left-card h1,
-.contact-right-card h2 {
+/* Section heading */
+.contact-section h1 {
     margin-top: 0;
-    margin-bottom: 18px;
-    font-size: 34px;
+    margin-bottom: 20px;
+    font-size: 28px;
     font-family: 'Belleza', Arial, sans-serif;
-    color: var(--text);
-}
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #000000;
+} 
 
-.contact-intro {
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-}
-
-.contact-response-time {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 28px;
-}
-
-.contact-response-time strong {
-    color: var(--purple);
-}
-
-.contact-details {
+/* Form layout */
+.contact-form {
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
-.contact-detail-item h3 {
-    margin: 0 0 6px;
-    font-size: 17px;
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.contact-detail-item p {
-    margin: 0;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-size: 15px;
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.contact-form .form-group {
+/* Each field wrapper */
+.form-group {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-.contact-form label {
+/* Labels */
+.form-group label {
     font-size: 14px;
     font-weight: 600;
-    color: var(--text);
+    color: #222222;
 }
 
-.contact-form input,
+/* Red asterisk */
+.required {
+    color: #d10000;
+}
+
+/* Inputs, selects, textareas */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
 .contact-form select,
 .contact-form textarea {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--input-border);
-    background: var(--input-bg);
-    color: var(--input-text);
-    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    background-color: #f9f9f9;
     font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.contact-form input:focus,
+/* Focus state */
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
 .contact-form select:focus,
 .contact-form textarea:focus {
     outline: none;
-    border-color: var(--purple);
-    box-shadow: 0 0 0 2px rgba(94, 23, 235, 0.15);
+    border-color: #5e17eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(94, 23, 235, 0.08);
 }
 
+/* Textarea resizing */
+.contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Helper text (message counter) */
+.helper-text {
+    font-size: 12px;
+    color: #777777;
+    margin: 0;
+}
+
+/* Error messages */
+.error-message {
+    font-size: 12px;
+    color: #c21807;
+    margin: 0;
+}
+
+/* Form status banner */
+.form-status {
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.form-status-success {
+    color: #0a7a28;
+}
+
+.form-status-error {
+    color: #c21807;
+}
+
+/* Submit button */
 .contact-submit-btn {
-    margin-top: 8px;
+    margin-top: 10px;
     align-self: flex-start;
-    padding: 12px 28px;
-    border: none;
+    padding: 10px 26px;
     border-radius: 999px;
-    background: var(--purple);
-    color: #fff;
+    border: none;
+    background-color: #5e17eb;
+    color: #ffffff;
     font-size: 15px;
     font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
     cursor: pointer;
-    transition: 0.25s ease;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
 }
 
+/* Button hover + active */
 .contact-submit-btn:hover {
-    background: var(--purple-hover);
+    background-color: #4a12bc;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
 }
 
-.required {
-    color: #ff5a5a;
+.contact-submit-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Small-screen tweaks */
+@media (max-width: 600px) {
+    .contact-section {
+        margin: 20px 16px 50px 16px;
+        padding: 22px 18px;
+    }
 
-.contact-map-section {
-    max-width: 1200px;
-    margin: 0 auto 80px;
-    padding: 0 20px;
-    box-sizing: border-box;
+    .contact-section h1 {
+        font-size: 24px;
+    }
 }
 
-.contact-map-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    box-shadow: var(--shadow-soft);
-    padding: 28px 32px 32px;
-    box-sizing: border-box;
+/* ===== CONTACT INFO GRID ===== */
+
+.contact-info {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e4e4e4;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px 35px;
 }
 
-.contact-map-card h2 {
-    margin: 0 0 10px;
-    font-size: 30px;
-    font-family: 'Belleza', Arial, sans-serif;
-    color: var(--text);
+.contact-info h2 {
+    grid-column: 1 / -1;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #000000;
 }
 
-.contact-map-text {
-    margin: 0 0 20px;
-    color: var(--text-muted);
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+/* Icons */
+.contact-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contact-info-item:hover .contact-icon {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.contact-info-item h3 {
+    margin: 0 0 4px 0;
     font-size: 15px;
+    font-weight: 600;
+    color: #222222;
+}
+
+.contact-info-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.5;
+}
+
+/* Links */
+.contact-info a {
+    text-decoration: none;
+    color: #5e17eb;
+    font-weight: 600;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* FAQ row (spans full grid) */
+.faq-item {
+    grid-column: 1 / -1;
+}
+
+.contact-icon-empty {
+    visibility: hidden;
+}
+
+/* Text on contact page */
+.contact-intro {
+    margin: 4px 0 6px 0;
+    font-size: 15px;
+    color: #444444;
     line-height: 1.6;
 }
 
-.contact-map-embed {
-    width: 100%;
-    height: 420px;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid var(--card-border);
+.contact-response-time {
+    margin: 0 0 18px 0;
+    font-size: 14px;
+    color: #666666;
 }
 
-.contact-map-embed iframe {
-    width: 100%;
-    height: 100%;
-    display: block;
+.contact-response-time strong {
+    font-weight: 700;
+    color: #5e17eb;
 }
+
+/* Mobile grid tweaks */
+@media (max-width: 600px) {
+    .contact-info {
+        gap: 18px 20px;
+    }
+    .contact-icon {
+        width: 26px;
+        height: 26px;
+    }
+}
+
 
 
 .checkout-page {
@@ -5120,1297 +5049,3 @@ body {
    .cp-body .nova-footer {
        margin-top: 0 !important;
    }
-
-/* =========================================================
-   NOVA DARK MODE - APPEND TO END OF OLD style.css
-   ========================================================= */
-
-   body.dark-mode {
-    --bg: #0d0d12;
-    --text: #f5f5f7;
-    --text-muted: #b8b8c2;
-    --card-bg: #17171f;
-    --card-border: #2c2c38;
-    --input-bg: #20202b;
-    --input-text: #f5f5f7;
-    --input-border: #3a3a49;
-    --footer-bg: #050507;
-    --footer-text: #f5f5f7;
-    --shadow-soft: 0 10px 30px rgba(0,0,0,0.35);
-    --purple: #7c3aed;
-    --purple-hover: #6d28d9;
-}
-
-/* base background colour for NOVA website */
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Global dark mode text fix */
-
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6 {
-    color: var(--text);
-}
-
-body.dark-mode p,
-body.dark-mode li,
-body.dark-mode span {
-    color: var(--text-muted);
-}
-
-/* ===============================
-   PRODUCT PAGE DARK MODE FIX
-   =============================== */
-
-body.dark-mode .product-title {
-    color: var(--text) !important;
-}
-
-body.dark-mode .product-category,
-body.dark-mode .product-rating,
-body.dark-mode .product-desc,
-body.dark-mode .info-paragraph,
-body.dark-mode .info-block p,
-body.dark-mode .product-info-section p,
-body.dark-mode .product-info-section li {
-    color: var(--text-muted) !important;
-}
-
-/* Product headings */
-body.dark-mode .info-title,
-body.dark-mode .product-reviews h2 {
-    color: var(--text) !important;
-}
-
-/* Price */
-body.dark-mode .product-price {
-    color: var(--text) !important;
-    font-weight: 600;
-}
-
-/* Dropdown + inputs */
-body.dark-mode select,
-body.dark-mode input {
-    background: var(--input-bg);
-    color: var(--input-text);
-    border: 1px solid var(--input-border);
-}
-
-/* Product cards */
-body.dark-mode .product-detail-panel,
-body.dark-mode .product-info-section,
-body.dark-mode .product-img-wrapper {
-    background: var(--card-bg);
-    border-color: var(--card-border);
-}
-
-/* Thumbnails */
-body.dark-mode .thumb-btn {
-    background: var(--card-bg);
-    border-color: var(--card-border);
-}
-
-/* =========================================
-   SHOP / RELATED CARDS DARK MODE TEXT FIX
-   ========================================= */
-
-body.dark-mode .product-info h3,
-body.dark-mode .product-card h3,
-body.dark-mode .related-products .product-info h3,
-body.dark-mode .related-products .product-card h3 {
-  color: var(--text) !important;
-}
-
-body.dark-mode .product-category,
-body.dark-mode .product-price,
-body.dark-mode .product-rating,
-body.dark-mode .product-desc,
-body.dark-mode .related-products .product-category,
-body.dark-mode .related-products .product-price,
-body.dark-mode .related-products .product-rating {
-  color: var(--text-muted) !important;
-}
-
-/* Shop title + filter labels */
-body.dark-mode .shop-title,
-body.dark-mode .filter-group label {
-  color: var(--text) !important;
-}
-
-/* Filter bar inputs/selects */
-body.dark-mode .filter-group select,
-body.dark-mode .filter-group input[type="text"] {
-  background: var(--input-bg) !important;
-  color: var(--input-text) !important;
-  border-color: var(--input-border) !important;
-}
-
-/* Product cards */
-body.dark-mode .product-card {
-  background: var(--card-bg) !important;
-  border: 1px solid var(--card-border) !important;
-  box-shadow: var(--shadow-soft) !important;
-}
-
-/* Image wrapper area */
-body.dark-mode .product-img-wrapper {
-  background: #141420 !important;
-  border-color: var(--card-border) !important;
-}
-
-/* Product footer row */
-body.dark-mode .card-footer-line,
-body.dark-mode .product-info {
-  color: var(--text) !important;
-}
-
-/* No reviews text */
-body.dark-mode .product-rating {
-  color: var(--text-muted) !important;
-}
-
-/* Related section heading */
-body.dark-mode .related-title,
-body.dark-mode .related-products h2 {
-  color: var(--text) !important;
-}
-
-/* Reviews section text */
-body.dark-mode .product-reviews h2,
-body.dark-mode .product-reviews h3 {
-  color: var(--text) !important;
-}
-
-body.dark-mode .product-reviews p,
-body.dark-mode .review-form-wrapper p {
-  color: var(--text-muted) !important;
-}
-
-/* Review form controls */
-body.dark-mode .review-form select,
-body.dark-mode .review-form textarea {
-  background: var(--input-bg) !important;
-  color: var(--input-text) !important;
-  border-color: var(--input-border) !important;
-}
-
-/* Pagination */
-body.dark-mode .pagination a,
-body.dark-mode .pagination span {
-  background: var(--card-bg) !important;
-  color: var(--text) !important;
-  border-color: var(--card-border) !important;
-}
-
-body.dark-mode .pagination .current {
-  background: var(--purple) !important;
-  color: #fff !important;
-  border-color: var(--purple) !important;
-}
-
-/* Dark mode polish */
-body.dark-mode .value-card,
-body.dark-mode .unique-point,
-body.dark-mode .craft-card {
-    background: linear-gradient(180deg, rgba(23, 23, 31, 0.98) 0%, rgba(18, 18, 26, 0.98) 100%) !important;
-    border: 1px solid rgba(124, 58, 237, 0.16) !important;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
-}
-
-body.dark-mode .value-card:hover,
-body.dark-mode .unique-point:hover,
-body.dark-mode .craft-card:hover {
-    border-color: rgba(124, 58, 237, 0.34) !important;
-    box-shadow: 0 22px 42px rgba(124, 58, 237, 0.18);
-}
-
-body.dark-mode .value-card::after,
-body.dark-mode .unique-point::after,
-body.dark-mode .craft-card::after {
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(124, 58, 237, 0) 70%);
-}
-
-/* =========================================
-   NAVBAR + FILTER BAR DARK MODE FIX
-   ========================================= */
-
-/* Navbar container */
-body.dark-mode #main-header,
-body.dark-mode #navbar {
-  background: transparent !important;
-}
-
-/* Navbar text links */
-body.dark-mode .nav-link {
-  color: var(--text) !important;
-}
-
-body.dark-mode .nav-link.active {
-  color: var(--purple) !important;
-}
-
-body.dark-mode .nav-link:hover {
-  color: var(--purple) !important;
-}
-
-/* DARK MODE NAV ICONS */
-
-/* dark mode: black default icon becomes white */
-body.dark-mode .account-icon-default,
-body.dark-mode .basket-icon-default {
-    filter: brightness(0) invert(1);
-}
-
-/* dark mode hover/active icon stays purple */
-body.dark-mode .account-icon-active,
-body.dark-mode .basket-icon-active {
-    filter: none;
-}
-
-/* Theme toggle */
-body.dark-mode .theme-toggle {
-  background: var(--card-bg) !important;
-  border-color: var(--card-border) !important;
-  color: var(--text) !important;
-}
-
-/* Basket/account icons area */
-body.dark-mode .account-link,
-body.dark-mode .basket-link {
-  color: var(--text) !important;
-}
-
-/* Logo */
-body.dark-mode #logo {
-  filter: none;
-}
-
-/* =========================================
-   FILTER / SEARCH BAR
-   ========================================= */
-
-body.dark-mode .filter-bar {
-  background: var(--card-bg) !important;
-  border: 1px solid var(--card-border) !important;
-  box-shadow: var(--shadow-soft) !important;
-}
-
-/* Filter labels */
-body.dark-mode .filter-group label {
-  color: var(--text) !important;
-}
-
-/* Select and input */
-body.dark-mode .filter-group select,
-body.dark-mode .filter-group input[type="text"] {
-  background: var(--input-bg) !important;
-  color: var(--input-text) !important;
-  border: 1px solid var(--input-border) !important;
-}
-
-/* Placeholder */
-body.dark-mode .filter-group input[type="text"]::placeholder {
-  color: var(--text-muted) !important;
-}
-
-/* Buttons */
-body.dark-mode .apply-btn {
-  background: var(--purple) !important;
-  border-color: var(--purple) !important;
-  color: #fff !important;
-}
-
-body.dark-mode .clear-btn {
-  background: var(--card-bg) !important;
-  border: 1px solid var(--card-border) !important;
-  color: var(--text) !important;
-}
-
-body.dark-mode .clear-btn:hover {
-  border-color: var(--purple) !important;
-  color: var(--purple) !important;
-}
-
-
-
-/* =========================================
-   AUTH + CONTACT DARK MODE FINAL FIX
-   ========================================= */
-
-/* Register / Login / Logout cards */
-body.dark-mode .register-container,
-body.dark-mode .login-container,
-body.dark-mode .logout-container,
-body.dark-mode .contact-section {
-  background: var(--card-bg) !important;
-  border: 1px solid var(--card-border) !important;
-  box-shadow: var(--shadow-soft) !important;
-  color: var(--text) !important;
-}
-
-/* Titles */
-body.dark-mode .register-title-inside,
-body.dark-mode .login-title,
-body.dark-mode .logout-title,
-body.dark-mode .contact-section h1,
-body.dark-mode .contact-info h2,
-body.dark-mode .contact-info-item h3 {
-  color: var(--text) !important;
-}
-
-/* Subtitles / helper text / intro */
-body.dark-mode .register-subtitle,
-body.dark-mode .login-subtitle,
-body.dark-mode .logout-subtitle,
-body.dark-mode .register-already-user,
-body.dark-mode .login-already-user,
-body.dark-mode .already-user,
-body.dark-mode .logout-redirect-info,
-body.dark-mode .contact-intro,
-body.dark-mode .contact-response-time,
-body.dark-mode .helper-text,
-body.dark-mode .contact-info-item p {
-  color: var(--text-muted) !important;
-}
-
-/* Auth labels */
-body.dark-mode .register-form label,
-body.dark-mode .login-form label,
-body.dark-mode .contact-form label,
-body.dark-mode .form-group label {
-  color: var(--text) !important;
-}
-
-/* Auth inputs */
-body.dark-mode .register-input,
-body.dark-mode .login-form input[type="email"],
-body.dark-mode .login-form input[type="text"],
-body.dark-mode .login-form input[type="password"],
-body.dark-mode .contact-form input[type="text"],
-body.dark-mode .contact-form input[type="email"],
-body.dark-mode .contact-form select,
-body.dark-mode .contact-form textarea {
-  background: var(--input-bg) !important;
-  color: var(--input-text) !important;
-  border: 1px solid var(--input-border) !important;
-}
-
-/* Placeholders */
-body.dark-mode .register-input::placeholder,
-body.dark-mode .login-form input::placeholder,
-body.dark-mode .contact-form input::placeholder,
-body.dark-mode .contact-form textarea::placeholder {
-  color: var(--text-muted) !important;
-  opacity: 1;
-}
-
-/* Focus states */
-body.dark-mode .register-input:focus,
-body.dark-mode .login-form input[type="email"]:focus,
-body.dark-mode .login-form input[type="text"]:focus,
-body.dark-mode .login-form input[type="password"]:focus,
-body.dark-mode .contact-form input[type="text"]:focus,
-body.dark-mode .contact-form input[type="email"]:focus,
-body.dark-mode .contact-form select:focus,
-body.dark-mode .contact-form textarea:focus {
-  background: #242432 !important;
-  border-color: var(--purple) !important;
-  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.18) !important;
-  color: var(--input-text) !important;
-}
-
-/* Links inside auth cards */
-body.dark-mode .register-already-user a,
-body.dark-mode .login-already-user a,
-body.dark-mode .already-user a,
-body.dark-mode .contact-info a {
-  color: var(--text) !important;
-}
-
-body.dark-mode .register-already-user a:hover,
-body.dark-mode .login-already-user a:hover,
-body.dark-mode .already-user a:hover,
-body.dark-mode .contact-info a:hover {
-  color: var(--purple) !important;
-}
-
-/* Contact section borders */
-body.dark-mode .contact-info {
-  border-top: 1px solid var(--card-border) !important;
-}
-
-/* Required asterisk can stay visible */
-body.dark-mode .required {
-  color: #ff6b6b !important;
-}
-
-/* Error messages inside contact/auth */
-body.dark-mode .register-error,
-body.dark-mode .login-error,
-body.dark-mode .error,
-body.dark-mode .error-message,
-body.dark-mode .form-status-error {
-  color: #ffb3b3 !important;
-}
-
-/* Success messages */
-body.dark-mode .form-status-success {
-  color: #b9f5c8 !important;
-}
-
-
-/* =========================================
-   FINAL DARK MODE FIX - BASKET + CHECKOUT
-   ========================================= */
-
-/* Basket + checkout page titles */
-body.dark-mode .basket-title,
-body.dark-mode .checkout-title,
-body.dark-mode .section-heading,
-body.dark-mode .checkout-subtitle {
-    color: var(--text) !important;
-}
-
-/* Main boxes */
-body.dark-mode .basket-products-box,
-body.dark-mode .basket-summary-box,
-body.dark-mode .checkout-box {
-    background: linear-gradient(180deg, rgba(23, 23, 31, 0.98) 0%, rgba(18, 18, 26, 0.98) 100%) !important;
-    border: 1px solid rgba(124, 58, 237, 0.16) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32) !important;
-    color: var(--text) !important;
-}
-
-/* Basket rows */
-body.dark-mode .basket-item {
-    border-bottom: 1px solid var(--card-border) !important;
-    color: var(--text) !important;
-}
-
-/* Basket product text */
-body.dark-mode .basket-item-title,
-body.dark-mode .basket-item-title a,
-body.dark-mode .basket-item-total {
-    color: var(--text) !important;
-}
-
-body.dark-mode .basket-item-size,
-body.dark-mode .basket-item-price-row,
-body.dark-mode .basket-item-price-row span,
-body.dark-mode .basket-item-price-row strong,
-body.dark-mode .basket-item-qty-row,
-body.dark-mode .basket-item-qty-row label {
-    color: var(--text-muted) !important;
-}
-
-/* Basket quantity input */
-body.dark-mode .basket-item-qty-row input[type="number"] {
-    background: var(--input-bg) !important;
-    color: var(--input-text) !important;
-    border: 1px solid var(--input-border) !important;
-}
-
-/* Basket remove link */
-body.dark-mode .basket-item-qty-row a,
-body.dark-mode .basket-item a[href*="remove"],
-body.dark-mode .remove-link {
-    color: #ff8a8a !important;
-}
-
-body.dark-mode .basket-item-qty-row a:hover,
-body.dark-mode .basket-item a[href*="remove"]:hover,
-body.dark-mode .remove-link:hover {
-    color: #ffb3b3 !important;
-}
-
-/* Basket summary */
-body.dark-mode .summary-row,
-body.dark-mode .summary-row span,
-body.dark-mode .summary-row strong {
-    color: var(--text) !important;
-}
-
-body.dark-mode .summary-row:not(.summary-row-total) span:first-child {
-    color: var(--text-muted) !important;
-}
-
-body.dark-mode .summary-row-total,
-body.dark-mode .summary-row-total span,
-body.dark-mode .summary-row-total strong {
-    color: var(--text) !important;
-    font-weight: 700 !important;
-}
-
-/* Update basket button */
-body.dark-mode .update-row button,
-body.dark-mode .btn-secondary,
-body.dark-mode .basket-products-box .btn-secondary {
-    background: transparent !important;
-    color: var(--text) !important;
-    border: 1px solid var(--input-border) !important;
-}
-
-body.dark-mode .update-row button:hover,
-body.dark-mode .btn-secondary:hover,
-body.dark-mode .basket-products-box .btn-secondary:hover {
-    border-color: var(--purple) !important;
-    color: var(--purple) !important;
-}
-
-/* Checkout form labels */
-body.dark-mode .checkout-box label,
-body.dark-mode .form-group label {
-    color: var(--text) !important;
-}
-
-/* Checkout inputs */
-body.dark-mode .checkout-box input,
-body.dark-mode .checkout-box select,
-body.dark-mode .checkout-box textarea {
-    background: var(--input-bg) !important;
-    color: var(--input-text) !important;
-    border: 1px solid var(--input-border) !important;
-}
-
-body.dark-mode .checkout-box input::placeholder,
-body.dark-mode .checkout-box textarea::placeholder {
-    color: var(--text-muted) !important;
-}
-
-/* Payment cards */
-body.dark-mode .payment-option {
-    background: rgba(255, 255, 255, 0.02) !important;
-    border: 1px solid var(--card-border) !important;
-    color: var(--text) !important;
-}
-
-body.dark-mode .payment-option-inner {
-    background: transparent !important;
-}
-
-body.dark-mode .payment-name {
-    color: var(--text) !important;
-}
-
-body.dark-mode .payment-desc {
-    color: var(--text-muted) !important;
-}
-
-body.dark-mode .payment-option input[type="radio"]:checked + .payment-option-inner {
-    background: rgba(124, 58, 237, 0.14) !important;
-    box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.35) !important;
-}
-
-/* Checkout summary */
-body.dark-mode .summary-list,
-body.dark-mode .summary-item-row,
-body.dark-mode .summary-item-name,
-body.dark-mode .summary-footer-row,
-body.dark-mode .summary-footer-total {
-    color: var(--text) !important;
-}
-
-body.dark-mode .summary-item-row {
-    border-bottom: 1px solid var(--card-border) !important;
-}
-
-body.dark-mode .summary-item-name small {
-    color: var(--text-muted) !important;
-}
-
-body.dark-mode .summary-footer-row span:first-child {
-    color: var(--text-muted) !important;
-}
-
-body.dark-mode .summary-footer-total span,
-body.dark-mode .summary-footer-row.summary-footer-total span {
-    color: var(--text) !important;
-    font-weight: 700 !important;
-}
-
-/* Buttons */
-body.dark-mode .checkout-box .btn-primary,
-body.dark-mode .basket-summary-box .btn-primary,
-body.dark-mode .browse-btn,
-body.dark-mode .basket-btn {
-    background: var(--purple) !important;
-    color: #ffffff !important;
-    border: none !important;
-}
-
-body.dark-mode .checkout-box .btn-primary:hover,
-body.dark-mode .basket-summary-box .btn-primary:hover,
-body.dark-mode .browse-btn:hover,
-body.dark-mode .basket-btn:hover {
-    background: var(--purple-hover) !important;
-}
-
-/* Empty basket state */
-body.dark-mode .basket-empty-message,
-body.dark-mode .basket-empty,
-body.dark-mode .basket-empty-actions {
-    color: var(--text-muted) !important;
-}
-
-
-/* If old styles are forcing white cards, kill them */
-/* Dark mode only */
-body.dark-mode .home-reviews .home-section-header h2 {
-  color: var(--text) !important;
-}
-
-body.dark-mode .reviews-subtitle {
-  color: var(--text-muted) !important;
-}
-
-body.dark-mode .review-card {
-  background: linear-gradient(180deg, rgba(23, 23, 31, 0.98) 0%, rgba(18, 18, 26, 0.98) 100%) !important;
-  border: 1px solid rgba(124, 58, 237, 0.16) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32) !important;
-  position: relative;
-  overflow: hidden;
-}
-
-body.dark-mode .review-card::after {
-  content: "";
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, rgba(124, 58, 237, 0) 70%);
-  pointer-events: none;
-  opacity: 0.8;
-  transition: transform 0.35s ease, opacity 0.35s ease;
-}
-
-body.dark-mode .review-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(124, 58, 237, 0.34) !important;
-  box-shadow: 0 24px 44px rgba(124, 58, 237, 0.18) !important;
-}
-
-body.dark-mode .review-card:hover::after {
-  transform: scale(1.12);
-  opacity: 1;
-}
-
-body.dark-mode .review-text {
-  color: #f5f5f7 !important;
-}
-
-body.dark-mode .review-author {
-  color: #c4b5fd !important;
-}
-
-
-/* =========================================================
-   ADMIN PANEL - REVISED DARK MODE FIX
-   Put this at the END of style.css
-   ========================================================= */
-
-body.dark-mode .admin-layout {
-    background: transparent;
-}
-
-body.dark-mode .admin-main {
-    color: var(--text);
-}
-
-/* Sidebar */
-body.dark-mode .sidebar {
-    background: linear-gradient(180deg, #5e17eb 0%, #3a0e9b 100%);
-    border: 1px solid rgba(138, 92, 246, 0.22);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-}
-
-body.dark-mode .sidebar a {
-    color: #ffffff;
-}
-
-body.dark-mode .sidebar a:hover,
-body.dark-mode .sidebar a.active {
-    background: rgba(255,255,255,0.14);
-    border-left-color: #b89cff;
-    color: #ffffff;
-}
-
-/* Header */
-body.dark-mode .admin-header h1 {
-    color: #ffffff;
-}
-
-body.dark-mode .welcome-text {
-    color: #d0d0db !important;
-}
-
-/* Stats cards */
-body.dark-mode .stats-grid,
-body.dark-mode .stats-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-}
-
-body.dark-mode .stat-card {
-    background: #17171f;
-    border: 1px solid #2c2c38;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.28);
-}
-
-body.dark-mode .stat-card:hover {
-    box-shadow: 0 12px 30px rgba(124, 58, 237, 0.18);
-}
-
-body.dark-mode .stat-card .number {
-    color: #8b5cf6 !important;
-}
-
-body.dark-mode .stat-card h3 {
-    color: #d6d6e0 !important;
-}
-
-/* Main panels */
-body.dark-mode .dashboard-panel,
-body.dark-mode .orders-table-container,
-body.dark-mode .profile-info-card {
-    background: #17171f !important;
-    border: 1px solid #2c2c38 !important;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.28) !important;
-}
-
-body.dark-mode .panel-header {
-    border-bottom: 1px solid #2d2d3a;
-}
-
-body.dark-mode .panel-header h2 {
-    color: #ffffff !important;
-}
-
-body.dark-mode .panel-link {
-    color: #a78bfa !important;
-}
-
-body.dark-mode .panel-link:hover {
-    color: #c4b5fd !important;
-}
-
-/* Generic admin text */
-body.dark-mode .product-name,
-body.dark-mode .review-product,
-body.dark-mode .review-comment,
-body.dark-mode .info-value,
-body.dark-mode .action-text,
-body.dark-mode .dashboard-panel strong,
-body.dark-mode .orders-table strong,
-body.dark-mode .products-table strong,
-body.dark-mode .reviews-table strong {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .product-desc,
-body.dark-mode .review-user,
-body.dark-mode .review-date,
-body.dark-mode .price-range,
-body.dark-mode .info-label,
-body.dark-mode .form-note,
-body.dark-mode .empty-state,
-body.dark-mode .action-text small,
-body.dark-mode .admin-muted,
-body.dark-mode .empty-row {
-    color: #b8b8c2 !important;
-}
-
-/* Tables */
-body.dark-mode .admin-table,
-body.dark-mode .orders-table,
-body.dark-mode .products-table,
-body.dark-mode .reviews-table,
-body.dark-mode .users-table {
-    background: transparent;
-    color: #f5f5f7;
-}
-
-body.dark-mode .admin-table th,
-body.dark-mode .orders-table th,
-body.dark-mode .products-table th,
-body.dark-mode .reviews-table th,
-body.dark-mode .users-table th {
-    background: #1e1e29;
-    color: #d8d8e2 !important;
-    border-bottom: 1px solid #303040;
-}
-
-body.dark-mode .admin-table td,
-body.dark-mode .orders-table td,
-body.dark-mode .products-table td,
-body.dark-mode .reviews-table td,
-body.dark-mode .users-table td {
-    color: #f5f5f7 !important;
-    border-bottom: 1px solid #2a2a37;
-}
-
-body.dark-mode .admin-table tr:hover,
-body.dark-mode .orders-table tr:hover,
-body.dark-mode .products-table tr:hover,
-body.dark-mode .reviews-table tr:hover,
-body.dark-mode .users-table tr:hover {
-    background: rgba(124, 58, 237, 0.08);
-}
-
-/* Badges */
-body.dark-mode .category-tag {
-    background: rgba(124, 58, 237, 0.16);
-    color: #d7c8ff !important;
-}
-
-body.dark-mode .variants-badge {
-    background: #21212b;
-    color: #d7d7e2 !important;
-    border: 1px solid #343444;
-}
-
-body.dark-mode .price-amount {
-    color: #a78bfa !important;
-}
-
-/* Status badges */
-body.dark-mode .status-processing,
-body.dark-mode .status-pending {
-    background: rgba(245, 158, 11, 0.16);
-    color: #fcd34d !important;
-}
-
-body.dark-mode .status-shipped {
-    background: rgba(59, 130, 246, 0.16);
-    color: #93c5fd !important;
-}
-
-body.dark-mode .status-delivered,
-body.dark-mode .status-paid {
-    background: rgba(34, 197, 94, 0.16);
-    color: #86efac !important;
-}
-
-body.dark-mode .status-cancelled {
-    background: rgba(239, 68, 68, 0.16);
-    color: #fca5a5 !important;
-}
-
-/* Forms */
-body.dark-mode .form-group label {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .form-group input,
-body.dark-mode .form-group select,
-body.dark-mode .form-group textarea {
-    background: #20202b !important;
-    color: #f5f5f7 !important;
-    border: 1px solid #3a3a49 !important;
-}
-
-body.dark-mode .form-group input::placeholder,
-body.dark-mode .form-group textarea::placeholder {
-    color: #9f9fad !important;
-}
-
-body.dark-mode .form-group input:focus,
-body.dark-mode .form-group select:focus,
-body.dark-mode .form-group textarea:focus {
-    border-color: #8b5cf6 !important;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.16) !important;
-}
-
-/* Buttons */
-body.dark-mode .submit-btn,
-body.dark-mode .add-btn,
-body.dark-mode .update-btn,
-body.dark-mode .primary-btn {
-    background: #6d28d9;
-    color: #ffffff !important;
-}
-
-body.dark-mode .submit-btn:hover,
-body.dark-mode .add-btn:hover,
-body.dark-mode .update-btn:hover,
-body.dark-mode .primary-btn:hover {
-    background: #5b21b6;
-}
-
-body.dark-mode .delete-btn {
-    background: #dc3545;
-    color: #ffffff !important;
-}
-
-body.dark-mode .delete-btn:hover {
-    background: #b91c1c;
-}
-
-/* Orders action buttons */
-.action-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.btn-view,
-.btn-ship,
-.btn-cancel {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all 0.25s ease;
-}
-
-.btn-view {
-    background: #f1f1f1;
-    color: #222;
-}
-
-.btn-view:hover {
-    background: #e3e3e3;
-}
-
-.btn-ship {
-    background: #5e17eb;
-    color: #fff;
-}
-
-.btn-ship:hover {
-    background: #4a12c9;
-}
-
-.btn-cancel {
-    background: #dc3545;
-    color: #fff;
-}
-
-.btn-cancel:hover {
-    background: #c82333;
-}
-
-body.dark-mode .btn-view {
-    background: #2b2b38;
-    color: #f5f5f7;
-}
-
-body.dark-mode .btn-view:hover {
-    background: #3a3a49;
-}
-
-body.dark-mode .btn-ship {
-    background: #2563eb;
-    color: #ffffff;
-}
-
-body.dark-mode .btn-ship:hover {
-    background: #1d4ed8;
-}
-
-body.dark-mode .btn-cancel {
-    background: #dc2626;
-    color: #ffffff;
-}
-
-body.dark-mode .btn-cancel:hover {
-    background: #b91c1c;
-}
-
-/* Quick actions */
-body.dark-mode .quick-actions li {
-    background: #1f1f2a;
-    border: 1px solid #2f2f3d;
-}
-
-body.dark-mode .quick-actions li:hover {
-    background: rgba(124, 58, 237, 0.12);
-}
-
-body.dark-mode .quick-actions a {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .quick-actions a:hover {
-    color: #c4b5fd !important;
-}
-
-body.dark-mode .action-icon {
-    background: #6d28d9;
-    color: #ffffff;
-}
-
-/* Profile */
-body.dark-mode .profile-info-card h3,
-body.dark-mode .profile-card-title {
-    color: #ffffff !important;
-}
-
-body.dark-mode .profile-info-item {
-    border-bottom: 1px solid #2a2a37;
-}
-
-/* Messages */
-.success-message,
-.message.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body.dark-mode .success-message,
-body.dark-mode .message.success {
-    background: rgba(34, 197, 94, 0.14);
-    color: #86efac !important;
-    border: 1px solid rgba(34, 197, 94, 0.22);
-}
-
-body.dark-mode .error-message,
-body.dark-mode .message.error {
-    background: rgba(239, 68, 68, 0.14);
-    color: #fca5a5 !important;
-    border: 1px solid rgba(239, 68, 68, 0.22);
-}
-/* =========================================
-   CUSTOMER PROFILE DARK MODE FIX
-   ========================================= */
-
-body.dark-mode .cp-body,
-body.dark-mode .cp-page-wrap,
-body.dark-mode .cp-main {
-    background: #0d0d12 !important;
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .cp-page-header h1,
-body.dark-mode .cp-card h2,
-body.dark-mode .cp-name,
-body.dark-mode .cp-review-product,
-body.dark-mode .cp-table td strong {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .cp-page-header p,
-body.dark-mode .cp-role,
-body.dark-mode .cp-sb-stat-label,
-body.dark-mode .cp-card p,
-body.dark-mode .cp-review-comment,
-body.dark-mode .cp-review-date,
-body.dark-mode .cp-empty p,
-body.dark-mode .cp-danger-desc,
-body.dark-mode .cp-table td,
-body.dark-mode .cp-table th {
-    color: #b8b8c2 !important;
-}
-
-body.dark-mode .cp-card,
-body.dark-mode .cp-sidebar {
-    background: #17171f !important;
-    border: 1px solid #2c2c38 !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35) !important;
-}
-
-body.dark-mode .cp-sidebar {
-    background: linear-gradient(180deg, #1a1a24 0%, #101018 100%) !important;
-}
-
-body.dark-mode .cp-avatar-inner {
-    background: linear-gradient(135deg, #7c3aed, #5b21b6) !important;
-    color: #ffffff !important;
-}
-
-body.dark-mode .cp-nav-link {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .cp-nav-link:hover,
-body.dark-mode .cp-nav-active {
-    background: rgba(124, 58, 237, 0.16) !important;
-    color: #c4b5fd !important;
-}
-
-body.dark-mode .cp-nav-divider {
-    background: #2c2c38 !important;
-}
-
-body.dark-mode .cp-sb-bottom-text {
-    color: #8f8fa3 !important;
-}
-
-body.dark-mode .cp-card-header {
-    border-bottom: 1px solid #2c2c38 !important;
-}
-
-body.dark-mode .cp-badge {
-    background: rgba(124, 58, 237, 0.14) !important;
-    color: #d8c7ff !important;
-    border: 1px solid rgba(124, 58, 237, 0.28) !important;
-}
-
-body.dark-mode .cp-badge-amber {
-    background: rgba(245, 158, 11, 0.14) !important;
-    color: #fcd34d !important;
-    border: 1px solid rgba(245, 158, 11, 0.28) !important;
-}
-
-body.dark-mode .cp-alert-success {
-    background: rgba(34, 197, 94, 0.14) !important;
-    color: #86efac !important;
-    border: 1px solid rgba(34, 197, 94, 0.22) !important;
-}
-
-body.dark-mode .cp-alert-error {
-    background: rgba(239, 68, 68, 0.14) !important;
-    color: #fca5a5 !important;
-    border: 1px solid rgba(239, 68, 68, 0.22) !important;
-}
-
-body.dark-mode .cp-field label {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .cp-field input,
-body.dark-mode .cp-field textarea,
-body.dark-mode .cp-field select {
-    background: #20202b !important;
-    color: #f5f5f7 !important;
-    border: 1px solid #3a3a49 !important;
-}
-
-body.dark-mode .cp-field input::placeholder,
-body.dark-mode .cp-field textarea::placeholder {
-    color: #9c9cab !important;
-}
-
-body.dark-mode .cp-field input:focus,
-body.dark-mode .cp-field textarea:focus,
-body.dark-mode .cp-field select:focus {
-    border-color: #7c3aed !important;
-    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.16) !important;
-    outline: none !important;
-}
-
-body.dark-mode .cp-btn-primary {
-    background: #6d28d9 !important;
-    color: #ffffff !important;
-    border: none !important;
-}
-
-body.dark-mode .cp-btn-primary:hover {
-    background: #5b21b6 !important;
-}
-
-body.dark-mode .cp-btn-danger-outline {
-    background: transparent !important;
-    color: #f5f5f7 !important;
-    border: 1px solid #3a3a49 !important;
-}
-
-body.dark-mode .cp-btn-danger-outline:hover {
-    border-color: #ef4444 !important;
-    color: #fca5a5 !important;
-}
-
-body.dark-mode .cp-btn-danger {
-    background: #dc2626 !important;
-    color: #ffffff !important;
-}
-
-body.dark-mode .cp-btn-danger:hover {
-    background: #b91c1c !important;
-}
-
-body.dark-mode .cp-table-wrap {
-    background: transparent !important;
-}
-
-body.dark-mode .cp-table {
-    color: #f5f5f7 !important;
-}
-
-body.dark-mode .cp-table thead th {
-    color: #d7d7e2 !important;
-    border-bottom: 1px solid #2c2c38 !important;
-}
-
-body.dark-mode .cp-table tbody td {
-    border-bottom: 1px solid #242430 !important;
-}
-
-body.dark-mode .cp-table tbody tr:hover {
-    background: rgba(124, 58, 237, 0.06) !important;
-}
-
-body.dark-mode .cp-empty {
-    color: #b8b8c2 !important;
-}
-
-body.dark-mode .cp-empty-link,
-body.dark-mode .cp-card-link {
-    color: #c4b5fd !important;
-}
-
-body.dark-mode .cp-empty-link:hover,
-body.dark-mode .cp-card-link:hover {
-    color: #e9ddff !important;
-}
-
-body.dark-mode .cp-review-item {
-    border-bottom: 1px solid #2c2c38 !important;
-}
-
-body.dark-mode .cp-strength-text {
-    color: #b8b8c2 !important;
-}
-
-body.dark-mode .status-badge,
-body.dark-mode .cp-table .status-badge {
-    border: none !important;
-}
-
-body.dark-mode .status-pending,
-body.dark-mode .status-processing {
-    background: rgba(245, 158, 11, 0.16) !important;
-    color: #fcd34d !important;
-}
-
-body.dark-mode .status-shipped {
-    background: rgba(59, 130, 246, 0.16) !important;
-    color: #93c5fd !important;
-}
-
-body.dark-mode .status-delivered,
-body.dark-mode .status-paid {
-    background: rgba(34, 197, 94, 0.16) !important;
-    color: #86efac !important;
-}
-
-body.dark-mode .status-cancelled {
-    background: rgba(239, 68, 68, 0.16) !important;
-    color: #fca5a5 !important;
-}
-/* CUSTOMER DASHBOARD - RECENT ORDERS TABLE HEADER FIX */
-body.dark-mode .cp-table thead,
-body.dark-mode .cp-table thead tr,
-body.dark-mode .cp-table thead th {
-    background: #1a1a24 !important;
-    color: #d7d7e2 !important;
-}
-
-body.dark-mode .cp-table thead th {
-    border-bottom: 1px solid #2c2c38 !important;
-}

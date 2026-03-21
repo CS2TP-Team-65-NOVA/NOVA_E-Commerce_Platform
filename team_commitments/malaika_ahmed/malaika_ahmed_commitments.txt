@@ -1,1 +1,22 @@
-test
+NOVA Project Overview: Malaika Ahmed (Database Engineer / Branding and Report Contributor)
+
+Role Summary
+As Database Engineer, I design and manage the MySQL schema and support documentation related to functional and non-functional requirements.
+
+Core Tables (High Level)
+•⁠  ⁠⁠ users ⁠ – stores customer and admin details (name, email, encrypted password, role).
+•⁠  ⁠⁠ products ⁠ – stores perfume details (name, description, price, category, image).
+•⁠  ⁠⁠ orders ⁠ – records order header information (user_id, order_date, total_amount, status).
+•⁠  ⁠⁠ order_items ⁠ – links orders to individual products with quantity and line totals.
+•⁠  ⁠⁠ reviews ⁠ (optional) – future extension to store customer feedback.
+
+Relationships
+•⁠  ⁠One user can have many orders.
+•⁠  ⁠One order can have many order_items.
+•⁠  ⁠One product can appear in many order_items.
+•⁠  ⁠Categories group products for filtering on the products_dashboard.
+
+Design Considerations
+•⁠  ⁠Normalised structure to avoid duplication of product information.
+•⁠  ⁠Support for future extension such as promotions or inventory tracking.
+•⁠  ⁠Schema diagram exported and stored in the docs folder as evidence for Trello.

@@ -148,7 +148,6 @@ function safe($val) {
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
             <span id="theme-icon">🌙</span>
         </button>
-
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <!-- Guest -->

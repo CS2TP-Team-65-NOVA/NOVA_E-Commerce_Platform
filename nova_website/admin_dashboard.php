@@ -226,7 +226,7 @@ try {
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <p style="text-align: center; color: #666; padding: 20px;">No recent orders found.</p>
+                    <p class="empty-row" style="text-align: center; padding: 20px;">No recent orders found.</p>
                 <?php endif; ?>
             </div>
 

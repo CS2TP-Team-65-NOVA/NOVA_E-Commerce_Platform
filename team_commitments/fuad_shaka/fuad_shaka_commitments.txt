@@ -1,1 +1,20 @@
-test
+NOVA Project Overview: Fuad Shaka (System Integration Engineer / Back-End Developer)
+
+Role Summary
+As System Integration Engineer and Back-End Developer, I plan how PHP scripts will interact with the database to support secure checkout.
+
+
+1. Retrieve the current user’s shopping_cart items from the database.
+2. Calculate subtotal, shipping (if applicable), and final total.
+3. Validate delivery details submitted from the checkout form.
+4. Create an order record and related order_items entries.
+5. Return a confirmation message and order reference.
+
+Security & Validation
+- All inputs will be validated on the server before creating any records.
+- Prepared statements will be used to prevent SQL injection.
+- Only logged-in users can trigger the checkout process.
+
+Integration Notes
+- This workflow supports the “Add to Cart and Checkout” use case from Section 5.
+- Actual PHP implementation will be completed during Teaching Period 1.

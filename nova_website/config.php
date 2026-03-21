@@ -1,9 +1,10 @@
 
 <?php
-$servername = "127.0.0.1";   // or "localhost"
-$username   = "root";
-$password   = "";
-$dbname     = "cs2team65_db";
+
+$servername = "localhost"; 
+$username = "cs2team65";                     
+$password = "XRCsv6P4min3JM88F9xZ8LVGM";     
+$dbname = "cs2team65_db";                  
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
