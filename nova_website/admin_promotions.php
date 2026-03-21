@@ -404,7 +404,7 @@ if (!$promotionsResult) {
         </div>
     </main>
 </div>
-
+<script src="theme.js"></script>
 </body>
 </html>
 
