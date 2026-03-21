@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                 </thead>
                 <tbody>
                     <?php if (empty($orders)): ?>
-                        <tr><td colspan="7" style="text-align: center; padding: 40px;">No orders found</td></tr>
+                        <tr><td colspan="7" class="empty-row" style="text-align: center; padding: 40px;"> No orders found</td></tr>
                     <?php else: ?>
                         <?php foreach ($orders as $order): ?>
                             <tr>

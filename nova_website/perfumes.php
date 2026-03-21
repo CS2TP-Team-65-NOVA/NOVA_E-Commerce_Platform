@@ -192,9 +192,6 @@ function build_page_url($page, $category, $sort, $search)
 
             <!-- RIGHT SIDE BASED ON USER SESSION -->
             <div class="nav-right">
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-                <span id="theme-icon">🌙</span>
-            </button>
 
             <?php if (!isset($_SESSION['user_id'])): ?>
 
@@ -519,6 +516,3 @@ function build_page_url($page, $category, $sort, $search)
 
     </div>
 </footer>
-<script src="theme.js"></script>
-</body>
-</html>

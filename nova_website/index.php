@@ -282,11 +282,13 @@ $featuredRes = $conn->query($featuredSql);
             </div>
         </section>
 
-        <!-- UNIQUE -->
+        <!-- CUSTOMER REVIEWS SECTION (STATIC) -->
+        
         <section class="about-unique-section">
             <div class="about-unique-inner">
 
                 <h2 class="about-heading">What Makes Nova Unique</h2>
+
                 <p class="about-unique-lead">
                     NOVA feels like a new constellation — familiar enough to love instantly, distinct enough to remember.
                 </p>
@@ -303,10 +305,10 @@ $featuredRes = $conn->query($featuredSql);
                         <p>Premium fragrance without the traditional luxury price barrier.</p>
                     </div>
 
-                    <div class="unique-point">
+                   <div class="unique-point">
                         <h3>Minimalist, Futuristic Design</h3>
                         <p>Precision, symmetry and modern silhouettes built for your shelf.</p>
-                    </div>
+                   </div>
 
                     <div class="unique-point">
                         <h3>Art Meets Science</h3>
@@ -314,10 +316,9 @@ $featuredRes = $conn->query($featuredSql);
                     </div>
 
                 </div>
-
             </div>
         </section>
-
+        
         <!-- CUSTOMER REVIEWS SECTION (STATIC) -->
         <section class="home-reviews">
             <div class="home-section-header">
@@ -451,7 +452,7 @@ $featuredRes = $conn->query($featuredSql);
 
 <!-- JAVASCRIPT FOR INTRO VIDEO -->
 <script src="intro.js"></script>
-
+    
 <script src="theme.js"></script>
 <!-- FAVOURITES HEARTS JS (same as perfumes.php) -->
 <script>

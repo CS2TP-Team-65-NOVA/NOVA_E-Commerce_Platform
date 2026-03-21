@@ -1,1 +1,18 @@
-test
+NOVA Project Overview: Robel Gashu (GitHub Repository Manager / Security Engineer)
+
+Role Summary
+As GitHub Repository Manager and Security Engineer, I manage version control and plan core security practices for the NOVA project.
+
+Repository Management
+- Created and organised main folders: frontend, backend, database, docs, media.
+- Encouraged each team member to commit at least one role-related file.
+- Monitored commit history to keep changes traceable and consistent.
+
+Planned Security Practices
+- Use PHP password hashing functions for storing user passwords.
+- Validate and sanitise all input from registration, login, and checkout forms.
+- Restrict admin pages (admin_products, admin_orders, admin_promotions, admin_profile) to authenticated admins only.
+
+Future Tasks
+- Review pull requests for security concerns once coding begins.
+- Help document any security-related changes in the report and Trello.
