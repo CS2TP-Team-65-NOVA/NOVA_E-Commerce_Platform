@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< Updated upstream
 -- Generation Time: Mar 18, 2026 at 10:46 PM
+=======
+-- Generation Time: Mar 21, 2026 at 02:58 PM
+>>>>>>> Stashed changes
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -633,7 +637,12 @@ INSERT INTO `products` (`product_id`, `category_id`, `brand_id`, `description`, 
 (73, 9, NULL, 'His & Hers oriental duo set.', 'Spiced citrus facets from both orientals.', 'Amber, cocoa and woods.', 'Rich resins, vanilla and musk.', 'Duo set launched to showcase NOVA oriental favourites.', 'Oriental Duo Gift Set pairs two richer, oriental leaning scents, ideal for evening wear or special occasions.', 'The duo is housed in a slimline Nova case with separate wells for each bottle, making it easy to travel or gift.', 'Oriental Duo Gift Set', 69.00, 'gift_oriental_duo.jpg', 'gift_oriental_duo_2.jpg', 'gift_oriental_duo_3.jpg', 'gift_oriental_duo_4.jpg', 'gift_oriental_duo_5.jpg', '2026-03-15 14:56:59', '2026-03-15 14:56:59'),
 (74, 9, NULL, 'Four best-selling unisex minis.', 'Mixed citrus and aromatic notes from four signatures.', 'Floral, woody and musk accords.', 'Amber, woods and soft resins.', 'Signature box released as a curated NOVA mini collection.', 'Nova Signature Collection Box features four of the brand’s best selling unisex favourites in miniature form.', 'A clean, monochrome box interior and simple outer sleeve keep the focus on the iconic mini bottles inside.', 'Nova Signature Collection Box', 75.00, 'gift_signature_box.jpg', 'gift_signature_box_2.jpg', 'gift_signature_box_3.jpg', 'gift_signature_box_4.jpg', 'gift_signature_box_5.jpg', '2026-03-15 14:56:59', '2026-03-15 14:56:59'),
 (75, 9, NULL, 'Holiday limited edition selection of spicy scents.', 'Assorted spices, citrus and herbs from the trail set.', 'Warm florals, woods and resins.', 'Amber, vanilla and musk across the chest.', 'Spice Trail chest launched as a journey through NOVA spices.', 'Spice Trail Gift Chest offers a curated selection of spicy and warm scents designed to feel like a journey through different spice markets.', 'The box uses map inspired graphics and rich colour blocking to underline the idea of travel and discovery.', 'Spice Trail Gift Chest', 72.00, 'gift_spice_trail_chest.jpg', 'gift_spice_trail_chest_2.jpg', 'gift_spice_trail_chest_3.jpg', 'gift_spice_trail_chest_4.jpg', 'gift_spice_trail_chest_5.jpg', '2026-03-15 14:56:59', '2026-03-15 14:56:59'),
+<<<<<<< Updated upstream
 (76, 1, NULL, 'Misty perfume', NULL, NULL, NULL, NULL, NULL, NULL, 'NOVA Ethereal', 79.00, 'nova_default.jpg', NULL, NULL, NULL, NULL, '2026-03-18 09:38:57', '2026-03-18 09:38:57');
+=======
+(76, 1, NULL, 'Misty perfume', NULL, NULL, NULL, NULL, NULL, NULL, 'NOVA Ethereal', 79.00, 'nova_default.jpg', NULL, NULL, NULL, NULL, '2026-03-18 09:38:57', '2026-03-18 09:38:57'),
+(81, 3, NULL, 'Test', NULL, NULL, NULL, NULL, NULL, NULL, 'Lynked Forever', 50.00, 'product_69bdf85170dc72.51656213.webp', 'product_69bdf851710aa7.38858576.webp', 'product_69bdf8517145f9.73570444.webp', 'product_69bdf851715f20.67507757.webp', 'product_69bdf851717908.97281950.webp', '2026-03-21 01:45:53', '2026-03-21 01:45:53');
+>>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
@@ -1063,7 +1072,12 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `password`, `phone_number`
 (9, 'Ava Bennett', 'ava.bennett@gmail.com', '$2y$10$demoHash', '07123456787', 'customer', '2026-03-16 13:17:07', '2026-03-16 16:29:29'),
 (10, 'Lucas Mitchell', 'lucas.mitchell@gmail.com', '$2y$10$demoHash', '07123456788', 'customer', '2026-03-16 13:17:07', '2026-03-16 16:29:29'),
 (11, 'Sophia Reed', 'sophia.reed@gmail.com', '$2y$10$demoHash', '07123456789', 'customer', '2026-03-16 13:17:07', '2026-03-16 16:29:30'),
+<<<<<<< Updated upstream
 (12, 'Ethan Clarke', 'ethan.clarke@gmail.com', '$2y$10$demoHash', '07123456790', 'customer', '2026-03-16 13:17:07', '2026-03-16 16:29:30');
+=======
+(12, 'Ethan Clarke', 'ethan.clarke@gmail.com', '$2y$10$demoHash', '07123456790', 'customer', '2026-03-16 13:17:07', '2026-03-16 16:29:30'),
+(13, 'Fuad', 'fuadaston@gmail.com', '$2y$10$VOFSzi6qHKKfNRdg5YWxWOwpGcAbRDbkoJpo2sA9Ow/Aqrni9dKI2', NULL, 'admin', '2026-03-20 22:56:50', '2026-03-20 22:58:14');
+>>>>>>> Stashed changes
 
 --
 -- Indexes for dumped tables
@@ -1218,7 +1232,11 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
+<<<<<<< Updated upstream
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+=======
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT for table `product_versions`
@@ -1242,7 +1260,11 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+<<<<<<< Updated upstream
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+=======
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+>>>>>>> Stashed changes
 
 --
 -- Constraints for dumped tables
