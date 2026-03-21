@@ -21,6 +21,18 @@ Team 65 Members and Roles:
 - Oliver Thorpe – Database Validation Engineer / Quality Assurance Tester  
 
 
+Team Memebers GitHub username: 
+
+- Alex-Gabriel Micu – @alexmcu
+- Amirah Begum – @AmirahTech
+- Shreya Manojbhai Kathiria – @SKathiria
+- Ashish Mepani – @Ashish-95
+- Malaika Ahmed – @malaikahmed
+- Fuad Shaka – @FuadS-git
+- Robel Gashu – @robelheni
+- Oliver Thorpe – @thorpeo04
+
+
 Technologies Used:
 
 - Front-end: HTML, CSS, JavaScript
