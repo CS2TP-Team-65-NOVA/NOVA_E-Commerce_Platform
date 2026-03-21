@@ -87,7 +87,9 @@ try {
 
         <!-- RIGHT SIDE (role-based, same structure as other pages) -->
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <!-- Guest -->
@@ -367,6 +369,6 @@ try {
 
     </div>
 </footer>
-
+<script src="theme.js"></script>
 </body>
 </html>

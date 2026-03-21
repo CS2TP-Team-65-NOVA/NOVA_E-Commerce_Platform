@@ -218,7 +218,9 @@ if ($stmt = $conn->prepare($relatedSql)) {
 
             <!-- RIGHT SIDE BASED ON USER SESSION -->
             <div class="nav-right">
-
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span id="theme-icon">🌙</span>
+            </button>
             <?php if (!isset($_SESSION['user_id'])): ?>
 
                 <!-- GUEST -->
@@ -660,3 +662,6 @@ if ($stmt = $conn->prepare($relatedSql)) {
 
     </div>
 </footer>
+<script src="theme.js"></script>
+</body>
+</html>

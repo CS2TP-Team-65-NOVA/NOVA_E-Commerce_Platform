@@ -45,6 +45,10 @@ require_once 'config.php';
         <!-- RIGHT SIDE -->
         <div class="nav-right">
 
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
+
             <?php if (!isset($_SESSION['user_id'])): ?>
 
                 <a href="register.php" class="nav-link">Register</a>
@@ -93,126 +97,98 @@ require_once 'config.php';
 </header>
 
 <main>
+    <section class="contact-two-column">
+        
+        <!-- LEFT SIDE -->
+        <div class="contact-left-card">
+            <h1>Contact Us</h1>
+            <p class="contact-intro">
+                Have a question about finding your perfect NOVA scent or an existing order?
+                We’d love to help.
+            </p>
+            <p class="contact-response-time">
+                We usually reply within <strong>24–48 hours</strong> on business days.
+            </p>
 
-    <!-- CONTACT CONTENT (Ashish) -->
-    <section class="contact-section">
-        <h1>Contact Us</h1>
-
-        <p class="contact-intro">
-            Have a question about finding your perfect NOVA scent or an existing order?
-            We’d love to help.
-        </p>
-
-        <p class="contact-response-time">
-            We usually reply within <strong>24–48 hours</strong> on business days.
-        </p>
-
-        <form id="contact-form" class="contact-form" novalidate>
-
-            <!-- Full Name -->
-            <div class="form-group">
-                <label for="full_name">Full Name <span class="required">*</span></label>
-                <input type="text" id="full_name" name="full_name" required maxlength="80">
-                <p class="error-message" data-for="full_name"></p>
-            </div>
-
-            <!-- Email -->
-            <div class="form-group">
-                <label for="email">Email Address <span class="required">*</span></label>
-                <input type="email" id="email" name="email" required>
-                <p class="error-message" data-for="email"></p>
-            </div>
-
-            <!-- Subject -->
-            <div class="form-group">
-                <label for="subject">Reason for contacting</label>
-                <select id="subject" name="subject">
-                    <option value="">Please select…</option>
-                    <option value="order_issue">Order issue</option>
-                    <option value="business">Business inquiry</option>
-                    <option value="pr">PR / brand question</option>
-                    <option value="other">Other</option>
-                </select>
-                <p class="error-message" data-for="subject"></p>
-            </div>
-
-            <!-- Message -->
-            <div class="form-group">
-                <label for="message">Message <span class="required">*</span></label>
-                <textarea id="message" name="message" rows="5" required maxlength="1000"></textarea>
-                <p class="error-message" data-for="message"></p>
-                <p class="helper-text" id="message-counter">0 / 1000</p>
-            </div>
-
-            <!-- Status -->
-            <div id="form-status" class="form-status"></div>
-
-            <!-- Submit -->
-            <button type="submit" class="contact-submit-btn">Send Message</button>
-
-        </form>
-
-        <div class="contact-info">
-            <h2>Other ways to reach us</h2>
-
-            <!-- Customer service email -->
-            <div class="contact-info-item">
-                <img src="mail_icon.png" alt="Email icon" class="contact-icon">
-                <div>
+            <div class="contact-details">
+                <div class="contact-detail-item">
                     <h3>Email</h3>
-                    <p>
-                        <a href="mailto:support@nova-perfumes.com">support@nova-perfumes.com</a>
-                    </p>
+                    <p>support@novafragrance.com</p>
+                </div>
+
+                <div class="contact-detail-item">
+                    <h3>Phone</h3>
+                    <p>+44 1234 567890</p>
+                </div>
+
+                <div class="contact-detail-item">
+                    <h3>Address</h3>
+                    <p>NOVA Fragrance Ltd<br>Birmingham, United Kingdom</p>
+                </div>
+
+                <div class="contact-detail-item">
+                    <h3>Customer Support</h3>
+                    <p>Monday – Friday, 9:00 AM – 5:00 PM</p>
                 </div>
             </div>
+        </div>
 
-            <!-- Phone / WhatsApp -->
-            <div class="contact-info-item">
-                <img src="whatsapp_icon.png" alt="Phone icon" class="contact-icon">
-                <div>
-                    <h3>Phone / WhatsApp</h3>
-                    <p>
-                        <a href="tel:+441234567890">+44 1234 567 890</a>
-                    </p>
+        <!-- RIGHT SIDE -->
+        <div class="contact-right-card">
+            <h2>Send us a message</h2>
+
+            <form class="contact-form" method="post" action="">
+                <div class="form-group">
+                    <label for="full_name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="full_name" name="full_name" required>
                 </div>
-            </div>
 
-            <!-- Instagram -->
-            <div class="contact-info-item">
-                <img src="instagram_icon.png" alt="Instagram icon" class="contact-icon">
-                <div>
-                    <h3>Instagram</h3>
-                    <p>
-                        <a href="https://instagram.com/nova.perfumes" target="_blank">@nova.perfumes</a>
-                    </p>
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-            </div>
 
-            <!-- Facebook -->
-            <div class="contact-info-item">
-                <img src="facebook_icon.png" alt="Facebook icon" class="contact-icon">
-                <div>
-                    <h3>Facebook</h3>
-                    <p>
-                        <a href="https://facebook.com/novaperfumes" target="_blank">/novaperfumes</a>
-                    </p>
+                <div class="form-group">
+                    <label for="reason">Reason for contacting</label>
+                    <select id="reason" name="reason">
+                        <option value="">Please select...</option>
+                        <option value="order">Order enquiry</option>
+                        <option value="product">Product question</option>
+                        <option value="delivery">Delivery issue</option>
+                        <option value="returns">Returns</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
-            </div>
 
-            <!-- FAQ -->
-            <div class="contact-info-item faq-item">
-                <span class="contact-icon contact-icon-empty" aria-hidden="true"></span>
-                <div>
-                    <h3>FAQ</h3>
-                    <p>
-                        <a href="faq.php">Find your instant answer here</a>
-                    </p>
+                <div class="form-group">
+                    <label for="message">Message <span class="required">*</span></label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
                 </div>
-            </div>
 
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
         </div>
     </section>
 
+    <!-- MAP SECTION -->
+    <section class="contact-map-section">
+        <div class="contact-map-card">
+            <h2>Find Us</h2>
+            <p class="contact-map-text">Visit NOVA Fragrance in Birmingham.</p>
+
+            <div class="contact-map-embed">
+                <iframe
+                    src="https://www.google.com/maps?q=Birmingham,United%20Kingdom&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
 </main>
 
 <footer class="nova-footer">
@@ -304,6 +280,8 @@ require_once 'config.php';
 
     </div>
 </footer>
+
+<script src="theme.js"></script>
 
 <!-- Contact form JS (unchanged) -->
 <script>

@@ -167,7 +167,9 @@ if (!$promotionsResult) {
         </a>
 
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <a href="register.php" class="nav-link">Register</a>
@@ -499,6 +501,6 @@ if (!$promotionsResult) {
 
     </div>
 </footer>
-
+<script src="theme.js"></script>
 </body>
 </html>

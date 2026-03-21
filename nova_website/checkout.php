@@ -176,6 +176,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <img src="nova_logo_black.png" id="logo" alt="NOVA Logo">
         </a>
         <div class="nav-right">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
             <?php if (!isset($_SESSION['user_id'])): ?>
                 <a href="register.php" class="nav-link">Register</a>
                 <a href="login.php"    class="nav-link">Log in</a>
@@ -425,6 +428,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </footer>
-
+<script src="theme.js"></script>
 </body>
 </html>
