@@ -32,8 +32,12 @@ function uploadImage($fileInputName, &$errorMessage) {
     $uploadDir = 'uploads/products/';
 
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+        if (!mkdir($uploadDir, 0777, true)) {
+            $errorMessage = "Could not create upload directory.";
+            return null;
+        }
     }
+    chmod($uploadDir, 0777);
 
     // no file chosen
     if (!isset($_FILES[$fileInputName]) || $_FILES[$fileInputName]['error'] === UPLOAD_ERR_NO_FILE) {
