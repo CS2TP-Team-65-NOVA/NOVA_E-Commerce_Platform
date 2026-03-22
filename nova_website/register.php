@@ -162,10 +162,15 @@ if (isset($_POST['submitted'])) {
 
         <button type="submit" class="register-btn">Register</button>
 
-        <p class="register-already-user">
-            Already a user?
-            <a href="login.php">Log in</a>
-        </p>
+       <p class="register-already-user">
+    Already a user?
+    <a href="login.php">Log in</a>
+</p>
+
+<p class="register-already-user admin-back-link">
+    Got an admin code?
+    <a href="admin_register.php">Register here</a>
+</p>
 
     </form>
 </div>
