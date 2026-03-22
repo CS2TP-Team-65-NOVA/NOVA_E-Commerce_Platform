@@ -282,7 +282,7 @@ $featuredRes = $conn->query($featuredSql);
             </div>
         </section>
 
-        <!-- CUSTOMER REVIEWS SECTION (STATIC) -->
+        <!-- What Makes NOva Unique -->
         
         <section class="about-unique-section">
             <div class="about-unique-inner">
