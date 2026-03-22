@@ -169,6 +169,12 @@ if (isset($_POST['action']) && $_POST['action'] === 'add_admin' ) {
     }
 }
 
+if (isset($_POST['generate_code'])) {
+    $_SESSION['generated_admin_code'] = strtoupper(substr(bin2hex(random_bytes(3)), 0, 6));
+    $_SESSION['generated_admin_code_time'] = time();
+    $_SESSION['show_admin_code'] = true;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -373,41 +379,94 @@ if (isset($_POST['action']) && $_POST['action'] === 'add_admin' ) {
 </div>
 
     <!-- Add Admin Form -->
-    <div class="dashboard-panel">
-        <div class="panel-header">
-            <h2>Add Admin</h2>
-            <span style="color: #666; font-size: 14px;">Create a new admin account</span>
-        </div>
-        
-        <?php if (!empty($addMessage)): ?>
-            <div class="error-message"><?php echo htmlspecialchars($addMessage); ?></div>
-        <?php endif; ?>
-        
-        <form method="post" action="admin_users.php">
-            <input type="hidden" name="action" value="add_admin">
-            
-            <div class="form-group">
-                <label for="full_name">Full Name *</label>
-                <input type="text" id="full_name" name="full_name" required placeholder="Enter full name">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" required placeholder="Enter email address">
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password *</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password">
-            </div>
-            
-            <button type="submit" class="add-btn">Add Admin</button>
-            
-            <div class="form-note">
-                Create a new admin account for staff access.
-            </div>
-        </form>
+<div class="dashboard-panel">
+    <div class="panel-header">
+        <h2>Add Admin</h2>
+        <span style="color: #666; font-size: 14px;">Create a new admin account</span>
     </div>
+
+    <?php if (!empty($addMessage)): ?>
+        <div class="error-message"><?php echo htmlspecialchars($addMessage); ?></div>
+    <?php endif; ?>
+
+    <?php if (
+        isset($_SESSION['generated_admin_code'], $_SESSION['generated_admin_code_time']) &&
+        (time() - $_SESSION['generated_admin_code_time']) < 60
+    ): ?>
+        <?php
+            $remaining = 60 - (time() - $_SESSION['generated_admin_code_time']);
+        ?>
+
+        <div class="code-card">
+
+            <!-- helper text -->
+            <div class="code-helper">
+                Generate a temporary access code for admin registration.
+            </div>
+
+            <!-- code row -->
+            <div class="code-row">
+                <div class="code-label">ACCESS CODE</div>
+
+                <div class="code-value-wrapper">
+                    <span class="code-value" id="code">
+                        <?php echo $_SESSION['generated_admin_code']; ?>
+                    </span>
+
+                    <!-- copy icon -->
+                    <span class="copy-icon" onclick="copyCode()">
+                        <img src="copy_icon.png" class="copy-default">
+                        <img src="active_copy_icon.png" class="copy-active">
+                    </span>
+                </div>
+
+                <div class="code-timer">
+                    Expires in <span id="timer"><?php echo $remaining; ?></span>s
+                </div>
+
+                <!-- feedback -->
+                <div id="copy-feedback" class="copy-feedback">Copied</div>
+            </div>
+
+        </div>
+
+        <script>
+        let t = <?php echo $remaining; ?>;
+        let timer = document.getElementById("timer");
+
+        let interval = setInterval(() => {
+            t--;
+            if (t <= 0) {
+                clearInterval(interval);
+                timer.innerText = "0";
+                document.getElementById("code").innerText = "EXPIRED";
+            } else {
+                timer.innerText = t;
+            }
+        }, 1000);
+
+        function copyCode() {
+            const text = document.getElementById("code").innerText;
+            navigator.clipboard.writeText(text);
+
+            const feedback = document.getElementById("copy-feedback");
+            feedback.classList.add("show");
+
+            setTimeout(() => {
+                feedback.classList.remove("show");
+            }, 1200);
+        }
+        </script>
+
+    <?php endif; ?>
+
+    <!-- BUTTON MOVED TO BOTTOM -->
+    <form method="post" style="margin-top: 25px; text-align: center;">
+        <button type="submit" name="generate_code" class="generate-btn">
+            Generate Access Code
+        </button>
+    </form>
+
 </div>
 
 
@@ -505,5 +564,30 @@ if (isset($_POST['action']) && $_POST['action'] === 'add_admin' ) {
     </div>
 </footer>
 <script src="theme.js"></script>
+<script>
+document.getElementById("generateForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop reload
+
+    fetch("admin_users.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "generate_code=1"
+    })
+    .then(res => res.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const newPanel = doc.querySelectorAll(".dashboard-panel")[1];
+        const currentPanel = document.querySelectorAll(".dashboard-panel")[1];
+
+        if (newPanel && currentPanel) {
+            currentPanel.innerHTML = newPanel.innerHTML;
+        }
+    });
+});
+</script>
 </body>
 </html>

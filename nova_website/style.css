@@ -2089,6 +2089,11 @@ body {
   text-decoration: underline;
 }
 
+.admin-back-link {
+  margin-top: 15px; /* increase spacing */
+  margin-bottom: 0;
+}
+
 
 /* -- STYLING FOR LOGIN PAGE -- */
 
@@ -5121,6 +5126,124 @@ body {
        margin-top: 0 !important;
    }
 
+   /* ===== NOVA ACCESS CODE UI ===== */
+
+.generate-btn {
+    padding: 12px 28px;
+    background: #5e17eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    width: auto;
+}
+
+.generate-btn:hover {
+    background: #4a12c9;
+    transform: translateY(-2px);
+}
+
+/* CENTER BUTTON */
+.dashboard-panel form {
+    text-align: center;
+}
+
+/* card */
+.code-card {
+    background: #f8f8f8;
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* helper text */
+.code-helper {
+    text-align: left;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* label */
+.code-label {
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 3px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+/* code + icon row */
+.code-value-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* code text */
+.code-value {
+    font-size: 34px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 10px;
+    font-weight: 600;
+    color: #111;
+}
+
+/* timer */
+.code-timer {
+    margin-top: 10px;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #666;
+}
+
+/* copy icon */
+.copy-icon {
+    position: relative;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.copy-icon img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s ease;
+}
+
+.copy-active {
+    opacity: 0;
+}
+
+.copy-icon:hover .copy-default {
+    opacity: 0;
+}
+
+.copy-icon:hover .copy-active {
+    opacity: 1;
+}
+
+/* feedback */
+.copy-feedback {
+    margin-top: 15px;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #5e17eb;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.copy-feedback.show {
+    opacity: 1;
+}
 /* =========================================================
    NOVA DARK MODE - APPEND TO END OF OLD style.css
    ========================================================= */
