@@ -83,7 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
 
         <!-- RIGHT SIDE (role-based, same structure as other pages) -->
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <!-- Guest -->
@@ -204,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                 </thead>
                 <tbody>
                     <?php if (empty($orders)): ?>
-                        <tr><td colspan="7" style="text-align: center; padding: 40px;">No orders found</td></tr>
+                        <tr><td colspan="7" class="empty-row" style="text-align: center; padding: 40px;"> No orders found</td></tr>
                     <?php else: ?>
                         <?php foreach ($orders as $order): ?>
                             <tr>
@@ -365,7 +367,7 @@ window.onclick = function(e) {
     }
 }
 </script>
-
+<script src="theme.js"></script>
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>

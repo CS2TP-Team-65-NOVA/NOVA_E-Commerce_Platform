@@ -86,7 +86,9 @@ $featuredRes = $conn->query($featuredSql);
 
             <!-- RIGHT SIDE BASED ON USER SESSION -->
             <div class="nav-right">
-
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span id="theme-icon">🌙</span>
+            </button>
             <?php if (!isset($_SESSION['user_id'])): ?>
 
                 <!-- GUEST -->
@@ -284,6 +286,43 @@ $featuredRes = $conn->query($featuredSql);
             </div>
         </section>
 
+        <!-- What Makes NOva Unique -->
+        
+        <section class="about-unique-section">
+            <div class="about-unique-inner">
+
+                <h2 class="about-heading">What Makes Nova Unique</h2>
+
+                <p class="about-unique-lead">
+                    NOVA feels like a new constellation — familiar enough to love instantly, distinct enough to remember.
+                </p>
+
+                <div class="unique-grid">
+
+                    <div class="unique-point">
+                        <h3>Celestial Inspiration</h3>
+                        <p>Night skies, light bursts and constellations translated into perfume experiences.</p>
+                    </div>
+
+                    <div class="unique-point">
+                        <h3>Luxury, Made Accessible</h3>
+                        <p>Premium fragrance without the traditional luxury price barrier.</p>
+                    </div>
+
+                   <div class="unique-point">
+                        <h3>Minimalist, Futuristic Design</h3>
+                        <p>Precision, symmetry and modern silhouettes built for your shelf.</p>
+                   </div>
+
+                    <div class="unique-point">
+                        <h3>Art Meets Science</h3>
+                        <p>Creative vision blended with chemistry and meticulous formulation.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
         <!-- CUSTOMER REVIEWS SECTION (STATIC) -->
         <section class="home-reviews">
             <div class="home-section-header">
@@ -417,7 +456,8 @@ $featuredRes = $conn->query($featuredSql);
 
 <!-- JAVASCRIPT FOR INTRO VIDEO -->
 <script src="intro.js"></script>
-
+    
+<script src="theme.js"></script>
 <!-- FAVOURITES HEARTS JS (same as perfumes.php) -->
 <script>
 (function () {

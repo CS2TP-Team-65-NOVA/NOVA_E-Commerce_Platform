@@ -38,7 +38,9 @@ require_once 'config.php';
 
         <!-- RIGHT SIDE -->
         <div class="nav-right">
-
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+               <span id="theme-icon">🌙</span>
+            </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <a href="register.php" class="nav-link">Register</a>
@@ -93,8 +95,6 @@ require_once 'config.php';
     <section class="about-hero"></section>
 </div>
 
-
-
 <main>
 
     <!-- OUR STORY -->
@@ -124,30 +124,11 @@ require_once 'config.php';
                 </p>
             </div>
 
-            <aside class="about-story-highlights">
-
-                <div class="about-highlight">
-                    <h3>Cruelty-Free by Design</h3>
-                    <p>NOVA fragrances are <strong>never tested on animals</strong> and are produced with ethical sourcing partners.</p>
-                </div>
-
-                <div class="about-highlight">
-                    <h3>Thoughtful Ingredients</h3>
-                    <p>We use premium aroma molecules and naturals, avoiding unnecessary fillers.</p>
-                </div>
-
-                <div class="about-highlight founder-note">
-                    <h3>From our Founder</h3>
-                    <p>“NOVA was created for people who want fragrances to feel intentional, quiet brilliance, not noise.”</p>
-                    <p class="founder-signoff">— CS2TP TEAM 65</p>
-                </div>
-
+            <aside class="about-story-image">
+                <img src="nova_register_promo.png" alt="NOVA perfume bottle">
             </aside>
-
         </div>
     </section>
-
-
 
     <!-- VALUES -->
     <section class="about-values-section">
@@ -183,8 +164,6 @@ require_once 'config.php';
             </div>
         </div>
     </section>
-
-
 
     <!-- UNIQUE -->
     <section class="about-unique-section">
@@ -222,8 +201,6 @@ require_once 'config.php';
         </div>
     </section>
 
-
-
     <!-- CRAFT -->
     <section class="about-craft-section">
         <div class="about-craft-inner">
@@ -258,7 +235,58 @@ require_once 'config.php';
             </div>
         </div>
     </section>
+    <!-- MEET OUR TEAM -->
+    <section class="about-team-section">
 
+        <div class="about-team-inner">
+
+            <!-- LEFT SIDE SLIDESHOW -->
+            <div class="team-slideshow">
+
+                <div class="team-slide active">
+                    <img src="alex.png" alt="Team Member">
+                    <h4>Alex</h4>
+                </div>
+
+            <div class="team-slide">
+                <img src="shreya.png" alt="Team Member">
+                <h4>Shreya Kathiria</h4>
+            </div>
+
+            <div class="team-slide">
+                <img src="malaika.jpg" alt="Team Member">
+                <h4>Malika</h4>
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE TEXT -->
+        <div class="about-team-text">
+
+            <h2 class="about-heading">Meet Our Team</h2>
+
+            <p class="about-lead">
+                Behind NOVA is a passionate group of designers, developers and creators
+                who believe fragrance should feel personal and meaningful.
+            </p>
+
+            <p>
+                Our team combines creativity, science and craftsmanship to design
+                scents that express identity and emotion. From fragrance formulation
+                to bottle design, every detail is shaped by collaboration and
+                innovation.
+            </p>
+
+            <p>
+                Together we work to create modern fragrances that feel luminous,
+                confident and unforgettable.
+            </p>
+
+        </div>
+        </div>
+    </section>
+    
 </main>
 
 <footer class="nova-footer">
@@ -352,7 +380,20 @@ require_once 'config.php';
 
     </div>
 </footer>
+<script src="theme.js"></script>
+<script>
+const slides = document.querySelectorAll(".team-slide");
+let index = 0;
 
+setInterval(() => {
+    slides[index].classList.remove("active");
+    index++;
+    if(index >= slides.length){
+        index = 0;
+    }
+    slides[index].classList.add("active");
+}, 3500);
+</script>
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>

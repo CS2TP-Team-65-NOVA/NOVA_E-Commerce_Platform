@@ -3,13 +3,11 @@ session_start();
 
 // ---- LOG OUT USER ----
 
-// Clear session
-$_SESSION = [];
-session_unset();
-session_destroy();
+// keep admin code, remove login only
+unset($_SESSION['user_id']);
+unset($_SESSION['role']);
 
 // Regenerate session ID for security (fresh empty session)
-session_start();
 session_regenerate_id(true);
 
 // Prevent cached pages from showing protected content

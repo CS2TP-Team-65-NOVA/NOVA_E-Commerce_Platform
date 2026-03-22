@@ -219,6 +219,9 @@ if (!empty($_SESSION['cart'])) {
 
             <!-- RIGHT SIDE BASED ON USER SESSION -->
             <div class="nav-right">
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span id="theme-icon">🌙</span>
+            </button>
 
             <?php if (!isset($_SESSION['user_id'])): ?>
 
@@ -469,4 +472,6 @@ if (!empty($_SESSION['cart'])) {
 
     </div>
 </footer>
-<?php require_once __DIR__ . '/chatbot_include.php'; ?>
+<script src="theme.js"></script>
+</body>
+</html><?php require_once __DIR__ . '/chatbot_include.php'; ?>

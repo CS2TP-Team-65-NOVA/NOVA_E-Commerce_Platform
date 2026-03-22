@@ -152,6 +152,9 @@ function safe($val) {
 
         <!-- RIGHT SIDE (role-based, consistent pattern) -->
         <div class="nav-right">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <a href="register.php" class="nav-link">Register</a>
@@ -450,7 +453,7 @@ document.getElementById('new_password').addEventListener('input', function(e) {
     strength.style.color = color;
 });
 </script>
-
+<script src="theme.js"></script>
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>
