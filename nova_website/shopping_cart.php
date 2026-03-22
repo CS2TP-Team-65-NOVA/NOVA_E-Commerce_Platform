@@ -474,4 +474,4 @@ if (!empty($_SESSION['cart'])) {
 </footer>
 <script src="theme.js"></script>
 </body>
-</html>
+</html><?php require_once __DIR__ . '/chatbot_include.php'; ?>

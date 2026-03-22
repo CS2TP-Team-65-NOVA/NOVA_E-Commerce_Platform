@@ -676,5 +676,8 @@ document.addEventListener('DOMContentLoaded', function () {
 <!-- theme.js (from Version 1) -->
 <script src="theme.js"></script>
 
+
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
+
 </body>
 </html>

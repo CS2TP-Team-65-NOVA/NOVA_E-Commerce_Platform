@@ -394,6 +394,7 @@ setInterval(() => {
     slides[index].classList.add("active");
 }, 3500);
 </script>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>
 

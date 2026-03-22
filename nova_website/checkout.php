@@ -432,3 +432,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script src="theme.js"></script>
 </body>
 </html>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>

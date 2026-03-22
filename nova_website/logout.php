@@ -126,5 +126,6 @@ header("Expires: 0");
 
 </main>
 
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>
