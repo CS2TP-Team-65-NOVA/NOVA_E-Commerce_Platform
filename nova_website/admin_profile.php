@@ -127,7 +127,8 @@ function safe($val) {
     <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="admin_style.css">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
@@ -151,6 +152,9 @@ function safe($val) {
 
         <!-- RIGHT SIDE (role-based, consistent pattern) -->
         <div class="nav-right">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <a href="register.php" class="nav-link">Register</a>
@@ -210,134 +214,116 @@ function safe($val) {
             <h1>My Profile</h1>
             <p class="welcome-text">Manage your account information and security settings</p>
         </div>
-
-        <div class="profile-summary-row">
-            <div class="profile-mini-card">
-                <div class="mini-number">#<?php echo safe($currentData['user_id'] ?? ''); ?></div>
-                <div class="mini-label">Admin ID</div>
-            </div>
-
-            <div class="profile-mini-card">
-                <div class="mini-number">Admin</div>
-                <div class="mini-label">Account Type</div>
-            </div>
-
-            <div class="profile-mini-card">
-                <div class="mini-number"><?php echo safe($currentData['email'] ?? ''); ?></div>
-                <div class="mini-label">Email Address</div>
-            </div>
-
-            <div class="profile-mini-card">
-                <div class="mini-number"><?php echo date('M Y', strtotime($currentData['created_at'] ?? date('Y-m-d'))); ?></div>
-                <div class="mini-label">Member Since</div>
-            </div>
-        </div>
-
-        <div class="profile-two-column">
-            <div class="dashboard-panel compact-panel">
-                <div class="panel-header">
-                    <h2>Account Information</h2>
-                    <span class="category-tag">Administrator</span>
-                </div>
-
-                <div class="profile-info-list">
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Full Name</span>
-                        <span class="profile-info-value"><?php echo safe($currentData['full_name'] ?? ''); ?></span>
+        
+        <div class="profile-container">
+            <!-- Left Column: Profile Information & Update -->
+            <div>
+                <!-- Profile Information Card -->
+                <div class="profile-info-card">
+                    <h3 style="margin: 0 0 20px 0; color: #2d1b69; font-family: 'Belleza', Arial, sans-serif;">
+                        Account Information
+                    </h3>
+                    
+                    <div class="profile-info-item">
+                        <span class="info-label">Full Name</span>
+                        <span class="info-value"><?php echo safe($currentData['full_name'] ?? ''); ?></span>
                     </div>
-
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Email Address</span>
-                        <span class="profile-info-value"><?php echo safe($currentData['email'] ?? ''); ?></span>
+                    
+                    <div class="profile-info-item">
+                        <span class="info-label">Email Address</span>
+                        <span class="info-value"><?php echo safe($currentData['email'] ?? ''); ?></span>
                     </div>
-
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">User ID</span>
-                        <span class="profile-info-value">#<?php echo safe($currentData['user_id'] ?? ''); ?></span>
+                    
+                    <div class="profile-info-item">
+                        <span class="info-label">User ID</span>
+                        <span class="info-value">#<?php echo safe($currentData['user_id'] ?? ''); ?></span>
                     </div>
-
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Member Since</span>
-                        <span class="profile-info-value"><?php echo date('F d, Y', strtotime($currentData['created_at'] ?? date('Y-m-d'))); ?></span>
+                    
+                    <div class="profile-info-item">
+                        <span class="info-label">Member Since</span>
+                        <span class="info-value">
+                            <?php echo date('F d, Y', strtotime($currentData['created_at'] ?? date('Y-m-d'))); ?>
+                        </span>
                     </div>
-
-                    <div class="profile-info-row">
-                        <span class="profile-info-label">Role</span>
-                        <span class="profile-info-value">Administrator</span>
+                    
+                    <div class="profile-info-item">
+                        <span class="info-label">Account Type</span>
+                        <span class="info-value">Administrator</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="dashboard-panel compact-panel">
-                <div class="panel-header">
-                    <h2>Update Profile</h2>
-                    <span style="color:#666;font-size:14px;">Edit your details</span>
+                
+                <!-- Update Profile Form -->
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h2>Update Profile</h2>
+                    </div>
+                    
+                    <?php if ($updateMessage !== ""): ?>
+                        <div class="message <?php echo $updateSuccess ? 'success' : 'error'; ?>">
+                            <?php echo safe($updateMessage); ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <form method="post" action="admin_profile.php">
+                        <input type="hidden" name="action" value="update_profile">
+                        
+                        <div class="form-group">
+                            <label for="full_name">Full Name *</label>
+                            <input type="text" id="full_name" name="full_name" 
+                                   value="<?php echo safe($currentData['full_name'] ?? ''); ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" 
+                                   value="<?php echo safe($currentData['email'] ?? ''); ?>" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Update Profile</button>
+                    </form>
                 </div>
-
-                <?php if ($updateMessage !== ""): ?>
-                    <div class="message <?php echo $updateSuccess ? 'success' : 'error'; ?>">
-                        <?php echo safe($updateMessage); ?>
-                    </div>
-                <?php endif; ?>
-
-                <form method="post" action="admin_profile.php">
-                    <input type="hidden" name="action" value="update_profile">
-
-                    <div class="form-group">
-                        <label for="full_name">Full Name *</label>
-                        <input type="text" id="full_name" name="full_name"
-                               value="<?php echo safe($currentData['full_name'] ?? ''); ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email"
-                               value="<?php echo safe($currentData['email'] ?? ''); ?>" required>
-                    </div>
-
-                    <button type="submit" class="add-btn">Save Changes</button>
-                </form>
             </div>
-        </div>
-
-        <div class="dashboard-panel">
-            <div class="panel-header">
-                <h2>Change Password</h2>
-                <span class="category-tag">Security</span>
+            
+            <!-- Right Column: Change Password -->
+            <div>
+                <div class="dashboard-panel">
+                    <div class="panel-header">
+                        <h2>Change Password</h2>
+                    </div>
+                    
+                    <?php if ($passwordMessage !== ""): ?>
+                        <div class="message <?php echo $passwordSuccess ? 'success' : 'error'; ?>">
+                            <?php echo safe($passwordMessage); ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <form method="post" action="admin_profile.php">
+                        <input type="hidden" name="action" value="change_password">
+                        
+                        <div class="form-group">
+                            <label for="current_password">Current Password *</label>
+                            <input type="password" id="current_password" name="current_password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_password">New Password *</label>
+                            <input type="password" id="new_password" name="new_password" required 
+                                   minlength="6"
+                                   placeholder="At least 6 characters">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm New Password *</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Change Password</button>
+                    </form>
+                </div>
             </div>
-
-            <?php if ($passwordMessage !== ""): ?>
-                <div class="message <?php echo $passwordSuccess ? 'success' : 'error'; ?>">
-                    <?php echo safe($passwordMessage); ?>
-                </div>
-            <?php endif; ?>
-
-            <form method="post" action="admin_profile.php">
-                <input type="hidden" name="action" value="change_password">
-
-                <div class="profile-form-grid">
-                    <div class="form-group">
-                        <label for="current_password">Current Password *</label>
-                        <input type="password" id="current_password" name="current_password" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="new_password">New Password *</label>
-                        <input type="password" id="new_password" name="new_password"
-                               required minlength="6" placeholder="At least 6 characters">
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="confirm_password">Confirm New Password *</label>
-                        <input type="password" id="confirm_password" name="confirm_password" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="add-btn">Change Password</button>
-            </form>
-        </div>
+        </div> <!-- end .profile-container -->
     </main>
-</div>
+</div> <!-- end .admin-layout -->
 
 <!-- GLOBAL NOVA FOOTER -->
 <footer class="nova-footer">
@@ -467,6 +453,6 @@ document.getElementById('new_password').addEventListener('input', function(e) {
     strength.style.color = color;
 });
 </script>
-
+<script src="theme.js"></script>
 </body>
 </html>

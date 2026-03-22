@@ -8,197 +8,39 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin
     exit();
 }
 
-$error = '';
-$success = '';
-
-// Handle status updates
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
-    $order_id = (int)($_POST['order_id'] ?? 0);
-    $new_status = trim($_POST['delivery_status'] ?? '');
-
-    $allowed_statuses = ['processing', 'packed', 'shipped', 'delivered', 'cancelled'];
-
-    if ($order_id <= 0) {
-        $error = "Invalid order.";
-    } elseif (!in_array($new_status, $allowed_statuses, true)) {
-        $error = "Invalid order status.";
-    } else {
-        try {
-            $stmt = $conn->prepare("UPDATE orders SET delivery_status = ? WHERE order_id = ?");
-            $stmt->bind_param("si", $new_status, $order_id);
-
-            if ($stmt->execute()) {
-                $success = "Order status updated successfully.";
-            } else {
-                $error = "Failed to update status.";
-            }
-        } catch (Exception $e) {
-            $error = "Failed to update status.";
-        }
-    }
-}
-
-// AJAX: load order details into orders modal
-if (isset($_GET['ajax']) && $_GET['ajax'] === 'order_details' && isset($_GET['order_id'])) {
-    $orderId = (int) $_GET['order_id'];
-
-    $orderSql = "
-        SELECT 
-            o.order_id,
-            o.order_number,
-            o.order_date,
-            o.total_amount,
-            o.payment_status,
-            o.delivery_status,
-            u.full_name,
-            u.email
-        FROM orders o
-        LEFT JOIN users u ON o.user_id = u.user_id
-        WHERE o.order_id = ?
-    ";
-
-    $stmt = $conn->prepare($orderSql);
-    $stmt->bind_param("i", $orderId);
-    $stmt->execute();
-    $orderResult = $stmt->get_result();
-    $order = $orderResult->fetch_assoc();
-
-    if (!$order) {
-        echo '<div class="orders-modal-loading">Order not found.</div>';
-        exit();
-    }
-
-    $itemsSql = "
-        SELECT 
-            oi.quantity,
-            oi.price,
-            pv.size_ml,
-            p.name AS product_name
-        FROM order_items oi
-        LEFT JOIN product_versions pv ON oi.size_id = pv.size_id
-        LEFT JOIN products p ON pv.product_id = p.product_id
-        WHERE oi.order_id = ?
-    ";
-
-    $stmt = $conn->prepare($itemsSql);
-    $stmt->bind_param("i", $orderId);
-    $stmt->execute();
-    $itemsResult = $stmt->get_result();
-    ?>
-
-    <div class="orders-modal-grid">
-        <div class="orders-modal-card">
-            <h3>Order Information</h3>
-            <div class="orders-modal-line"><strong>Order Number:</strong> #<?php echo htmlspecialchars($order['order_number']); ?></div>
-            <div class="orders-modal-line"><strong>Order Date:</strong> <?php echo date('M d, Y', strtotime($order['order_date'])); ?></div>
-            <div class="orders-modal-line">
-                <strong>Delivery Status:</strong>
-                <span class="orders-status-pill orders-status-<?php echo htmlspecialchars($order['delivery_status']); ?>">
-                    <?php echo htmlspecialchars(ucfirst($order['delivery_status'])); ?>
-                </span>
-            </div>
-            <div class="orders-modal-line"><strong>Payment Status:</strong> <?php echo htmlspecialchars(ucfirst($order['payment_status'])); ?></div>
-        </div>
-
-        <div class="orders-modal-card">
-            <h3>Customer Information</h3>
-            <div class="orders-modal-line"><strong>Name:</strong> <?php echo htmlspecialchars($order['full_name'] ?? 'Unknown Customer'); ?></div>
-            <div class="orders-modal-line"><strong>Email:</strong> <?php echo htmlspecialchars($order['email'] ?? 'No email'); ?></div>
-        </div>
-
-        <div class="orders-modal-card">
-            <h3>Update Delivery Status</h3>
-
-            <form method="post" action="admin_orders.php" class="orders-modal-actions">
-                <input type="hidden" name="order_id" value="<?php echo (int)$order['order_id']; ?>">
-                <input type="hidden" name="update_status" value="1">
-
-                <button type="submit" name="delivery_status" value="processing" class="orders-action-btn">
-                    Processing
-                </button>
-
-                <button type="submit" name="delivery_status" value="packed" class="orders-action-btn">
-                    Packed
-                </button>
-
-                <button type="submit" name="delivery_status" value="shipped" class="orders-action-btn">
-                    Shipped
-                </button>
-
-                <button type="submit" name="delivery_status" value="delivered" class="orders-action-btn">
-                    Delivered
-                </button>
-
-                <button type="submit" name="delivery_status" value="cancelled" class="orders-action-btn orders-action-btn-danger">
-                    Cancel
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <div class="orders-modal-card">
-        <h3>Order Items</h3>
-
-        <table class="orders-modal-table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($item = $itemsResult->fetch_assoc()): ?>
-                    <tr>
-                        <td>
-                            <div class="product-name">
-                                <?php echo htmlspecialchars($item['product_name'] ?? 'Unknown Product'); ?>
-                            </div>
-                            <div class="product-desc">
-                                <?php echo htmlspecialchars($item['size_ml'] ?? ''); ?>ml
-                            </div>
-                        </td>
-                        <td><?php echo (int)$item['quantity']; ?></td>
-                        <td>£<?php echo number_format((float)$item['price'], 2); ?></td>
-                        <td>£<?php echo number_format((float)$item['price'] * (int)$item['quantity'], 2); ?></td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-
-        <div class="orders-modal-total">
-            Total: £<?php echo number_format((float)$order['total_amount'], 2); ?>
-        </div>
-    </div>
-
-    <?php
-    exit();
-}
-
 // Fetch orders
 $orders = [];
 try {
     $stmt = $conn->prepare("
-        SELECT 
-            o.order_id, 
-            o.order_number, 
-            o.order_date, 
-            o.total_amount, 
-            o.payment_status, 
-            o.delivery_status,
-            CONCAT(u.full_name, ' (', u.email, ')') AS customer_name,
-            COUNT(oi.order_items_id) AS item_count
+        SELECT o.order_id, o.order_number, o.order_date, o.total_amount, 
+               o.payment_status, o.delivery_status,
+               CONCAT(u.full_name, ' (', u.email, ')') as customer_name,
+               COUNT(oi.order_items_id) as item_count
         FROM orders o
         LEFT JOIN users u ON o.user_id = u.user_id
         LEFT JOIN order_items oi ON o.order_id = oi.order_id
-        GROUP BY o.order_id, o.order_number, o.order_date, o.total_amount, o.payment_status, o.delivery_status, u.full_name, u.email
+        GROUP BY o.order_id
         ORDER BY o.order_date DESC
     ");
     $stmt->execute();
     $orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 } catch (Exception $e) {
     $error = "Failed to load orders.";
+}
+
+// Handle status updates
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
+    $order_id   = intval($_POST['order_id']);
+    $new_status = $_POST['delivery_status'];
+
+    try {
+        $stmt = $conn->prepare("UPDATE orders SET delivery_status = ? WHERE order_id = ?");
+        $stmt->bind_param("si", $new_status, $order_id);
+        $stmt->execute();
+        $success = "Order status updated successfully.";
+    } catch (Exception $e) {
+        $error = "Failed to update status.";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -209,33 +51,44 @@ try {
 
     <title>Manage Orders</title>
 
+    <!-- Google Belleza Font (same as other pages) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="style.css?v=4">
+    <!-- Global + admin styles -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="admin_style.css">
 
+    <!-- NOVA favicon -->
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
 </head>
 <body>
 
+<!-- HEADER: same navbar pattern as other pages -->
 <header id="main-header">
     <nav id="navbar">
 
+        <!-- LEFT SIDE -->
         <div class="nav-left">
             <a href="index.php" class="nav-link">Home</a>
             <a href="about.php" class="nav-link">About</a>
             <a href="perfumes.php" class="nav-link">Perfumes</a>
         </div>
 
+        <!-- CENTER LOGO -->
         <a href="index.php" class="logo-link">
             <img src="nova_logo_black.png" id="logo" alt="NOVA Logo">
         </a>
 
+        <!-- RIGHT SIDE (role-based, same structure as other pages) -->
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
+            <!-- Guest -->
             <a href="register.php" class="nav-link">Register</a>
             <a href="login.php" class="nav-link">Log in</a>
 
@@ -249,6 +102,7 @@ try {
 
             <?php if ($role === 'admin'): ?>
 
+                <!-- ADMIN: show Admin Dashboard link + admin account icon + basket -->
                 <a href="admin_dashboard.php" class="nav-link active">Admin Dashboard</a>
 
                 <a href="admin_profile.php" class="account-link" aria-label="Admin account">
@@ -263,6 +117,7 @@ try {
 
             <?php else: ?>
 
+                <!-- CUSTOMER: profile + basket -->
                 <a href="customer_profile.php" class="account-link" aria-label="My account">
                     <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
                     <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
@@ -281,6 +136,8 @@ try {
     </nav>
 </header>
 
+
+<!-- ADMIN LAYOUT -->
 <div class="admin-layout">
     <div class="sidebar">
         <a href="admin_dashboard.php">Dashboard</a>
@@ -295,164 +152,106 @@ try {
     
     <main class="admin-main">
         <div class="admin-header">
-            <h1>Orders Management</h1>
-            <p class="welcome-text">Manage customer orders and delivery progress</p>
+            <h1>Manage Orders</h1>
+            <p class="welcome-text">
+                Welcome back, <?php echo htmlspecialchars($_SESSION['full_name'] ?? 'Admin'); ?>!
+                Here’s an overview of recent orders.
+            </p>
         </div>
         
-        <?php if (!empty($error)): ?>
+        <?php if (isset($error)): ?>
             <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-        
-        <?php if (!empty($success)): ?>
+        <?php if (isset($success)): ?>
             <div class="success-message"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
         
-        <div class="stats-grid">
+        <!-- STATS -->
+        <div class="stats-cards">
             <div class="stat-card">
-                <div class="number"><?php echo count($orders); ?></div>
                 <h3>Total Orders</h3>
+                <div class="number"><?php echo count($orders); ?></div>
             </div>
-            
             <div class="stat-card">
+                <h3>Pending</h3>
                 <div class="number">
                     <?php echo count(array_filter($orders, fn($o) => $o['delivery_status'] === 'processing')); ?>
                 </div>
-                <h3>Pending</h3>
             </div>
-            
             <div class="stat-card">
+                <h3>Shipped</h3>
                 <div class="number">
                     <?php echo count(array_filter($orders, fn($o) => $o['delivery_status'] === 'shipped')); ?>
                 </div>
-                <h3>Shipped</h3>
             </div>
-            
             <div class="stat-card">
-                <div class="number">£<?php echo number_format(array_sum(array_column($orders, 'total_amount')), 2); ?></div>
                 <h3>Revenue</h3>
+                <div class="number">£<?php echo number_format(array_sum(array_column($orders, 'total_amount')), 2); ?></div>
             </div>
         </div>
         
-        <div class="dashboard-panel">
-            <div class="panel-header">
-                <h2>All Orders</h2>
-                <span style="color: #666; font-size: 14px;">Most recent first</span>
-            </div>
-
-            <?php if (!empty($orders)): ?>
-                <div class="users-table-container">
-                    <table class="users-table">
-                        <thead>
+        <!-- ORDERS TABLE -->
+        <div class="orders-table-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($orders)): ?>
+                        <tr><td colspan="7" class="empty-row" style="text-align: center; padding: 40px;"> No orders found</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($orders as $order): ?>
                             <tr>
-                                <th>Order</th>
-                                <th>Customer</th>
-                                <th>Status</th>
-                                <th>Amount</th>
-                                <th>Actions</th>
+                                <td><strong>#<?php echo htmlspecialchars($order['order_number']); ?></strong></td>
+                                <td><?php echo htmlspecialchars($order['customer_name']); ?></td>
+                                <td><?php echo date('M d, Y', strtotime($order['order_date'])); ?></td>
+                                <td><?php echo (int)$order['item_count']; ?> items</td>
+                                <td><strong>£<?php echo number_format($order['total_amount'], 2); ?></strong></td>
+                                <td>
+                                    <span class="status-badge status-<?php echo htmlspecialchars($order['delivery_status']); ?>">
+                                        <?php echo ucfirst($order['delivery_status']); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-view" onclick="viewOrder(<?php echo (int)$order['order_id']; ?>)">View</button>
+                                        <form method="POST" style="display: inline;">
+                                            <input type="hidden" name="order_id" value="<?php echo (int)$order['order_id']; ?>">
+                                            <input type="hidden" name="delivery_status" value="shipped">
+                                            <button type="submit" name="update_status" class="btn-ship">Ship</button>
+                                        </form>
+                                        <button class="btn-cancel" onclick="cancelOrder(<?php echo (int)$order['order_id']; ?>)">Cancel</button>
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($orders as $order): ?>
-                                <tr>
-                                    <td>
-                                        <div class="product-name">
-                                            #<?php echo htmlspecialchars($order['order_number']); ?>
-                                        </div>
-                                        <div class="product-desc">
-                                            <?php echo date('M d, Y', strtotime($order['order_date'])); ?>
-                                        </div>
-                                        <div class="product-desc">
-                                            <?php echo (int)$order['item_count']; ?> items
-                                        </div>
-                                    </td>
-                                    
-                                    <td>
-                                        <div class="product-name">
-                                            <?php echo htmlspecialchars($order['customer_name']); ?>
-                                        </div>
-                                    </td>
-                                    
-                                    <td>
-                                        <span class="category-tag">
-                                            <?php echo htmlspecialchars(ucfirst($order['delivery_status'])); ?>
-                                        </span>
-                                    </td>
-                                    
-                                    <td>
-                                        <span class="variants-badge">
-                                            £<?php echo number_format($order['total_amount'], 2); ?>
-                                        </span>
-                                    </td>
-                                    
-                                    <td>
-                                        <div class="action-buttons">
-                                            <button type="button" class="add-btn" onclick="openOrdersModal(<?php echo (int)$order['order_id']; ?>)">
-                                                View
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            <?php else: ?>
-                <div class="empty-state">
-                    <p>No orders found.</p>
-                </div>
-            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </main>
 </div>
 
-<div id="ordersModal" class="orders-modal">
-    <div class="orders-modal-content">
-        <button type="button" class="orders-modal-close" onclick="closeOrdersModal()">&times;</button>
-        
-        <div class="orders-modal-header">
+<!-- MODAL -->
+<div id="orderModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
             <h2>Order Details</h2>
-            <p>View full order information</p>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
-
-        <div id="ordersModalBody" class="orders-modal-body">
-            <div class="orders-modal-loading">Loading order details...</div>
+        <div class="modal-body" id="orderDetailsContent">
+            <!-- Content loaded via JavaScript -->
         </div>
     </div>
 </div>
-
-<script>
-function openOrdersModal(orderId) {
-    const modal = document.getElementById('ordersModal');
-    const modalBody = document.getElementById('ordersModalBody');
-
-    modal.style.display = 'flex';
-    modalBody.innerHTML = '<div class="orders-modal-loading">Loading order details...</div>';
-
-    fetch('admin_orders.php?ajax=order_details&order_id=' + orderId)
-        .then(response => response.text())
-        .then(data => {
-            modalBody.innerHTML = data;
-        })
-        .catch(() => {
-            modalBody.innerHTML = '<div class="orders-modal-loading">Failed to load order details.</div>';
-        });
-}
-
-function closeOrdersModal() {
-    document.getElementById('ordersModal').style.display = 'none';
-}
-
-window.addEventListener('click', function(e) {
-    const modal = document.getElementById('ordersModal');
-    if (e.target === modal) {
-        closeOrdersModal();
-    }
-});
-</script>
-
-</body>
-</html>
-
 
 <!-- GLOBAL NOVA FOOTER (same as other pages) -->
 <footer class="nova-footer">
@@ -568,6 +367,6 @@ window.onclick = function(e) {
     }
 }
 </script>
-
+<script src="theme.js"></script>
 </body>
 </html>

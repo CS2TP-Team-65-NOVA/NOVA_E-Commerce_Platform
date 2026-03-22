@@ -2,15 +2,85 @@
 session_start();
 require_once 'config.php';
 
+// Check if user is admin
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin') {
+    header('Location: login.php');
+    exit();
+}
+
+$addMessage = "";
+$error = "";
+$delUserError= "";
+
+// Delete User
+if (isset($_GET['delete']))  {
+    $userDeleteID = (int)$_GET['delete'];
+
+    // Check if user is trying to delete own account. 
+
+    if($userDeleteID === (int)$_SESSION['user_id']) {
+        $delUserError = "You cannot delete your account.";
+    } else {
+
+    // Check if user is trying to delete an admin account.
+
+        $checkTarget =$conn->prepare("SELECT role FROM users WHERE user_id = ?");
+        $checkTarget->bind_param("i", $userDeleteID);
+        $checkTarget->execute();
+        $checkTargetResult = $checkTarget->get_result();
+
+        if ($targetRole = $checkTargetResult->fetch_assoc()) {
+
+            $role = 'admin';
+            if ($targetRole['role'] === $role) {
+                $delUserError = "You do not have permission to delete another admin.";
+
+            } else {
+                $checkUserOrders =$conn->prepare("SELECT COUNT(*) AS user_total FROM orders WHERE user_id = ?");
+                $checkUserOrders->bind_param("i", $userDeleteID);
+                $checkUserOrders->execute();
+                $checkUserOrdersResult = $checkUserOrders->get_result();
+
+                if ($numOfOrders = $checkUserOrdersResult->fetch_assoc()) {
+
+                    if ((int)$numOfOrders['user_total'] >= 1) {
+                        $delUserError = "Unable to delete a user that has an existing order.";
+
+                    } else {
+                        $deleteTarget =$conn->prepare("DELETE FROM users WHERE user_id = ?");
+                        $deleteTarget->bind_param("i", $userDeleteID);
+
+                    if (!$deleteTarget->execute()) {
+                        $delUserError = "Error deleting user.";
+
+                    } else {
+                    $delUserError = "User deleted successfully.";
+                    }
+
+                    $deleteTarget->close();
+            }
+        } else {
+            $delUserError = "Error checking user orders.";
+        }
+
+        $checkUserOrders->close();
+
+    }
+
+    } else {
+        $delUserError = "Unable to find user.";
+    }
+
+    $checkTarget->close();
+    }
+}
+
 $stats = [
     'totalUsers' => 0,
     'customers' => 0,
     'admins' => 0,
     'newThisMonth' => 0
 ];
-
-$addMessage = "";
-$error = "";
 
 $totalUsersResult = mysqli_query($conn, "SELECT COUNT(*) AS total FROM users");
 if ($totalUsersResult) {
@@ -40,10 +110,69 @@ $usersResult = mysqli_query($conn, "
     ORDER BY u.user_id DESC
 ");
 
-// Check if user is admin
-if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin') {
-    header('Location: login.php');
-    exit();
+
+// Create Admin Account
+
+if (isset($_POST['action']) && $_POST['action'] === 'add_admin' ) {
+
+    // Get and trim inputs from the form
+  
+    $fullName      = trim($_POST['full_name'] ?? '');
+    $email         = trim($_POST['email'] ?? '');
+    $passwordPlain = trim($_POST['password'] ?? '');
+
+    if ($fullName === '' || $email === '' || $passwordPlain === '') {
+        $addMessage = "All fields are required!";
+    } else {
+        // Hash password (fits into VARCHAR(64))
+        $passwordHashed = password_hash($passwordPlain, PASSWORD_DEFAULT);
+
+        // 1) Check if email already exists
+        //    Columns must match the DB: email
+        $sqlCheck = "SELECT user_id FROM users WHERE email = ? LIMIT 1";
+
+        if ($check = $conn->prepare($sqlCheck)) {
+            $check->bind_param('s', $email);
+            $check->execute();
+            $check->store_result();
+
+            if ($check->num_rows > 0) {
+                $addMessage = "Email is already taken.";
+            } else {
+                // 2) Insert new user
+                //    Map to full_name, email, password, role (admin)
+                $sqlInsert = "
+                    INSERT INTO users (full_name, email, password, role)
+                    VALUES (?, ?, ?, 'admin')
+                ";
+                if ($stmt = $conn->prepare($sqlInsert)) {
+                    $stmt->bind_param('sss', $fullName, $email, $passwordHashed);
+
+                    if ($stmt->execute()) {
+                        // Success
+                        $addMessage = "Successfully created Admin Account."; 
+
+                    } else {
+                        $addMessage = "A database error occurred while creating admin account.";
+                    }
+
+                    $stmt->close();
+                } else {
+                    $addMessage = "Could not prepare insert statement.";
+                }
+            }
+
+            $check->close();
+        } else {
+            $addMessage = "Could not prepare check statement.";
+        }
+    }
+}
+
+if (isset($_POST['generate_code'])) {
+    $_SESSION['generated_admin_code'] = strtoupper(substr(bin2hex(random_bytes(3)), 0, 6));
+    $_SESSION['generated_admin_code_time'] = time();
+    $_SESSION['show_admin_code'] = true;
 }
 
 ?>
@@ -87,7 +216,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin
 
         <!-- RIGHT SIDE (role-based, same structure as other pages) -->
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
+            
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <!-- Guest -->
@@ -191,6 +323,10 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin
         <span style="color: #666; font-size: 14px;">Newest first</span>
     </div>
 
+    <?php if (!empty($delUserError)): ?>
+        <div class="error-message"><?php echo htmlspecialchars($delUserError); ?></div>
+    <?php endif; ?>
+
     <?php if ($usersResult && mysqli_num_rows($usersResult) > 0): ?>
         <div class="users-table-container">
             <table class="users-table">
@@ -243,41 +379,94 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin
 </div>
 
     <!-- Add Admin Form -->
-    <div class="dashboard-panel">
-        <div class="panel-header">
-            <h2>Add Admin</h2>
-            <span style="color: #666; font-size: 14px;">Create a new admin account</span>
-        </div>
-        
-        <?php if (!empty($addMessage)): ?>
-            <div class="error-message"><?php echo htmlspecialchars($addMessage); ?></div>
-        <?php endif; ?>
-        
-        <form method="post" action="admin_users.php">
-            <input type="hidden" name="action" value="add_admin">
-            
-            <div class="form-group">
-                <label for="full_name">Full Name *</label>
-                <input type="text" id="full_name" name="full_name" required placeholder="Enter full name">
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email Address *</label>
-                <input type="email" id="email" name="email" required placeholder="Enter email address">
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password *</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password">
-            </div>
-            
-            <button type="submit" class="add-btn">Add Admin</button>
-            
-            <div class="form-note">
-                Create a new admin account for staff access.
-            </div>
-        </form>
+<div class="dashboard-panel">
+    <div class="panel-header">
+        <h2>Add Admin</h2>
+        <span style="color: #666; font-size: 14px;">Create a new admin account</span>
     </div>
+
+    <?php if (!empty($addMessage)): ?>
+        <div class="error-message"><?php echo htmlspecialchars($addMessage); ?></div>
+    <?php endif; ?>
+
+    <?php if (
+        isset($_SESSION['generated_admin_code'], $_SESSION['generated_admin_code_time']) &&
+        (time() - $_SESSION['generated_admin_code_time']) < 60
+    ): ?>
+        <?php
+            $remaining = 60 - (time() - $_SESSION['generated_admin_code_time']);
+        ?>
+
+        <div class="code-card">
+
+            <!-- helper text -->
+            <div class="code-helper">
+                Generate a temporary access code for admin registration.
+            </div>
+
+            <!-- code row -->
+            <div class="code-row">
+                <div class="code-label">ACCESS CODE</div>
+
+                <div class="code-value-wrapper">
+                    <span class="code-value" id="code">
+                        <?php echo $_SESSION['generated_admin_code']; ?>
+                    </span>
+
+                    <!-- copy icon -->
+                    <span class="copy-icon" onclick="copyCode()">
+                        <img src="copy_icon.png" class="copy-default">
+                        <img src="active_copy_icon.png" class="copy-active">
+                    </span>
+                </div>
+
+                <div class="code-timer">
+                    Expires in <span id="timer"><?php echo $remaining; ?></span>s
+                </div>
+
+                <!-- feedback -->
+                <div id="copy-feedback" class="copy-feedback">Copied</div>
+            </div>
+
+        </div>
+
+        <script>
+        let t = <?php echo $remaining; ?>;
+        let timer = document.getElementById("timer");
+
+        let interval = setInterval(() => {
+            t--;
+            if (t <= 0) {
+                clearInterval(interval);
+                timer.innerText = "0";
+                document.getElementById("code").innerText = "EXPIRED";
+            } else {
+                timer.innerText = t;
+            }
+        }, 1000);
+
+        function copyCode() {
+            const text = document.getElementById("code").innerText;
+            navigator.clipboard.writeText(text);
+
+            const feedback = document.getElementById("copy-feedback");
+            feedback.classList.add("show");
+
+            setTimeout(() => {
+                feedback.classList.remove("show");
+            }, 1200);
+        }
+        </script>
+
+    <?php endif; ?>
+
+    <!-- BUTTON MOVED TO BOTTOM -->
+    <form method="post" style="margin-top: 25px; text-align: center;">
+        <button type="submit" name="generate_code" class="generate-btn">
+            Generate Access Code
+        </button>
+    </form>
+
 </div>
 
 
@@ -374,6 +563,31 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? 'customer') !== 'admin
 
     </div>
 </footer>
+<script src="theme.js"></script>
+<script>
+document.getElementById("generateForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop reload
 
+    fetch("admin_users.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "generate_code=1"
+    })
+    .then(res => res.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const newPanel = doc.querySelectorAll(".dashboard-panel")[1];
+        const currentPanel = document.querySelectorAll(".dashboard-panel")[1];
+
+        if (newPanel && currentPanel) {
+            currentPanel.innerHTML = newPanel.innerHTML;
+        }
+    });
+});
+</script>
 </body>
 </html>

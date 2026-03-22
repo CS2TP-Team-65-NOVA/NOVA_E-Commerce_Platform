@@ -61,8 +61,8 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
     <!-- Global + admin styles -->
-    <link rel="stylesheet" type="text/css" href="style.css?v=2">
-   
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="admin_style.css">
 
     <!-- NOVA favicon -->
     <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
@@ -87,7 +87,9 @@ try {
 
         <!-- RIGHT SIDE (role-based, same structure as other pages) -->
         <div class="nav-right">
-
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <!-- Guest -->
@@ -224,7 +226,7 @@ try {
                         </tbody>
                     </table>
                 <?php else: ?>
-                    <p style="text-align: center; color: #666; padding: 20px;">No recent orders found.</p>
+                    <p class="empty-row" style="text-align: center; padding: 20px;">No recent orders found.</p>
                 <?php endif; ?>
             </div>
 
@@ -367,6 +369,6 @@ try {
 
     </div>
 </footer>
-
+<script src="theme.js"></script>
 </body>
 </html>
