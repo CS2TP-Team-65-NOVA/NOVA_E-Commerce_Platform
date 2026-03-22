@@ -6559,14 +6559,23 @@ body.nova-intro-pending #nova-chatbot {
     --cb-muted: var(--nova-muted, #777777);
     --cb-radius: var(--btn-radius, 10px);
     --cb-shadow: var(--nova-shadow-soft, 0 4px 20px rgba(0, 0, 0, 0.05));
+    /* Set by chatbot.js from documentElement.clientWidth (scrollbar-safe); fallback avoids vw-only sizing. */
+    --nova-chatbot-safe-w: min(400px, calc(100vw - 48px));
+    --nova-chatbot-panel-max-h: min(620px, calc(100dvh - 220px));
+    --nova-chatbot-panel-w-frac: 0.8;
+    --nova-chatbot-panel-max-w: 320px;
+    --nova-chatbot-font-scale: 1;
+    --cb-fs: max(11px, calc(12px * var(--nova-chatbot-font-scale)));
+    --cb-fs-md: max(10px, calc(11px * var(--nova-chatbot-font-scale)));
+    --cb-fs-sm: max(10px, calc(10px * var(--nova-chatbot-font-scale)));
+    --cb-fs-xs: max(9px, calc(9px * var(--nova-chatbot-font-scale)));
+    --cb-fs-title: max(13px, calc(14px * var(--nova-chatbot-font-scale)));
     font-family: Arial, Helvetica, sans-serif;
     position: fixed;
-    /* ~3/4 down the viewport, right edge; stays on screen while scrolling */
-    top: 75vh;
     right: max(16px, env(safe-area-inset-right, 0px));
-    bottom: auto;
+    bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    top: auto;
     left: auto;
-    transform: translateY(-50%);
     z-index: 2147483000;
     box-sizing: border-box;
     pointer-events: none;
@@ -6584,6 +6593,8 @@ body.nova-intro-pending #nova-chatbot {
     flex-direction: column;
     align-items: flex-end;
     gap: 10px;
+    max-width: 100%;
+    box-sizing: border-box;
     transform-origin: 50% 100%;
     animation: nova-chatbot-bob 3.2s ease-in-out infinite;
 }
@@ -6630,9 +6641,9 @@ body.nova-intro-pending #nova-chatbot {
     background: var(--cb-bg);
     border: 1px solid var(--cb-border);
     border-radius: 18px;
-    padding: 12px 14px 11px;
+    padding: 9px 11px 8px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(94, 23, 235, 0.06);
-    max-width: min(300px, calc(100vw - 48px));
+    max-width: min(300px, 100%);
     text-align: left;
     animation: nova-chatbot-callout-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -6683,8 +6694,8 @@ body.nova-intro-pending #nova-chatbot {
 
 .nova-chatbot-callout-line {
     display: block;
-    font-size: 13px;
-    line-height: 1.3;
+    font-size: var(--cb-fs-md);
+    line-height: 1.28;
     color: #111111;
     font-weight: 700;
     padding-right: 2px;
@@ -6705,9 +6716,9 @@ body.nova-intro-pending #nova-chatbot {
     user-select: none;
     font-weight: 700;
     letter-spacing: 0.02em;
-    font-size: 11px;
+    font-size: var(--cb-fs-xs);
     color: #ffffff;
-    padding: 8px 12px;
+    padding: 6px 10px;
     border-radius: 999px;
     background: linear-gradient(135deg, #6f35f2 0%, #b286ff 100%);
     box-shadow: 0 10px 24px rgba(94, 23, 235, 0.26);
@@ -6730,13 +6741,11 @@ body.nova-intro-pending #nova-chatbot {
     right: 0;
     bottom: 100%;
     margin-bottom: 14px;
-    /* Wide panels squeeze the 2-column chips + input on common laptop widths */
-    width: min(400px, calc(100vw - 32px));
-    max-width: 100%;
-    max-height: min(620px, calc(82vh - 32px));
+    width: min(var(--nova-chatbot-panel-max-w, 320px), calc(var(--nova-chatbot-safe-w) * var(--nova-chatbot-panel-w-frac, 0.8)));
+    max-height: min(620px, var(--nova-chatbot-panel-max-h, calc(100dvh - 220px)));
     background: #e8e8ed;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 22px;
+    border-radius: 18px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), var(--cb-shadow);
     display: flex;
     flex-direction: column;
@@ -6771,9 +6780,9 @@ body.nova-intro-pending #nova-chatbot {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
+    gap: 8px;
     flex-shrink: 0;
-    padding: 14px 16px;
+    padding: 10px 12px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(232, 232, 237, 0) 100%);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     min-width: 0;
@@ -6787,22 +6796,22 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-title-main {
     display: block;
     font-weight: 700;
-    font-size: 16px;
+    font-size: var(--cb-fs-title);
     color: var(--cb-text);
     letter-spacing: 0.02em;
 }
 
 .nova-chatbot-title-sub {
     display: block;
-    font-size: 12px;
+    font-size: var(--cb-fs-sm);
     color: var(--cb-muted);
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .nova-chatbot-close {
     border: none;
     background: transparent;
-    font-size: 24px;
+    font-size: calc(20px * var(--nova-chatbot-font-scale));
     line-height: 1;
     cursor: pointer;
     color: var(--cb-muted);
@@ -6822,12 +6831,12 @@ body.nova-intro-pending #nova-chatbot {
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 14px 16px 16px;
+    padding: 10px 11px 12px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 8px;
     background: #e8e8ed;
-    min-height: 220px;
+    min-height: 96px;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -6850,7 +6859,7 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-imessage-row {
     display: flex;
     align-items: flex-end;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
     max-width: 100%;
 }
@@ -6859,13 +6868,13 @@ body.nova-intro-pending #nova-chatbot {
     flex-direction: row;
     justify-content: flex-end;
     margin-left: auto;
-    max-width: min(88%, 300px);
+    max-width: min(92%, 280px);
 }
 
 .nova-chatbot-msg-avatar {
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: contain;
     background: linear-gradient(165deg, #ffffff 0%, #f3e8ff 100%);
@@ -6878,7 +6887,7 @@ body.nova-intro-pending #nova-chatbot {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: 2px;
     min-width: 0;
     flex: 1 1 auto;
     max-width: 100%;
@@ -6889,16 +6898,16 @@ body.nova-intro-pending #nova-chatbot {
 }
 
 .nova-chatbot-bubble {
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: var(--cb-fs);
+    line-height: 1.35;
     color: var(--cb-text);
 }
 
 .nova-chatbot-bubble--user {
     background: var(--cb-purple);
     color: #ffffff;
-    padding: 10px 14px 10px 14px;
-    border-radius: 18px;
+    padding: 7px 10px;
+    border-radius: 14px;
     border-bottom-right-radius: 5px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
     max-width: 100%;
@@ -6908,8 +6917,8 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-bubble--bot {
     background: var(--cb-bg);
     border: 1px solid rgba(0, 0, 0, 0.06);
-    padding: 10px 14px;
-    border-radius: 18px;
+    padding: 7px 10px;
+    border-radius: 14px;
     border-bottom-left-radius: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     white-space: pre-wrap;
@@ -6918,7 +6927,7 @@ body.nova-intro-pending #nova-chatbot {
 }
 
 .nova-chatbot-msg-time {
-    font-size: 11px;
+    font-size: var(--cb-fs-xs);
     color: rgba(0, 0, 0, 0.38);
     padding: 0 4px;
     font-variant-numeric: tabular-nums;
@@ -6933,7 +6942,7 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-products {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
     max-width: 100%;
 }
@@ -6941,11 +6950,11 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-product {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
+    gap: 8px;
+    padding: 6px 8px;
     background: var(--cb-bg);
     border: 1px solid var(--cb-border);
-    border-radius: 14px;
+    border-radius: 12px;
     text-decoration: none;
     color: inherit;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -6958,9 +6967,9 @@ body.nova-intro-pending #nova-chatbot {
 }
 
 .nova-chatbot-product-img {
-    flex: 0 0 52px;
-    width: 52px;
-    height: 52px;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
     border-radius: 10px;
     overflow: hidden;
     background: #eee;
@@ -6982,7 +6991,7 @@ body.nova-intro-pending #nova-chatbot {
 
 .nova-chatbot-product-name {
     font-weight: 700;
-    font-size: 13px;
+    font-size: var(--cb-fs-md);
     color: var(--cb-text);
     white-space: nowrap;
     overflow: hidden;
@@ -6990,12 +6999,12 @@ body.nova-intro-pending #nova-chatbot {
 }
 
 .nova-chatbot-product-cat {
-    font-size: 11px;
+    font-size: var(--cb-fs-xs);
     color: var(--cb-muted);
 }
 
 .nova-chatbot-product-price {
-    font-size: 13px;
+    font-size: var(--cb-fs-md);
     font-weight: 600;
     color: var(--cb-purple);
 }
@@ -7003,8 +7012,8 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-suggestions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px 10px;
-    padding: 10px 14px 12px;
+    gap: 6px 8px;
+    padding: 8px 10px 10px;
     background: #e8e8ed;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     align-items: stretch;
@@ -7014,9 +7023,9 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-chip {
     width: 100%;
     min-width: 0;
-    font-size: 12px;
-    line-height: 1.35;
-    padding: 9px 10px;
+    font-size: var(--cb-fs-sm);
+    line-height: 1.3;
+    padding: 6px 8px;
     border-radius: 999px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     background: #ffffff;
@@ -7045,12 +7054,12 @@ body.nova-intro-pending #nova-chatbot {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    padding: 12px 14px 14px;
+    padding: 8px 10px 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.06);
     background: #ffffff;
     box-sizing: border-box;
@@ -7059,11 +7068,11 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-input {
     flex: 1 1 auto;
     min-width: 0;
-    padding: 10px 12px;
-    min-height: 42px;
+    padding: 7px 9px;
+    min-height: 34px;
     border: 1px solid var(--cb-purple);
-    border-radius: 10px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: var(--cb-fs);
     font-family: inherit;
     box-sizing: border-box;
     background: #ffffff;
@@ -7079,14 +7088,14 @@ body.nova-intro-pending #nova-chatbot {
 .nova-chatbot-send {
     flex: 0 0 auto;
     flex-shrink: 0;
-    padding: 0 16px;
-    min-height: 42px;
-    border-radius: 10px;
+    padding: 0 11px;
+    min-height: 34px;
+    border-radius: 8px;
     border: 1px solid var(--cb-purple);
     background: var(--cb-purple);
     color: #fff;
     font-weight: 700;
-    font-size: 14px;
+    font-size: var(--cb-fs);
     line-height: 1.2;
     cursor: pointer;
     font-family: inherit;

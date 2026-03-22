@@ -1,6 +1,13 @@
 <?php
 session_start();
-require_once 'config.php';
+ require_once 'config.php';
+
+ /* Require User To Be Logged in */
+  if(!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+
+  } 
 
 /* 1. Rebuild cart */
 
@@ -21,6 +28,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && !empty($_SESSION[
     $productIds = array_values(array_unique($productIds));
     $sizeIds    = array_values(array_unique($sizeIds));
 
+    // Products
     $productMap = [];
     if (!empty($productIds)) {
         $idList = implode(',', array_map('intval', $productIds));
@@ -33,6 +41,7 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && !empty($_SESSION[
         }
     }
 
+    // Sizes
     $sizeMap = [];
     if (!empty($sizeIds)) {
         $idList = implode(',', array_map('intval', $sizeIds));
@@ -84,20 +93,103 @@ $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = trim($_POST['full_name'] ?? '');
-    $email     = trim($_POST['email']     ?? '');
-    $address   = trim($_POST['address']   ?? '');
-    $city      = trim($_POST['city']      ?? '');
-    $postcode  = trim($_POST['postcode']  ?? '');
-    $payment   = $_POST['payment_method'] ?? '';
+    $email     = trim($_POST['email'] ?? '');
+    $address   = trim($_POST['address'] ?? '');
+    $city      = trim($_POST['city'] ?? '');
+    $postcode  = trim($_POST['postcode'] ?? '');
+    $payment   = trim($_POST['payment_method'] ?? '');
+
+    $issue= [];
 
     if (empty($cartItems)) {
-        $error_message = 'Your basket is empty.';
-    } elseif ($full_name === '' || $email === '' || $address === '' || $city === '' || $postcode === '' || $payment === '') {
-        $error_message = 'Please fill in all required fields.';
-    } else {
+        $issue[] = 'Your basket is empty.';
+    }
+    if ($full_name === '') {
+        $issue[] = "Enter Full Name.";
+    }
+    if ($full_name !== '' && strlen($full_name)< 2) { 
+        $issue[] = "Full Name is too short.";
+    }
+    if ($email === '') {
+        $issue[] = "Enter An Email Address.";
+    }
+    if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $issue[] = "Enter A Valid Email Address.";
+    }
+    if ($address === '') {
+        $issue[] = "Enter An Address.";
+    }
+    if ($address !== '' && strlen($address)< 5) { 
+        $issue[] = "Enter A Valid Address.";
+    }
+    if ($city === '') {
+        $issue[] = "Enter A City.";
+    }
+    if ($city !== '' && !preg_match('/^[a-zA-Z]+(?:[ -][a-zA-Z]+)*$/', $city)) {
+        $issue[] = "Enter A Valid City.";
+    }
+    if ($postcode === '') {
+        $issue[] = "Enter A Postcode.";
+    }
+    if ($postcode !== '' && !preg_match('/^([A-Z]{1,2}[0-9][A-Z0-9]?)\s?[0-9][A-Z]{2}$/i', $postcode)) {
+        $issue[] = "Enter A Valid Postcode.";
+    }
 
-        // ---- INSERT INTO orders ----
-        $userId          = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+    $paymentOptions = ["card", "paypal", "apple_pay", "klarna"];
+    if ($payment === '') {
+        $issue[] = "Choose A Payment Method.";
+    } else if (!in_array($payment, $paymentOptions, true)) {
+        $issue[] = "Pick A Valid Payment Method.";
+    }
+
+    if (!empty($issue)) {
+        $error_message = '<ul>';
+        foreach ($issue as $is) {
+            $error_message .= '<li>' . htmlspecialchars($is) . '</li>';
+        }
+        $error_message .= '</ul>';
+
+    } else {
+    try {
+
+    // Check Stock For All Items
+
+    $conn->begin_transaction();
+    $stockquery =$conn->prepare("SELECT stock_qty FROM inventory WHERE size_id = ?");
+
+    if (!$stockquery) {
+        throw new Exception("Failed to check stock levels.");
+    }
+
+    foreach ($cartItems as $eachItem) {
+        $s_id = (int)$eachItem['size_id'];
+        $qty = (int)$eachItem['qty'];
+
+        if($s_id <= 0) {
+            throw new Exception("Invalid Product Size.");
+        }
+        if($qty <= 0) {
+            throw new Exception("Invalid Quantity.");
+        }
+
+        $stockquery->bind_param("i", $s_id);
+        $stockquery->execute();
+        $stockResult = $stockquery->get_result();
+        $stockResultRow = $stockResult->fetch_assoc();
+
+        if (!$stockResultRow) {
+            throw new Exception($eachItem['name'] . " is currently unavailable.");
+        }
+
+        $stock = (int)$stockResultRow['stock_qty'];
+        if ($stock < $qty ) {
+            throw new Exception($eachItem['name'] . " (" . $eachItem['size_label'] . ") has only " . $stock . " in stock.");
+        }
+    }
+    $stockquery->close();
+
+            // ---- INSERT INTO orders ----
+        $userId          = (int)$_SESSION['user_id'];
         $orderNumber     = 'ORD-' . strtoupper(substr(uniqid(), -6));
         $shippingAddress = $address . ', ' . $city . ', ' . $postcode;
 
@@ -115,6 +207,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $orderId = $conn->insert_id;
                 $stmt->close();
 
+            // ---- INSERT INTO payments ----
+
+        $payStmt = $conn->prepare("
+            INSERT INTO payments
+                (order_id, payment_method, currency, total_amount,
+                 payment_status, payment_date)
+            VALUES (?, ?, 'GBP', ?, 'success', NOW())
+        ");
+
+        if (!$payStmt) {
+            throw new Exception("Could not save payment information.");
+        }
+        $payStmt->bind_param("isd", $orderId, $payment , $subtotal);
+    
+        if (!$payStmt->execute()) {
+            throw new Exception("Error saving payment information.");
+        }
+
+        $payStmt->close();
+
                 // ---- INSERT INTO order_items ----
                 $itemStmt = $conn->prepare("
                     INSERT INTO order_items
@@ -122,7 +234,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES (?, ?, ?, ?, ?)
                 ");
 
-                if ($itemStmt) {
+                if (!$itemStmt) {
+                throw new Exception("Could not create order items.");
+                }
                     foreach ($cartItems as $item) {
                         $sid       = !empty($item['size_id']) ? (int)$item['size_id'] : null;
                         $qty       = (int)$item['qty'];
@@ -130,26 +244,81 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $lineTotal = (float)$item['line_total'];
 
                         $itemStmt->bind_param("iiddd", $orderId, $sid, $qty, $unitPrice, $lineTotal);
-                        $itemStmt->execute();
+                        if (!$itemStmt->execute()) {
+                            throw new Exception("Failed to save order items.");
+                        }
                     }
                     $itemStmt->close();
                 }
-
-                // ---- SUCCESS: clear cart ----
-                $order_success    = true;
-                $_SESSION['cart'] = [];
-                $cartItems        = [];
-                $subtotal         = 0.0;
-
             } else {
-                $error_message = 'Could not place order. Please try again.';
                 $stmt->close();
+                throw new Exception("Could not place order. Please try again.");
             }
-        } else {
-            $error_message = 'Database error. Please try again.';
+    
+    // Reduce Stock and Log Stock Changes
+
+    $reduceStock = $conn->prepare("UPDATE inventory SET stock_qty = stock_qty - ? WHERE size_id = ? AND stock_qty >= ?");
+    $logStock = $conn->prepare("INSERT INTO inventory_logs (size_id, change_type, quantity_changed, quantity_before, quantity_after, reference_type, reference_id) VALUES (?, 'sale', ?, ?, ?, 'order', ?)");
+
+    if (!$reduceStock || !$logStock) {
+        throw new Exception("Failed to update stock levels.");
+    }
+
+    foreach ($cartItems as $eachItem) {
+        $s_id = (int)$eachItem['size_id'];
+        $qty = (int)$eachItem['qty'];
+
+        $checkBeforeStock =$conn->prepare("SELECT stock_qty FROM inventory WHERE size_id = ?");
+
+    if (!$checkBeforeStock) {
+        throw new Exception("Failed to check stock levels.");
+    }
+
+    $checkBeforeStock->bind_param("i", $s_id);
+    $checkBeforeStock->execute();
+    $beforeResult = $checkBeforeStock->get_result();
+    $beforeResultRow = $beforeResult->fetch_assoc();
+
+    if (!$beforeResultRow) {
+            throw new Exception("Failed to check stock record.");
+    }
+
+    $bQty = (int)$beforeResultRow['stock_qty']; 
+    $aQty = $bQty - $qty;
+    $reduceStock->bind_param("iii", $qty, $s_id, $qty);
+    $reduceStock->execute();
+
+    if ($reduceStock->affected_rows === 0) {
+            throw new Exception($eachItem['name'] . " (" . $eachItem['size_label'] . ") isn't available in the requested quantity.");
+        }
+
+    $logStock->bind_param("iiiii", $s_id, $qty, $bQty, $aQty, $orderId);
+
+      if (!$logStock->execute()) {
+            throw new Exception("Unable to write to the inventory log.");
         }
     }
+
+    $reduceStock->close();
+    $logStock->close();
+    $checkBeforeStock->close();
+    
+    $conn->commit();
+        // Finish Order and Clear the cart.
+        $order_success = true;
+        $_SESSION['cart'] = [];
+        $cartItems = [];
+        $subtotal  = 0.0;
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        $error_message = '<ul><li>' . htmlspecialchars($e->getMessage()) . '</li></ul>'; 
+    }
+    }
 }
+
+$chosenPayment = $_POST['payment_method'] ?? 'card';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
