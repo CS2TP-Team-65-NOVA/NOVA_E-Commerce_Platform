@@ -1,3 +1,4 @@
+
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -56,7 +57,7 @@ $featuredRes = $conn->query($featuredSql);
 <link rel="icon" type="image/x-icon" href="nova_favicon.png"/>
 </head>
 
-<body>
+<body class="nova-intro-pending">
 
 <!-- FULLSCREEN INTRO VIDEO OVERLAY -->
 <div id="intro-overlay">

@@ -6,24 +6,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check if intro already played in this browser tab
     const hasPlayed = sessionStorage.getItem("novaIntroPlayed");
 
+    function revealMainPage() {
+        if (introOverlay) introOverlay.style.display = "none";
+        if (pageContent) pageContent.style.opacity = "1";
+        document.body.classList.remove("nova-intro-pending");
+    }
+
     if (!hasPlayed) {
-        // FIRST TIME: show video and hide page
-        introOverlay.style.display = "flex";
-        pageContent.style.opacity = "0";
+        // FIRST TIME: show video and hide page (chatbot stays hidden via .nova-intro-pending CSS)
+        if (introOverlay) introOverlay.style.display = "flex";
+        if (pageContent) pageContent.style.opacity = "0";
 
-        introVideo.play();
-        
-        introVideo.onended = function () {
-            introOverlay.style.display = "none";
-            pageContent.style.opacity = "1";
+        if (introVideo) {
+            introVideo.play().catch(function () {});
 
-            // mark intro as "played"
+            introVideo.onended = function () {
+                revealMainPage();
+                sessionStorage.setItem("novaIntroPlayed", "true");
+            };
+
+            introVideo.onerror = function () {
+                revealMainPage();
+                sessionStorage.setItem("novaIntroPlayed", "true");
+            };
+        } else {
+            revealMainPage();
             sessionStorage.setItem("novaIntroPlayed", "true");
-        };
-
+        }
     } else {
-        // INTRO HAS ALREADY PLAYED – hide overlay immediately
-        introOverlay.style.display = "none";
-        pageContent.style.opacity = "1";
+        // INTRO HAS ALREADY PLAYED – hide overlay immediately, show chatbot
+        revealMainPage();
     }
 });
