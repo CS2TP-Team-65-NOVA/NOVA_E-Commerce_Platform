@@ -16,6 +16,43 @@
     var avatarSrc = root.getAttribute('data-avatar') || 'noa_icon.png';
     var pendingRequest = false;
 
+    function syncNovaChatbotSafeWidth() {
+        var w = document.documentElement && document.documentElement.clientWidth;
+        if (!w) w = window.innerWidth || 0;
+        root.style.setProperty('--nova-chatbot-safe-w', Math.max(0, w - 32) + 'px');
+    }
+
+    /** Keeps panel bottom above launcher; max height = space from viewport top to panel bottom so header/close stay visible. */
+    function syncNovaChatbotPanelMaxHeight() {
+        var launcher = root.querySelector('.nova-chatbot-launcher');
+        if (!launcher) return;
+        var top = launcher.getBoundingClientRect().top;
+        var panelMarginAboveLauncher = 14;
+        var minTopInset = 12;
+        var avail = Math.floor(top - panelMarginAboveLauncher - minTopInset);
+        if (avail < 0) avail = 0;
+        var cap = Math.min(620, avail);
+        root.style.setProperty('--nova-chatbot-panel-max-h', cap + 'px');
+    }
+
+    function syncNovaChatbotLayout() {
+        syncNovaChatbotSafeWidth();
+        var w = document.documentElement && document.documentElement.clientWidth;
+        if (!w) w = window.innerWidth || 0;
+        var frac = w < 400 ? 0.96 : w < 520 ? 0.9 : w < 720 ? 0.85 : 0.8;
+        root.style.setProperty('--nova-chatbot-panel-w-frac', String(frac));
+        var maxW = w < 480 ? 340 : 320;
+        root.style.setProperty('--nova-chatbot-panel-max-w', maxW + 'px');
+        var fontScale = w < 380 ? 0.88 : w < 450 ? 0.92 : w < 560 ? 0.96 : 1;
+        root.style.setProperty('--nova-chatbot-font-scale', String(fontScale));
+        syncNovaChatbotPanelMaxHeight();
+    }
+    syncNovaChatbotLayout();
+    window.addEventListener('resize', syncNovaChatbotLayout);
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', syncNovaChatbotLayout);
+    }
+
     function escapeHtml(s) {
         var d = document.createElement('div');
         d.textContent = s;
@@ -76,8 +113,8 @@
         var av = document.createElement('img');
         av.className = 'nova-chatbot-msg-avatar';
         av.src = avatarSrc;
-        av.width = 36;
-        av.height = 36;
+        av.width = 30;
+        av.height = 30;
         av.alt = 'NOA';
         av.decoding = 'async';
 
@@ -163,7 +200,11 @@
     function openPanel() {
         panel.hidden = false;
         toggle.setAttribute('aria-expanded', 'true');
-        input.focus();
+        syncNovaChatbotPanelMaxHeight();
+        requestAnimationFrame(function () {
+            syncNovaChatbotPanelMaxHeight();
+            if (input) input.focus();
+        });
     }
 
     function closePanel() {

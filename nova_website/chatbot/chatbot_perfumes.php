@@ -47,7 +47,7 @@ function nova_parse_perfume_intent(string $t, mysqli $conn): array
     $priceMin = null;
     $priceMax = null;
 
-    if (preg_match('/\b(?:under|below|less than|max|maximum|upto|up to|at most)\s*£?\s*(\d+(?:\.\d+)?)/iu', $t, $m)) {
+    if (preg_match('/\b(?:under|below|less than|max|maximum|upto|up to|at most|around|about)\s*£?\s*(\d+(?:\.\d+)?)/iu', $t, $m)) {
         $priceMax = (float) $m[1];
     }
     if (preg_match('/\b(?:over|above|more than|min|minimum|at least)\s*£?\s*(\d+(?:\.\d+)?)/iu', $t, $m)) {
@@ -67,6 +67,17 @@ function nova_parse_perfume_intent(string $t, mysqli $conn): array
     }
     if ($cheapWord && $priceMax === null) {
         $priceMax = 65.0;
+    }
+
+    // "£65" / "65 quid" after perfume/budget words when "under" wasn't typed (common in chat).
+    if ($priceMax === null && $priceMin === null) {
+        $hasBudgetHint = (bool) preg_match(
+            '/\b(perfume|fragrances?|scent|gift|women|men|citrus|floral|spicy|oriental|cheap|budget|affordable|box|bottle)\b/u',
+            $t
+        );
+        if ($hasBudgetHint && preg_match('/£\s*(\d+(?:\.\d+)?)/u', $t, $m)) {
+            $priceMax = (float) $m[1];
+        }
     }
 
     $ids = [];

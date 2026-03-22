@@ -1,5 +1,6 @@
-
 <?php
+
+/*
 $servername = "localhost"; 
 $username = "cs2team65";                     
 $password = "XRCsv6P4min3JM88F9xZ8LVGM";     
@@ -10,8 +11,8 @@ $conn = new mysqli($host, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-*/
 
+*/
 
 $servername = "127.0.0.1";  // localhost can sometimes fail on Mac
 $username = "root";          // default XAMPP/MAMP username
@@ -25,5 +26,3 @@ $conn = new mysqli(null, "root", "", "cs2team65_db", null, "/Applications/XAMPP/
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-?>

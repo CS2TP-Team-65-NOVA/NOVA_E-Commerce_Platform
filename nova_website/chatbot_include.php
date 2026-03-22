@@ -57,4 +57,25 @@ if ($novaPage === 'perfumes.php') {
         </button>
     </div>
 </div>
+<script>
+(function () {
+    var r = document.getElementById('nova-chatbot');
+    if (!r) return;
+    var w = document.documentElement && document.documentElement.clientWidth;
+    if (!w) w = window.innerWidth || 0;
+    r.style.setProperty('--nova-chatbot-safe-w', Math.max(0, w - 32) + 'px');
+    var frac = w < 400 ? 0.96 : w < 520 ? 0.9 : w < 720 ? 0.85 : 0.8;
+    r.style.setProperty('--nova-chatbot-panel-w-frac', String(frac));
+    r.style.setProperty('--nova-chatbot-panel-max-w', (w < 480 ? 340 : 320) + 'px');
+    var fontScale = w < 380 ? 0.88 : w < 450 ? 0.92 : w < 560 ? 0.96 : 1;
+    r.style.setProperty('--nova-chatbot-font-scale', String(fontScale));
+    var launcher = r.querySelector('.nova-chatbot-launcher');
+    if (launcher) {
+        var top = launcher.getBoundingClientRect().top;
+        var avail = Math.floor(top - 14 - 12);
+        if (avail < 0) avail = 0;
+        r.style.setProperty('--nova-chatbot-panel-max-h', Math.min(620, avail) + 'px');
+    }
+})();
+</script>
 <script src="chatbot.js" defer></script>
