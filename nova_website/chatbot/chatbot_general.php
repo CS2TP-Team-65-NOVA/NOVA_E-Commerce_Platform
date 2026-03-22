@@ -79,7 +79,7 @@ function nova_try_topic_button_menu(string $t, string $raw): ?array
         return null;
     }
 
-    if (preg_match('/\b(?:order|ord)\s*[#:]?\s*[A-Za-z0-9][A-Za-z0-9-]{3,39}\b/u', $raw) || preg_match('/\b#([A-Za-z0-9][A-Za-z0-9-]{3,39})\b/u', $raw)) {
+    if (preg_match('/\b(?:order|ord)\s*[#:]?\s*[A-Za-z0-9][A-Za-z0-9-]{1,39}\b/u', $raw) || preg_match('/\b#([A-Za-z0-9][A-Za-z0-9-]{1,39})\b/u', $raw)) {
         return null;
     }
 
