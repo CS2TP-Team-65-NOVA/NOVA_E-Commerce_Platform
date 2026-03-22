@@ -93,6 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $description = trim($_POST['description'] ?? '');
     $price       = trim($_POST['price'] ?? '');
     $category_id = $_POST['category_id'] ?? '';
+    $top_notes    = trim($_POST['top_notes'] ?? '');
+    $heart_notes  = trim($_POST['heart_notes'] ?? '');
+    $base_notes   = trim($_POST['base_notes'] ?? '');
+    $launch_info  = trim($_POST['launch_info'] ?? '');
+    $scent_story  = trim($_POST['scent_story'] ?? '');
+    $design_story = trim($_POST['design_story'] ?? '');
 
     if ($name === '' || $price === '') {
         $addMessage = "Please fill in at least product name and price.";
@@ -122,18 +128,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         // Insert only if no upload error
         if ($addMessage === "") {
             $stmt = $conn->prepare("
-                INSERT INTO products 
-                (category_id, description, name, price, image, image_2, image_3, image_4, image_5)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ");
+    INSERT INTO products 
+    (
+        category_id, description, name, price,
+        top_notes, heart_notes, base_notes, launch_info, scent_story, design_story,
+        image, image_2, image_3, image_4, image_5
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+");
 
             if ($stmt) {
                 $stmt->bind_param(
-                    "issdsssss",
+                     "issdsssssssssss",
                     $catVal,
                     $description,
                     $name,
                     $priceValue,
+                    $top_notes,
+                    $heart_notes,
+                    $base_notes,
+                    $launch_info,
+                    $scent_story,
+                    $design_story,
                     $image1,
                     $image2,
                     $image3,
@@ -446,6 +462,38 @@ function safe($val) {
                         <label for="description">Description</label>
                         <textarea id="description" name="description" placeholder="Enter product description"></textarea>
                     </div>
+
+<div class="form-group">
+    <label for="top_notes">Top Notes</label>
+    <input type="text" id="top_notes" name="top_notes">
+</div>
+
+<div class="form-group">
+    <label for="heart_notes">Heart Notes</label>
+    <input type="text" id="heart_notes" name="heart_notes">
+</div>
+
+<div class="form-group">
+    <label for="base_notes">Base Notes</label>
+    <input type="text" id="base_notes" name="base_notes">
+</div>
+
+<div class="form-group">
+    <label for="launch_info">Launch Info</label>
+    <input type="text" id="launch_info" name="launch_info">
+</div>
+
+<div class="form-group">
+    <label for="scent_story">Scent Story</label>
+    <textarea id="scent_story" name="scent_story"></textarea>
+</div>
+
+<div class="form-group">
+    <label for="design_story">Design Story</label>
+    <textarea id="design_story" name="design_story"></textarea>
+</div>
+
+
 
                     <!-- Image upload fields (from Version 2) -->
                     <div class="form-group">
