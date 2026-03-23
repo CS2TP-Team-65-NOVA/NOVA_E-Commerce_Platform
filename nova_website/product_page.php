@@ -54,19 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_review'])) {
 }
 
 // ------------------------------------------------------------------
-// WishLists
-// ------------------------------------------------------------------
-
-$inWishlist = false;
-if (isset($_SESSION['user_id'])) {
-    $wChk = $conn->prepare("SELECT 1 FROM wishlist WHERE user_id = ? AND product_id = ?");
-    $wChk->bind_param("ii", $_SESSION['user_id'], $product['product_id']);
-    $wChk->execute();
-    $inWishlist = $wChk->get_result()->num_rows > 0;
-    $wChk->close();
-}
-
-// ------------------------------------------------------------------
 // 3. Load product details
 // ------------------------------------------------------------------
 $productSql = "
@@ -404,9 +391,7 @@ if ($stmt = $conn->prepare($relatedSql)) {
                         data-product-id="<?php echo $productId; ?>"
                         title="Add to favourites"
                     >
-                        <img src="heart_icon.png"        class="heart-img heart-default" alt="Add to wishlist">
-                        <img src="heart_icon_white.png"  class="heart-img heart-white"   alt="Add to wishlist">
-                        <img src="active_heart_icon.png" class="heart-img heart-active"  alt="Wishlisted">
+                        <span class="heart">&hearts;</span>
                     </button>
                 </div>
             </form>
@@ -495,9 +480,7 @@ if ($stmt = $conn->prepare($relatedSql)) {
                                     data-product-id="<?php echo $relProductId; ?>"
                                     title="Add to favourites"
                                 >
-                                    <img src="heart_icon.png"        class="heart-img heart-default" alt="Add to wishlist">
-                                    <img src="heart_icon_white.png"  class="heart-img heart-white"   alt="Add to wishlist">
-                                    <img src="active_heart_icon.png" class="heart-img heart-active"  alt="Wishlisted">
+                                    <span class="heart">&hearts;</span>
                                 </button>
 
                                 <form method="get" action="shopping_cart.php" class="cart-form">

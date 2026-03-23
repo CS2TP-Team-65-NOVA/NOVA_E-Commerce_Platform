@@ -229,16 +229,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 --
--- Wishlist tables
+-- Indexes for dumped tables
 --
-
-CREATE TABLE IF NOT EXISTS wishlist (
-    wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id     INT NOT NULL,
-    product_id  INT NOT NULL,
-    added_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY unique_wish (user_id, product_id)
-);
 
 --
 -- Indexes for table `basket`
