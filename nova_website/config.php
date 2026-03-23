@@ -26,3 +26,5 @@ $conn = new mysqli(null, "root", "", "cs2team65_db", null, "/Applications/XAMPP/
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+?>

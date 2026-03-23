@@ -27,9 +27,9 @@ if (isset($_GET['delete'])) {
     exit;
 }
 
-// ---------- IMAGE UPLOAD HELPER (from Version 2) ----------
+
 function uploadImage($fileInputName, &$errorMessage) {
-    $uploadDir = 'uploads/products/';
+    $uploadDir = __DIR__ . '/uploads/products/';
 
     if (!is_dir($uploadDir)) {
         if (!mkdir($uploadDir, 0777, true)) {

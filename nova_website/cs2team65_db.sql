@@ -1385,3 +1385,15 @@ VALUES (
 
 COMMIT;
 
+CREATE TABLE `promotions` (
+  `promotion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `promotion_name` varchar(100) NOT NULL,
+  `promo_code` varchar(50) NOT NULL,
+  `discount_type` enum('percentage','fixed') NOT NULL,
+  `discount_value` decimal(10,2) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `status` enum('active','scheduled','expired') DEFAULT 'scheduled',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`promotion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
