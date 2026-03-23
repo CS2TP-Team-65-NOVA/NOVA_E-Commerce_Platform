@@ -194,7 +194,15 @@ function build_page_url($page, $category, $sort, $search)
             <div class="nav-right">
                 <!-- Theme toggle (from Version 1) -->
                 <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
-                    <span id="theme-icon">🌙</span>
+
+                    <!-- MOON (LIGHT MODE) -->
+                    <img src="dark_mode_icon.png" class="theme-icon theme-icon-moon theme-icon-default" alt="">
+                    <img src="active_dark_mode_icon.png" class="theme-icon theme-icon-moon theme-icon-active" alt="">
+
+                    <!-- SUN (DARK MODE) -->
+                    <img src="light_mode_icon_white.png" class="theme-icon theme-icon-sun theme-icon-default" alt="">
+                    <img src="active_light_mode_icon.png" class="theme-icon theme-icon-sun theme-icon-active" alt="">
+
                 </button>
 
                 <?php if (!isset($_SESSION['user_id'])): ?>

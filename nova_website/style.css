@@ -8494,3 +8494,75 @@ body.dark-mode .nova-chatbot-product:hover {
     overflow-x: auto;
   }
 }
+.action-icon {
+    background: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+}
+
+.action-icon-img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+/* ---------------------------------- */
+/* THEME TOGGLE ICON (SIMPLIFIED) */
+/* ---------------------------------- */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+
+.theme-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    display: none;
+}
+
+/* ---------------------------------- */
+/* SHOW CORRECT ICONS */
+/* ---------------------------------- */
+
+/* Default: Moon in light mode (or no mode) */
+.theme-icon-moon.theme-icon-default {
+    display: block;
+}
+
+/* Dark mode: Hide moon, show sun */
+body.dark-mode .theme-icon-moon.theme-icon-default {
+    display: none;
+}
+
+body.dark-mode .theme-icon-sun.theme-icon-default {
+    display: block;
+}
+
+/* ---------------------------------- */
+/* HOVER STATES */
+/* ---------------------------------- */
+
+/* Hide default icons on hover */
+.theme-toggle:hover .theme-icon-default {
+    display: none;
+}
+
+/* LIGHT MODE HOVER → purple moon only */
+body:not(.dark-mode) .theme-toggle:hover .theme-icon-moon.theme-icon-active {
+    display: block;
+}
+
+/* DARK MODE HOVER → purple sun only */
+body.dark-mode .theme-toggle:hover .theme-icon-sun.theme-icon-active {
+    display: block;
+}

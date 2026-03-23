@@ -239,7 +239,9 @@ try {
                 <ul class="quick-actions">
                     <li>
                         <a href="admin_products.php">
-                            <div class="action-icon"></div>
+                            <div class="action-icon">
+                                <img src="active_product_icon.png" class="action-icon-img" alt="">
+                            </div>
                             <div class="action-text">
                                 Add New Product
                                 <small>Create a new perfume listing</small>
@@ -248,7 +250,9 @@ try {
                     </li>
                     <li>
                         <a href="admin_orders.php">
-                            <div class="action-icon"></div>
+                            <div class="action-icon">
+                                <img src="active_orders_icon.png" class="action-icon-img" alt="">
+                            </div>
                             <div class="action-text">
                                 Process Orders
                                 <small>Review and update order status</small>
@@ -257,7 +261,9 @@ try {
                     </li>
                     <li>
                         <a href="admin_users.php">
-                            <div class="action-icon"></div>
+                            <div class="action-icon">
+                                <img src="active_account_icon.png" class="action-icon-img" alt="">
+                            </div>
                             <div class="action-text">
                                 Manage Users
                                 <small>View and manage customer accounts</small>
@@ -266,7 +272,9 @@ try {
                     </li>
                     <li>
                         <a href="admin_promotions.php">
-                            <div class="action-icon"></div>
+                            <div class="action-icon">
+                                <img src="active_promotion_icon.png" class="action-icon-img" alt="">
+                            </div>
                             <div class="action-text">
                                 Create Promotion
                                 <small>Set up discounts and special offers</small>
