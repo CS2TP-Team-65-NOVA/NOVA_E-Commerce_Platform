@@ -262,10 +262,34 @@ require_once 'config.php';
             </div>
 
             <div class="team-slide">
+                <img src="rob.jpg" alt="Team Member">
+                <h4>Robel</h4>
+            </div>
+
+            <div class="team-slide">
                 <img src="malaika.jpg" alt="Team Member">
                 <h4>Malika</h4>
             </div>
 
+            <div class="team-slide">
+                <img src="oliver.jpg" alt="Team Member">
+                <h4>Oliver</h4>
+            </div>
+            
+            <div class="team-slide">
+                <img src="faud.jpg" alt="Team Member">
+                <h4>Faud</h4>
+            </div>           
+
+            <div class="team-slide">
+                <img src="amirah.jpg" alt="Team Member">
+                <h4>Amirah</h4>
+            </div>
+
+            <div class="team-slide">
+                <img src="ashish.jpg" alt="Team Member">
+                <h4>Ashish</h4>
+            </div>
         </div>
 
 
