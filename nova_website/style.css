@@ -2905,6 +2905,14 @@ body {
   padding: 0;
 }
 
+.cart-btn {
+  all: unset;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
 /* Product card text */
 
 .product-info {
@@ -3387,6 +3395,181 @@ body {
 .update-row {
   margin-top: 10px;
   text-align: right;
+}
+
+/* =========================================
+   CONTACT PAGE - TWO COLUMN LAYOUT
+   ========================================= */
+
+.contact-two-column {
+  max-width: 1200px;
+  margin: 50px auto 80px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+.contact-left-card,
+.contact-right-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.contact-left-card h1,
+.contact-right-card h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 34px;
+  font-family: "Belleza", Arial, sans-serif;
+  color: var(--text);
+}
+
+.contact-intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.contact-response-time {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.contact-response-time strong {
+  color: var(--purple);
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-detail-item h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.contact-detail-item p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--input-text);
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 2px rgba(94, 23, 235, 0.15);
+}
+
+.contact-submit-btn {
+  margin-top: 8px;
+  align-self: flex-start;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.contact-submit-btn:hover {
+  background: var(--purple-hover);
+}
+
+.required {
+  color: #ff5a5a;
+}
+
+.contact-map-section {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.contact-map-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  padding: 28px 32px 32px;
+  box-sizing: border-box;
+}
+
+.contact-map-card h2 {
+  margin: 0 0 10px;
+  font-size: 30px;
+  font-family: "Belleza", Arial, sans-serif;
+  color: var(--text);
+}
+
+.contact-map-text {
+  margin: 0 0 20px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.contact-map-embed {
+  width: 100%;
+  height: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+
+.contact-map-embed iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .checkout-page {
@@ -5554,7 +5737,9 @@ body.dark-mode .clear-btn:hover {
 
 /* Register / Login / Logout cards */
 body.dark-mode .register-container,
-body.dark-mode .login-container{
+body.dark-mode .login-container,
+body.dark-mode .logout-container,
+body.dark-mode .contact-section {
   background: var(--card-bg) !important;
   border: 1px solid var(--card-border) !important;
   box-shadow: var(--shadow-soft) !important;
@@ -5564,7 +5749,10 @@ body.dark-mode .login-container{
 /* Titles */
 body.dark-mode .register-title-inside,
 body.dark-mode .login-title,
-body.dark-mode .logout-title {
+body.dark-mode .logout-title,
+body.dark-mode .contact-section h1,
+body.dark-mode .contact-info h2,
+body.dark-mode .contact-info-item h3 {
   color: var(--text) !important;
 }
 
@@ -5576,13 +5764,17 @@ body.dark-mode .register-already-user,
 body.dark-mode .login-already-user,
 body.dark-mode .already-user,
 body.dark-mode .logout-redirect-info,
-body.dark-mode .helper-text{
+body.dark-mode .contact-intro,
+body.dark-mode .contact-response-time,
+body.dark-mode .helper-text,
+body.dark-mode .contact-info-item p {
   color: var(--text-muted) !important;
 }
 
 /* Auth labels */
 body.dark-mode .register-form label,
 body.dark-mode .login-form label,
+body.dark-mode .contact-form label,
 body.dark-mode .form-group label {
   color: var(--text) !important;
 }
@@ -5591,7 +5783,11 @@ body.dark-mode .form-group label {
 body.dark-mode .register-input,
 body.dark-mode .login-form input[type="email"],
 body.dark-mode .login-form input[type="text"],
-body.dark-mode .login-form input[type="password"]{
+body.dark-mode .login-form input[type="password"],
+body.dark-mode .contact-form input[type="text"],
+body.dark-mode .contact-form input[type="email"],
+body.dark-mode .contact-form select,
+body.dark-mode .contact-form textarea {
   background: var(--input-bg) !important;
   color: var(--input-text) !important;
   border: 1px solid var(--input-border) !important;
@@ -5599,7 +5795,9 @@ body.dark-mode .login-form input[type="password"]{
 
 /* Placeholders */
 body.dark-mode .register-input::placeholder,
-body.dark-mode .login-form input::placeholder {
+body.dark-mode .login-form input::placeholder,
+body.dark-mode .contact-form input::placeholder,
+body.dark-mode .contact-form textarea::placeholder {
   color: var(--text-muted) !important;
   opacity: 1;
 }
@@ -5608,7 +5806,11 @@ body.dark-mode .login-form input::placeholder {
 body.dark-mode .register-input:focus,
 body.dark-mode .login-form input[type="email"]:focus,
 body.dark-mode .login-form input[type="text"]:focus,
-body.dark-mode .login-form input[type="password"]:focus{
+body.dark-mode .login-form input[type="password"]:focus,
+body.dark-mode .contact-form input[type="text"]:focus,
+body.dark-mode .contact-form input[type="email"]:focus,
+body.dark-mode .contact-form select:focus,
+body.dark-mode .contact-form textarea:focus {
   background: #242432 !important;
   border-color: var(--purple) !important;
   box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.18) !important;
@@ -5618,14 +5820,21 @@ body.dark-mode .login-form input[type="password"]:focus{
 /* Links inside auth cards */
 body.dark-mode .register-already-user a,
 body.dark-mode .login-already-user a,
-body.dark-mode .already-user a{
+body.dark-mode .already-user a,
+body.dark-mode .contact-info a {
   color: var(--text) !important;
 }
 
 body.dark-mode .register-already-user a:hover,
 body.dark-mode .login-already-user a:hover,
-body.dark-mode .already-user a:hover {
+body.dark-mode .already-user a:hover,
+body.dark-mode .contact-info a:hover {
   color: var(--purple) !important;
+}
+
+/* Contact section borders */
+body.dark-mode .contact-info {
+  border-top: 1px solid var(--card-border) !important;
 }
 
 /* Required asterisk can stay visible */
@@ -8356,592 +8565,4 @@ body:not(.dark-mode) .theme-toggle:hover .theme-icon-moon.theme-icon-active {
 /* DARK MODE HOVER → purple sun only */
 body.dark-mode .theme-toggle:hover .theme-icon-sun.theme-icon-active {
     display: block;
-}
-
-/* ===================================================
-   WISHLIST HEART BUTTON — perfumes & product pages
-   =================================================== */
-
-.fav-toggle {
-    position: relative;
-    background: rgba(255,255,255,0.85);
-    border: none;
-    border-radius: 50%;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-body.dark-mode .fav-toggle {
-    background: rgba(0,0,0,0.6) !important;
-}
-
-.heart-img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-    position: absolute;
-    transition: opacity 0.2s ease;
-}
-
-/* LIGHT MODE — default state: show black heart */
-.heart-default { opacity: 1; }
-.heart-white   { opacity: 0; }
-.heart-active  { opacity: 0; }
-
-/* LIGHT MODE — wishlisted: show purple heart */
-.fav-toggle.fav-active .heart-default { opacity: 0; }
-.fav-toggle.fav-active .heart-white   { opacity: 0; }
-.fav-toggle.fav-active .heart-active  { opacity: 1; }
-
-/* LIGHT MODE — hover: show purple heart */
-.fav-toggle:hover .heart-default { opacity: 0; }
-.fav-toggle:hover .heart-active  { opacity: 1; }
-
-/* DARK MODE — default state: show white heart */
-body.dark-mode .heart-default { opacity: 0; }
-body.dark-mode .heart-white   { opacity: 1; }
-body.dark-mode .heart-active  { opacity: 0; }
-
-/* DARK MODE — wishlisted: show purple heart */
-body.dark-mode .fav-toggle.fav-active .heart-white  { opacity: 0; }
-body.dark-mode .fav-toggle.fav-active .heart-active { opacity: 1; }
-
-/* DARK MODE — hover: show purple heart */
-body.dark-mode .fav-toggle:hover .heart-white  { opacity: 0; }
-body.dark-mode .fav-toggle:hover .heart-active { opacity: 1; }
-
-
-/* ===================================================
-   WISHLIST GRID — customer profile page
-   =================================================== */
-
-.cp-wishlist-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
-}
-
-.cp-wishlist-card {
-    background: #ffffff !important;
-    border: 1px solid #ece7f6 !important;
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cp-wishlist-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(94,23,235,0.18);
-}
-
-.cp-wishlist-img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-}
-
-.cp-wishlist-remove {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(0,0,0,0.55);
-    color: #fff;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-    z-index: 2;
-}
-
-.cp-wishlist-remove:hover {
-    background: #dc2626;
-}
-
-.cp-wishlist-info {
-    padding: 10px 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.cp-wishlist-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: #111 !important;
-    text-decoration: none;
-    line-height: 1.3;
-}
-
-.cp-wishlist-name:hover {
-    color: #7c3aed !important;
-}
-
-.cp-wishlist-cat {
-    font-size: 12px;
-    color: #666 !important;
-    margin: 0;
-}
-
-.cp-wishlist-price {
-    font-size: 13px;
-    font-weight: 600;
-    color: #7c3aed;
-    margin: 0;
-}
-
-.cp-wishlist-view-btn {
-    margin-top: 8px;
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 999px;
-    border: 1px solid #7c3aed;
-    color: #7c3aed;
-    font-size: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    text-align: center;
-    transition: background 0.2s ease, color 0.2s ease;
-}
-
-.cp-wishlist-view-btn:hover {
-    background: #7c3aed;
-    color: #fff;
-}
-
-
-/* ===================================================
-   WISHLIST DARK MODE OVERRIDES
-   =================================================== */
-
-body.dark-mode .cp-wishlist-card {
-    background: var(--card-bg) !important;
-    border-color: var(--card-border) !important;
-}
-
-body.dark-mode .cp-wishlist-name {
-    color: var(--text) !important;
-}
-
-body.dark-mode .cp-wishlist-cat {
-    color: var(--text-muted) !important;
-}
-
-body.dark-mode .cp-wishlist-price {
-    color: var(--purple) !important;
-}
-
-body.dark-mode .cp-wishlist-view-btn {
-    border-color: var(--purple) !important;
-    color: var(--purple) !important;
-}
-
-body.dark-mode .cp-wishlist-view-btn:hover {
-    background: var(--purple) !important;
-    color: #fff !important;
-}
-
-/* ===== BASKET BUTTON — product cards ===== */
-.cart-btn {
-    position: relative;
-    background: rgba(255,255,255,0.85);
-    border: none;
-    border-radius: 50%;
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-body.dark-mode .cart-btn {
-    background: rgba(0,0,0,0.6) !important;
-}
-
-.basket-img {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
-    position: absolute;
-    transition: opacity 0.2s ease;
-}
-
-/* LIGHT MODE — show black, hide others */
-.basket-default { opacity: 1; }
-.basket-white   { opacity: 0; }
-.basket-active  { opacity: 0; }
-
-/* LIGHT MODE — hover: show purple */
-.cart-btn:hover .basket-default { opacity: 0; }
-.cart-btn:hover .basket-active  { opacity: 1; }
-
-/* DARK MODE — show white, hide black */
-body.dark-mode .basket-default { opacity: 0; }
-body.dark-mode .basket-white   { opacity: 1; }
-body.dark-mode .basket-active  { opacity: 0; }
-
-/* DARK MODE — hover: show purple */
-body.dark-mode .cart-btn:hover .basket-white  { opacity: 0; }
-body.dark-mode .cart-btn:hover .basket-active { opacity: 1; }
-
-/* Disabled state */
-.cart-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-/* =========================================
-   CONTACT PAGE - TWO COLUMN LAYOUT
-   ========================================= */
-
-.contact-two-column {
-  max-width: 1200px;
-  margin: 50px auto 80px;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 26px;
-  box-sizing: border-box;
-  align-items: stretch;
-}
-
-.contact-left-card,
-.contact-right-card {
-  background: #ffffff;
-  border: 1px solid #e9e6f2;
-  border-radius: 24px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  padding: 34px 30px;
-  box-sizing: border-box;
-  height: 100%;
-}
-
-.contact-left-card h1,
-.contact-right-card h2 {
-  margin-top: 0;
-  margin-bottom: 18px;
-  font-size: 34px;
-  font-family: "Belleza", Arial, sans-serif;
-  color: #111111;
-}
-
-.contact-intro {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #444444;
-  margin-bottom: 10px;
-}
-
-.contact-response-time {
-  font-size: 14px;
-  color: #666666;
-  margin-bottom: 28px;
-}
-
-.contact-response-time strong {
-  color: #5e17eb;
-}
-
-.contact-details {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.contact-detail-item h3 {
-  margin: 0 0 6px;
-  font-size: 17px;
-  color: #111111;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.contact-detail-item p {
-  margin: 0;
-  color: #555555;
-  line-height: 1.6;
-  font-size: 15px;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.contact-form .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 0;
-}
-
-.contact-form label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #111111;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.contact-form input,
-.contact-form select,
-.contact-form textarea {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid #d9d9e3;
-  background: #ffffff;
-  color: #111111;
-  box-sizing: border-box;
-  font-size: 14px;
-  font-family: Arial, Helvetica, sans-serif;
-  transition: all 0.25s ease;
-}
-
-.contact-form input:focus,
-.contact-form select:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: #5e17eb;
-  box-shadow: 0 0 0 3px rgba(94, 23, 235, 0.12);
-}
-
-.contact-form textarea {
-  min-height: 140px;
-  resize: vertical;
-}
-
-.contact-submit-btn {
-  margin-top: 10px;
-  align-self: flex-start;
-  padding: 14px 28px;
-  border: none;
-  border-radius: 999px;
-  background: #5e17eb;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-.contact-submit-btn:hover {
-  background: #4a12c9;
-  transform: translateY(-1px);
-}
-
-.required {
-  color: #ff5a5a;
-}
-
-.contact-map-section {
-  max-width: 1200px;
-  margin: 0 auto 80px;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.contact-map-card {
-  background: #ffffff;
-  border: 1px solid #e9e6f2;
-  border-radius: 24px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  padding: 30px;
-  box-sizing: border-box;
-}
-
-.contact-map-card h2 {
-  margin: 0 0 10px;
-  font-size: 30px;
-  font-family: "Belleza", Arial, sans-serif;
-  color: #111111;
-}
-
-.contact-map-text {
-  margin: 0 0 20px;
-  color: #555555;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.contact-map-embed {
-  width: 100%;
-  height: 420px;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid #e9e6f2;
-}
-
-.contact-map-embed iframe {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-@media (max-width: 900px) {
-  .contact-two-column {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-left-card,
-  .contact-right-card,
-  .contact-map-card {
-    padding: 24px 20px;
-  }
-}
-
-/* =========================================
-   CONTACT PAGE - DARK MODE STYLES
-   ========================================= */
-
-/* Dark mode - when body has dark-mode class */
-body.dark-mode .contact-left-card,
-body.dark-mode .contact-right-card,
-body.dark-mode .contact-map-card {
-  background: #1a1a1a;
-  border: 1px solid #333333;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Titles */
-body.dark-mode .contact-left-card h1,
-body.dark-mode .contact-right-card h2,
-body.dark-mode .contact-map-card h2 {
-  color: #ffffff;
-}
-
-/* Intro and normal text */
-body.dark-mode .contact-intro,
-body.dark-mode .contact-response-time,
-body.dark-mode .contact-map-text,
-body.dark-mode .contact-detail-item p {
-  color: #cccccc;
-}
-
-/* Response time text */
-body.dark-mode .contact-response-time {
-  color: #aaaaaa;
-}
-
-/* Small headings and labels */
-body.dark-mode .contact-detail-item h3,
-body.dark-mode .contact-form label {
-  color: #ffffff;
-}
-
-/* Form fields */
-body.dark-mode .contact-form input,
-body.dark-mode .contact-form select,
-body.dark-mode .contact-form textarea {
-  background: #2a2a2a;
-  color: #ffffff;
-  border: 1px solid #444444;
-}
-
-/* Form field focus state */
-body.dark-mode .contact-form input:focus,
-body.dark-mode .contact-form select:focus,
-body.dark-mode .contact-form textarea:focus {
-  border-color: #5e17eb;
-  box-shadow: 0 0 0 3px rgba(94, 23, 235, 0.2);
-}
-
-/* Placeholder text */
-body.dark-mode .contact-form input::placeholder,
-body.dark-mode .contact-form textarea::placeholder {
-  color: #888888;
-  opacity: 1;
-}
-
-/* Dropdown options */
-body.dark-mode .contact-form select option {
-  background: #2a2a2a;
-  color: #ffffff;
-}
-
-/* Submit button - keep same or adjust slightly */
-body.dark-mode .contact-submit-btn {
-  background: #5e17eb;
-}
-
-body.dark-mode .contact-submit-btn:hover {
-  background: #6b2ef0;
-}
-
-/* Required asterisk */
-body.dark-mode .required {
-  color: #ff6b6b;
-}
-
-/* =========================================
-   CONTACT PAGE - WHITE MODE STYLES
-   ========================================= */
-
-body:not(.dark-mode) .contact-left-card,
-body:not(.dark-mode) .contact-right-card,
-body:not(.dark-mode) .contact-map-card {
-  background: #ffffff;
-  border: 1px solid #e9e6f2;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-/* Titles */
-body:not(.dark-mode) .contact-left-card h1,
-body:not(.dark-mode) .contact-right-card h2,
-body:not(.dark-mode) .contact-map-card h2 {
-  color: #111111;
-}
-
-/* Intro and normal text */
-body:not(.dark-mode) .contact-intro,
-body:not(.dark-mode) .contact-response-time,
-body:not(.dark-mode) .contact-map-text,
-body:not(.dark-mode) .contact-detail-item p {
-  color: #555555;
-}
-
-/* Small headings */
-body:not(.dark-mode) .contact-detail-item h3,
-body:not(.dark-mode) .contact-form label {
-  color: #111111;
-}
-
-/* Form fields */
-body:not(.dark-mode) .contact-form input,
-body:not(.dark-mode) .contact-form select,
-body:not(.dark-mode) .contact-form textarea {
-  background: #ffffff;
-  color: #111111;
-  border: 1px solid #d9d9e3;
-}
-
-/* Placeholder text */
-body:not(.dark-mode) .contact-form input::placeholder,
-body:not(.dark-mode) .contact-form textarea::placeholder {
-  color: #888888;
-  opacity: 1;
-}
-
-/* Alignment fix */
-.contact-two-column {
-  align-items: stretch;
-}
-
-.contact-left-card,
-.contact-right-card {
-  height: 100%;
 }
