@@ -83,6 +83,30 @@ if ($stmt) {
     $stmt->close();
 }
 
+// WISHLIST FETCH
+$userWishlist = [];
+$totalWishlist = 0;
+$stmt = $conn->prepare("
+    SELECT p.product_id, p.name, p.image,
+           c.category,
+           p.price AS min_price
+    FROM wishlist w
+    JOIN products p ON p.product_id = w.product_id
+    LEFT JOIN categories c ON c.category_id = p.category_id
+    WHERE w.user_id = ?
+    ORDER BY w.added_at DESC
+");
+if ($stmt) {
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $userWishlist[] = $row;
+    }
+    $stmt->close();
+    $totalWishlist = count($userWishlist);
+}
+
 // ---------- 5. COUNTS ----------
 $totalOrders  = 0;
 $totalReviews = 0;
@@ -262,6 +286,10 @@ function formatStatus($status) {
                     <span class="cp-sb-stat-value"><?php echo $totalOrders; ?></span>
                     <span class="cp-sb-stat-label">Orders</span>
                 </div>
+                                <div class="cp-sb-stat">
+                    <span class="cp-sb-stat-value"><?php echo $totalWishlist; ?></span>
+                    <span class="cp-sb-stat-label">Wishlist</span>
+                </div>
                 <div class="cp-sb-stat">
                     <span class="cp-sb-stat-value"><?php echo $totalReviews; ?></span>
                     <span class="cp-sb-stat-label">Reviews</span>
@@ -281,6 +309,10 @@ function formatStatus($status) {
             <a href="#section-orders" class="cp-nav-link">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
                 My Orders
+            </a>
+                        <a href="#section-wishlist" class="cp-nav-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
+                My Wishlist
             </a>
             <a href="#section-password" class="cp-nav-link">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
@@ -456,6 +488,40 @@ function formatStatus($status) {
             </div>
         </section>
         <?php endif; ?>
+        
+        <!-- MY WISHLIST -->
+        <section class="cp-card" id="section-wishlist">
+            <div class="cp-card-header">
+                <h2>My Wishlist</h2>
+                <span class="cp-badge"><?php echo $totalWishlist; ?> item<?php echo $totalWishlist !== 1 ? 's' : ''; ?></span>
+            </div>
+            <?php if (empty($userWishlist)): ?>
+                <div class="cp-empty">
+                    <p>You haven't added any perfumes to your wishlist yet.</p>
+                    <a href="perfumes.php" class="cp-empty-link">Browse Perfumes &rarr;</a>
+                </div>
+            <?php else: ?>
+                <div class="cp-wishlist-grid">
+                    <?php foreach ($userWishlist as $w): ?>
+                        <div class="cp-wishlist-card" id="wcard-<?php echo (int)$w['product_id']; ?>">
+                            <a href="product_page.php?id=<?php echo (int)$w['product_id']; ?>">
+                                <img src="uploads/products/<?php echo htmlspecialchars($w['image'] ?: 'nova_default.jpg'); ?>"
+                                    alt="<?php echo safe($w['name']); ?>" class="cp-wishlist-img">
+                            </a>
+                            <button class="cp-wishlist-remove" data-product-id="<?php echo (int)$w['product_id']; ?>" title="Remove">&#10005;</button>
+                            <div class="cp-wishlist-info">
+                                <a href="product_page.php?id=<?php echo (int)$w['product_id']; ?>" class="cp-wishlist-name"><?php echo safe($w['name']); ?></a>
+                                <p class="cp-wishlist-cat"><?php echo safe($w['category'] ?: 'Exclusive Perfumes'); ?></p>
+                                <?php if ($w['min_price']): ?>
+                                    <p class="cp-wishlist-price">from £<?php echo number_format($w['min_price'], 2); ?></p>
+                                <?php endif; ?>
+                                <a href="product_page.php?id=<?php echo (int)$w['product_id']; ?>" class="cp-wishlist-view-btn">View Product</a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </section>
 
         <!-- DANGER ZONE -->
         <section class="cp-card cp-danger-card">
@@ -571,6 +637,39 @@ document.querySelectorAll('.cp-nav-link[href^="#"]').forEach(function(link) {
         }
     });
 });
+
+document.querySelectorAll('.cp-wishlist-remove').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        const productId = this.dataset.productId;
+        const card = document.getElementById('wcard-' + productId);
+        fetch('wishlist_toggle.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'product_id=' + productId
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.action === 'removed') {
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.remove();
+                    const badge = document.querySelector('#section-wishlist .cp-badge');
+                    if (badge) {
+                        const n = (parseInt(badge.textContent) || 1) - 1;
+                        badge.textContent = n + ' item' + (n !== 1 ? 's' : '');
+                    }
+                    const grid = document.querySelector('.cp-wishlist-grid');
+                    if (grid && grid.children.length === 0) {
+                        grid.outerHTML = '<div class="cp-empty"><p>Your wishlist is empty.</p><a href="perfumes.php" class="cp-empty-link">Browse Perfumes &rarr;</a></div>';
+                    }
+                }, 300);
+            }
+        });
+    });
+});
+
 </script>
 <script src="theme.js"></script>
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>

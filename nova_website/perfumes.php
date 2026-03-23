@@ -135,6 +135,15 @@ $productSql = "
     LIMIT {$perPage} OFFSET {$offset}
 ";
 $productRes = $conn->query($productSql);
+$wishlistIds = [];
+if (isset($_SESSION['user_id'])) {
+    $wRes = $conn->query("SELECT product_id FROM wishlist WHERE user_id = " . (int)$_SESSION['user_id']);
+    if ($wRes) {
+        while ($wRow = $wRes->fetch_assoc()) {
+            $wishlistIds[] = (int)$wRow['product_id'];
+        }
+    }
+}
 
 // -------------------------------------------------
 // 7. Helper for page URLs (keep category + sort + search)
@@ -340,11 +349,12 @@ function build_page_url($page, $category, $sort, $search)
                             <!-- Favourite (localStorage-based) -->
                             <button
                                 type="button"
-                                class="card-icon fav-toggle"
+                                class="card-icon fav-toggle <?php echo in_array($productId, $wishlistIds) ? 'fav-active' : ''; ?>"
                                 data-product-id="<?php echo $productId; ?>"
-                                title="Add to favourites"
-                            >
-                                <span class="heart">&hearts;</span>
+                                title="Add to wishlist">
+                                <img src="heart_icon.png"        class="heart-img heart-default" alt="Add to wishlist">
+                                <img src="heart_icon_white.png"  class="heart-img heart-white"   alt="Add to wishlist">
+                                <img src="active_heart_icon.png" class="heart-img heart-active"  alt="Wishlisted">
                             </button>
 
                             <!-- Quick add to cart -->
@@ -352,13 +362,17 @@ function build_page_url($page, $category, $sort, $search)
                                 <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
                                 <?php if ($defaultSizeId): ?>
                                     <input type="hidden" name="size_id" value="<?php echo $defaultSizeId; ?>">
-                                    <button type="submit" class="card-icon cart-btn" title="Add to basket">
-                                        &#128722;
+                                    <button type="button" class="card-icon cart-btn" title="Out of stock" disabled>
+                                        <img src="basket_icon.png"        class="basket-img basket-default" alt="Out of stock">
+                                        <img src="basket_icon_white.png"  class="basket-img basket-white"   alt="Out of stock">
+                                        <img src="active_basket_icon.png" class="basket-img basket-active"  alt="Out of stock">
                                     </button>
                                 <?php else: ?>
                                     <!-- No in-stock sizes – disable cart icon -->
                                     <button type="button" class="card-icon cart-btn" title="Out of stock" disabled>
-                                        &#128722;
+                                        <img src="basket_icon.png"        class="basket-img basket-default" alt="Out of stock">
+                                        <img src="basket_icon_white.png"  class="basket-img basket-white"   alt="Out of stock">
+                                        <img src="active_basket_icon.png" class="basket-img basket-active"  alt="Out of stock">
                                     </button>
                                 <?php endif; ?>
                             </form>
