@@ -136,6 +136,17 @@ $productSql = "
 ";
 $productRes = $conn->query($productSql);
 
+// Load wishlist IDs for logged-in user
+$wishlistIds = [];
+if (isset($_SESSION['user_id'])) {
+    $wRes = $conn->query("SELECT product_id FROM wishlist WHERE user_id = " . (int)$_SESSION['user_id']);
+    if ($wRes) {
+        while ($wRow = $wRes->fetch_assoc()) {
+            $wishlistIds[] = (int)$wRow['product_id'];
+        }
+    }
+}
+
 // -------------------------------------------------
 // 7. Helper for page URLs (keep category + sort + search)
 // -------------------------------------------------
@@ -165,9 +176,9 @@ function build_page_url($page, $category, $sort, $search)
     <title>Perfumes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Belleza&display=swap" rel="stylesheet">
 
     <!-- Global site styles -->
     <link rel="stylesheet" href="style.css">
@@ -192,29 +203,16 @@ function build_page_url($page, $category, $sort, $search)
 
             <!-- RIGHT SIDE BASED ON USER SESSION -->
             <div class="nav-right">
+                <!-- Theme toggle (from Version 1) -->
+                <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+                    <span id="theme-icon">🌙</span>
+                </button>
 
-            <?php if (!isset($_SESSION['user_id'])): ?>
+                <?php if (!isset($_SESSION['user_id'])): ?>
 
-                <!-- GUEST -->
-                <a href="register.php" class="nav-link">Register</a>
-                <a href="login.php" class="nav-link">Log in</a>
-
-                <a href="shopping_cart.php" class="basket-link" aria-label="Shopping basket">
-                    <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
-                    <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
-                </a>
-
-            <?php else: ?>
-                <?php $role = $_SESSION['role'] ?? 'customer'; ?>
-
-                <?php if ($role === 'admin'): ?>
-
-                    <a href="admin_dashboard.php" class="nav-link">Admin Dashboard</a>
-
-                    <a href="admin_profile.php" class="account-link" aria-label="Admin account">
-                        <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
-                        <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
-                    </a>
+                    <!-- GUEST -->
+                    <a href="register.php" class="nav-link">Register</a>
+                    <a href="login.php" class="nav-link">Log in</a>
 
                     <a href="shopping_cart.php" class="basket-link" aria-label="Shopping basket">
                         <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
@@ -222,19 +220,36 @@ function build_page_url($page, $category, $sort, $search)
                     </a>
 
                 <?php else: ?>
+                    <?php $role = $_SESSION['role'] ?? 'customer'; ?>
 
-                    <a href="customer_profile.php" class="account-link" aria-label="My account">
-                        <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
-                        <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
-                    </a>
+                    <?php if ($role === 'admin'): ?>
 
-                    <a href="shopping_cart.php" class="basket-link" aria-label="Shopping basket">
-                        <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
-                        <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
-                    </a>
+                        <a href="admin_dashboard.php" class="nav-link">Admin Dashboard</a>
 
+                        <a href="admin_profile.php" class="account-link" aria-label="Admin account">
+                            <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
+                            <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
+                        </a>
+
+                        <a href="shopping_cart.php" class="basket-link" aria-label="Shopping basket">
+                            <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
+                            <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
+                        </a>
+
+                    <?php else: ?>
+
+                        <a href="customer_profile.php" class="account-link" aria-label="My account">
+                            <img src="account_icon.png" class="account-icon account-icon-default" alt="Account icon" />
+                            <img src="active_account_icon.png" class="account-icon account-icon-active" alt="Active account icon" />
+                        </a>
+
+                        <a href="shopping_cart.php" class="basket-link" aria-label="Shopping basket">
+                            <img src="basket_icon.png" class="basket-icon basket-icon-default" alt="Basket icon" />
+                            <img src="active_basket_icon.png" class="basket-icon basket-icon-active" alt="Active basket icon" />
+                        </a>
+
+                    <?php endif; ?>
                 <?php endif; ?>
-            <?php endif; ?>
 
             </div>
 
@@ -266,14 +281,14 @@ function build_page_url($page, $category, $sort, $search)
         <div class="filter-group">
             <label for="sort">Sort perfumes:</label>
             <select name="sort" id="sort">
-                <option value="relevant"   <?php echo $sort === 'relevant'   ? 'selected' : ''; ?>>Most relevant</option>
-                <option value="price_low"  <?php echo $sort === 'price_low'  ? 'selected' : ''; ?>>Price: Low to High</option>
-                <option value="price_high" <?php echo $sort === 'price_high' ? 'selected' : ''; ?>>Price: High to Low</option>
-                <option value="name_az"    <?php echo $sort === 'name_az'    ? 'selected' : ''; ?>>Name: A–Z</option>
-                <option value="name_za"    <?php echo $sort === 'name_za'    ? 'selected' : ''; ?>>Name: Z–A</option>
-                <option value="best_seller"<?php echo $sort === 'best_seller'? 'selected' : ''; ?>>Best seller</option>
-                <option value="top_rated"  <?php echo $sort === 'top_rated'  ? 'selected' : ''; ?>>Top rated</option>
-                <option value="newest"     <?php echo $sort === 'newest'     ? 'selected' : ''; ?>>Newest</option>
+                <option value="relevant"    <?php echo $sort === 'relevant'    ? 'selected' : ''; ?>>Most relevant</option>
+                <option value="price_low"   <?php echo $sort === 'price_low'   ? 'selected' : ''; ?>>Price: Low to High</option>
+                <option value="price_high"  <?php echo $sort === 'price_high'  ? 'selected' : ''; ?>>Price: High to Low</option>
+                <option value="name_az"     <?php echo $sort === 'name_az'     ? 'selected' : ''; ?>>Name: A–Z</option>
+                <option value="name_za"     <?php echo $sort === 'name_za'     ? 'selected' : ''; ?>>Name: Z–A</option>
+                <option value="best_seller" <?php echo $sort === 'best_seller' ? 'selected' : ''; ?>>Best seller</option>
+                <option value="top_rated"   <?php echo $sort === 'top_rated'   ? 'selected' : ''; ?>>Top rated</option>
+                <option value="newest"      <?php echo $sort === 'newest'      ? 'selected' : ''; ?>>Newest</option>
             </select>
         </div>
 
@@ -301,8 +316,8 @@ function build_page_url($page, $category, $sort, $search)
             <?php while ($p = $productRes->fetch_assoc()): ?>
                 <?php
                     // Find a default in-stock size for quick add-to-cart
-                    $productId      = (int)$p['product_id'];
-                    $defaultSizeId  = null;
+                    $productId     = (int)$p['product_id'];
+                    $defaultSizeId = null;
 
                     if ($stmtSize = $conn->prepare("
                         SELECT v.size_id
@@ -326,17 +341,18 @@ function build_page_url($page, $category, $sort, $search)
                     <div class="product-img-wrapper">
                         <div class="product-actions">
                             <!-- Favourite (localStorage-based) -->
-                            <button
-                                type="button"
-                                class="card-icon fav-toggle"
-                                data-product-id="<?php echo $productId; ?>"
-                                title="Add to favourites"
-                            >
-                                <span class="heart">&hearts;</span>
-                            </button>
+                        <button
+                            type="button"
+                            class="card-icon fav-toggle <?php echo in_array($productId, $wishlistIds) ? 'fav-active' : ''; ?>"
+                            data-product-id="<?php echo $productId; ?>"
+                            title="Add to wishlist">
+                            <img src="heart_icon.png"        class="heart-img heart-default" alt="Add to wishlist">
+                            <img src="heart_icon_white.png"  class="heart-img heart-white"   alt="Add to wishlist">
+                            <img src="active_heart_icon.png" class="heart-img heart-active"  alt="Wishlisted">
+                        </button>
 
                             <!-- Quick add to cart -->
-                            <form method="get" action="shopping_cart.php" class="cart-form">
+                            <form method="get" action="<?php echo isset($_SESSION['user_id']) ? 'shopping_cart.php' : 'login.php'; ?>" class="cart-form">
                                 <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
                                 <?php if ($defaultSizeId): ?>
                                     <input type="hidden" name="size_id" value="<?php echo $defaultSizeId; ?>">
@@ -352,12 +368,15 @@ function build_page_url($page, $category, $sort, $search)
                             </form>
                         </div>
 
-                        <?php if (!empty($p['image'])): ?>
-                            <img src="images/<?php echo htmlspecialchars($p['image']); ?>"
-                                 alt="<?php echo htmlspecialchars($p['name']); ?>">
-                        <?php else: ?>
-                            <span class="placeholder-text">Image coming soon</span>
-                        <?php endif; ?>
+                        <?php
+                            // Image display (from Version 2):
+                            // Always show an image; fall back to nova_default.jpg if none set.
+                            // Images live in uploads/products/
+                            $productImage = !empty($p['image']) ? $p['image'] : 'nova_default.jpg';
+                        ?>
+                        <img src="uploads/products/<?php echo htmlspecialchars($productImage); ?>"
+                             alt="<?php echo htmlspecialchars($p['name']); ?>">
+
                     </div>
 
                     <div class="product-info">
@@ -381,7 +400,6 @@ function build_page_url($page, $category, $sort, $search)
                                 <?php endif; ?>
                             </div>
 
-                            <!-- FIXED: use ?id= so it matches product_page.php -->
                             <a href="product_page.php?id=<?php echo $productId; ?>" class="view-btn">
                                 View
                             </a>
@@ -428,9 +446,7 @@ function build_page_url($page, $category, $sort, $search)
 <footer class="nova-footer">
     <div class="nova-footer-inner">
 
-        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
-            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
@@ -444,7 +460,6 @@ function build_page_url($page, $category, $sort, $search)
                 <a href="#">Complaints Policy</a>
             </div>
 
-            <!-- About Us -->
             <div class="footer-col">
                 <h4>About Us</h4>
                 <a href="about.php">Our Story</a>
@@ -455,7 +470,6 @@ function build_page_url($page, $category, $sort, $search)
                 <a href="#">Charity Partners</a>
             </div>
 
-            <!-- Legal -->
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a href="#">Terms &amp; Conditions</a>
@@ -469,10 +483,8 @@ function build_page_url($page, $category, $sort, $search)
                 <a href="#">Corporate Governance</a>
             </div>
 
-            <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
-                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
                     <img src="Pay_pal.png" alt="PayPal">
                     <img src="apple_pay.png" alt="Apple Pay">
@@ -486,7 +498,6 @@ function build_page_url($page, $category, $sort, $search)
                 </div>
 
                 <div class="footer-membership-logo">
-                    <!-- membership / group logo -->
                     <span>Member of NOVA Group</span>
                 </div>
 
@@ -500,15 +511,25 @@ function build_page_url($page, $category, $sort, $search)
         <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
-        <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
             <p>Copyright © 2025 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
@@ -516,3 +537,28 @@ function build_page_url($page, $category, $sort, $search)
 
     </div>
 </footer>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
+<script>
+document.querySelectorAll('.fav-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        const productId = this.dataset.productId;
+        const self = this;
+        fetch('wishlist_toggle.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'product_id=' + productId
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                self.classList.toggle('fav-active', data.action === 'added');
+            } else if (data.message === 'not_logged_in') {
+                window.location.href = 'login.php';
+            }
+        });
+    });
+});
+</script>
+<script src="theme.js"></script>
+</body>
+</html>

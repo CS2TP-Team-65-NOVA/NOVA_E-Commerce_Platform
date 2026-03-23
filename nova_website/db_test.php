@@ -13,6 +13,7 @@ if (!$result) {
 <head>
     <meta charset="UTF-8">
     <title>Database Test</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <h2>DB connection works! Tables found:</h2>
@@ -21,5 +22,6 @@ if (!$result) {
     <li><?php echo $row[0]; ?></li>
 <?php endwhile; ?>
 </ul>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>

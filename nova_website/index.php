@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require_once 'config.php';
 
@@ -82,7 +86,9 @@ $featuredRes = $conn->query($featuredSql);
 
             <!-- RIGHT SIDE BASED ON USER SESSION -->
             <div class="nav-right">
-
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+                <span id="theme-icon">🌙</span>
+            </button>
             <?php if (!isset($_SESSION['user_id'])): ?>
 
                 <!-- GUEST -->
@@ -280,6 +286,43 @@ $featuredRes = $conn->query($featuredSql);
             </div>
         </section>
 
+        <!-- What Makes NOva Unique -->
+        
+        <section class="about-unique-section">
+            <div class="about-unique-inner">
+
+                <h2 class="about-heading">What Makes Nova Unique</h2>
+
+                <p class="about-unique-lead">
+                    NOVA feels like a new constellation — familiar enough to love instantly, distinct enough to remember.
+                </p>
+
+                <div class="unique-grid">
+
+                    <div class="unique-point">
+                        <h3>Celestial Inspiration</h3>
+                        <p>Night skies, light bursts and constellations translated into perfume experiences.</p>
+                    </div>
+
+                    <div class="unique-point">
+                        <h3>Luxury, Made Accessible</h3>
+                        <p>Premium fragrance without the traditional luxury price barrier.</p>
+                    </div>
+
+                   <div class="unique-point">
+                        <h3>Minimalist, Futuristic Design</h3>
+                        <p>Precision, symmetry and modern silhouettes built for your shelf.</p>
+                   </div>
+
+                    <div class="unique-point">
+                        <h3>Art Meets Science</h3>
+                        <p>Creative vision blended with chemistry and meticulous formulation.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
         <!-- CUSTOMER REVIEWS SECTION (STATIC) -->
         <section class="home-reviews">
             <div class="home-section-header">
@@ -392,11 +435,22 @@ $featuredRes = $conn->query($featuredSql);
         <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
@@ -413,7 +467,8 @@ $featuredRes = $conn->query($featuredSql);
 
 <!-- JAVASCRIPT FOR INTRO VIDEO -->
 <script src="intro.js"></script>
-
+    
+<script src="theme.js"></script>
 <!-- FAVOURITES HEARTS JS (same as perfumes.php) -->
 <script>
 (function () {
@@ -467,5 +522,6 @@ $featuredRes = $conn->query($featuredSql);
 })();
 </script>
 
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>

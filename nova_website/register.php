@@ -92,6 +92,9 @@ if (isset($_POST['submitted'])) {
         </a>
 
         <div class="nav-right">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+            <span id="theme-icon">🌙</span>
+        </button>
         <?php if (!isset($_SESSION['user_id'])): ?>
 
             <a href="register.php" class="nav-link active">Register</a>
@@ -162,10 +165,15 @@ if (isset($_POST['submitted'])) {
 
         <button type="submit" class="register-btn">Register</button>
 
-        <p class="register-already-user">
-            Already a user?
-            <a href="login.php">Log in</a>
-        </p>
+       <p class="register-already-user">
+    Already a user?
+    <a href="login.php">Log in</a>
+</p>
+
+<p class="register-already-user admin-back-link">
+    Got an admin code?
+    <a href="admin_register.php">Register here</a>
+</p>
 
     </form>
 </div>
@@ -248,11 +256,22 @@ if (isset($_POST['submitted'])) {
         <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
@@ -264,6 +283,7 @@ if (isset($_POST['submitted'])) {
 
     </div>
 </footer>
-
+<script src="theme.js"></script>
+<?php require_once __DIR__ . '/chatbot_include.php'; ?>
 </body>
 </html>
