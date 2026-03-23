@@ -267,5 +267,6 @@ if ($access_granted && isset($_POST['submitted'])) {
     </div>
 </footer>
 <script src="theme.js"></script>
+<?php require_once _DIR_ . '/chatbot_include.php'; ?>
 </body>
 </html>

@@ -282,5 +282,7 @@ if (isset($_POST['submitted'])) {
 </footer>
 
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>
+<script src="theme.js"></script>
+
 </body>
 </html>
