@@ -2,6 +2,23 @@
 session_start();
 require_once 'config.php';
 
+$promoResult = null;
+$promocheckSql = "
+    SELECT discount_type, discount_value
+    FROM promotions
+    WHERE status = 'active'
+      AND CURDATE() BETWEEN start_date AND end_date
+      AND discount_type = 'percentage'
+    ORDER BY discount_value DESC
+    LIMIT 1
+";
+
+$promoquery = $conn->query($promocheckSql);
+
+if ($promoquery && $promoquery->num_rows > 0) {
+    $promoResult = $promoquery->fetch_assoc();
+}
+
 // ------------------------------------------
 // 1. Get 3 random featured products
 // ------------------------------------------
@@ -191,6 +208,12 @@ $featuredRes = $conn->query($featuredSql);
                             $productId     = (int)$p['product_id'];
                             $defaultSizeId = null;
 
+                            $priceShown = (float)$p['price'];
+                            if ($promoResult) {
+                                $priceShown = round($priceShown *(1- ((float) $promoResult['discount_value'] /100)), 2);
+
+                            }
+
                             if ($stmtSize = $conn->prepare("
                                 SELECT v.size_id
                                 FROM product_versions v
@@ -254,7 +277,7 @@ $featuredRes = $conn->query($featuredSql);
                                 </p>
 
                                 <p class="product-price">
-                                    £<?php echo number_format((float)$p['price'], 2); ?>
+                                    £<?php echo number_format((float)$priceShown, 2); ?>
                                 </p>
 
                                 <div class="card-footer-line">

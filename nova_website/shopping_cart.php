@@ -2,6 +2,23 @@
 session_start();
 require_once 'config.php';
 
+$promoResult = null;
+$promocheckSql = "
+    SELECT discount_type, discount_value
+    FROM promotions
+    WHERE status = 'active'
+      AND CURDATE() BETWEEN start_date AND end_date
+      AND discount_type = 'percentage'
+    ORDER BY discount_value DESC
+    LIMIT 1
+";
+
+$promoquery = $conn->query($promocheckSql);
+
+if ($promoquery && $promoquery->num_rows > 0) {
+    $promoResult = $promoquery->fetch_assoc();
+}
+
 if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
@@ -168,6 +185,10 @@ if (!empty($_SESSION['cart'])) {
             ? (float) $variantRow['price']
             : (float) $productRow['price'];
 
+        if ($promoResult) {
+            $unitPrice = round($unitPrice *(1- ((float) $promoResult['discount_value'] /100)), 2);
+        }
+        
         $lineTotal  = $unitPrice * $qty;
         $subtotal  += $lineTotal;
 
