@@ -2,6 +2,23 @@
 session_start();
 require_once 'config.php'; // gives $conn
 
+$promoResult = null;
+$promocheckSql = "
+    SELECT discount_type, discount_value
+    FROM promotions
+    WHERE status = 'active'
+      AND CURDATE() BETWEEN start_date AND end_date
+      AND discount_type = 'percentage'
+    ORDER BY discount_value DESC
+    LIMIT 1
+";
+
+$promoquery = $conn->query($promocheckSql);
+
+if ($promoquery && $promoquery->num_rows > 0) {
+    $promoResult = $promoquery->fetch_assoc();
+}
+
 // ------------------------------------------------------------------
 // 1. Read and validate product id (?id=...)
 // ------------------------------------------------------------------
@@ -122,6 +139,20 @@ if (!empty($sizes)) {
     $defaultPrice  = $defaultSize['price'];
     $defaultSizeId = $defaultSize['size_id'];
 }
+
+$defaultPrice = (float)$defaultPrice;
+if ($promoResult) {
+    $defaultPrice = round($defaultPrice * (1 - ((float)$promoResult['discount_value'] / 100)), 2);
+}
+
+
+
+
+
+
+
+
+
 
 // ------------------------------------------------------------------
 // 5. Load reviews for this product
@@ -363,7 +394,16 @@ if ($stmt = $conn->prepare($relatedSql)) {
                             ?>
                             <option
                                 value="<?php echo (int)$s['size_id']; ?>"
-                                data-price="<?php echo number_format((float)$s['price'], 2, '.', ''); ?>"
+                                data-price="<?php
+                                
+                                $s_price = (float) $s['price'];
+
+                                if ($promoResult) {
+                                $s_price = round($s_price *(1- ((float) $promoResult['discount_value'] /100)), 2);
+
+                            }
+                                
+                                echo number_format($s_price, 2, '.', ''); ?>"
                                 <?php echo $selected . ' ' . $disabled; ?>
                             >
                                 <?php
@@ -453,6 +493,12 @@ if ($stmt = $conn->prepare($relatedSql)) {
                         $relProductId     = (int)$rp['product_id'];
                         $relDefaultSizeId = null;
 
+                       $p_shown = (float)$rp['price'];
+
+                        if ($promoResult) {
+                            $p_shown = round($p_shown *(1- ((float) $promoResult['discount_value'] /100)), 2);
+                        }
+
                         if ($stmtSize = $conn->prepare("
                             SELECT v.size_id
                             FROM product_versions v
@@ -512,7 +558,7 @@ if ($stmt = $conn->prepare($relatedSql)) {
                             <h3><?php echo htmlspecialchars($rp['name']); ?></h3>
 
                             <p class="product-category">
-                                From £<?php echo number_format($rp['price'], 2); ?>
+                                From £<?php echo number_format($p_shown, 2); ?>
                             </p>
 
                             <div class="card-footer-line">
