@@ -481,8 +481,8 @@ if (isset($_POST['generate_code'])) {
 
 
 
-<!-- GLOBAL NOVA FOOTER (same as other pages) -->
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
 
         <!-- TOP: 3 columns + payment / rating column -->
@@ -529,6 +529,7 @@ if (isset($_POST['generate_code'])) {
             <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
                     <img src="Pay_pal.png" alt="PayPal">
                     <img src="apple_pay.png" alt="Apple Pay">
@@ -542,6 +543,7 @@ if (isset($_POST['generate_code'])) {
                 </div>
 
                 <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
                     <span>Member of NOVA Group</span>
                 </div>
 
@@ -555,17 +557,28 @@ if (isset($_POST['generate_code'])) {
         <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
         <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
 

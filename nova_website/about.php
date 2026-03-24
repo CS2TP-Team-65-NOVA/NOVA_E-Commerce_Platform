@@ -138,6 +138,8 @@ require_once 'config.php';
         </div>
     </section>
 
+
+
     <!-- VALUES -->
     <section class="about-values-section">
         <div class="about-values-inner">
@@ -173,41 +175,7 @@ require_once 'config.php';
         </div>
     </section>
 
-    <!-- UNIQUE -->
-    <section class="about-unique-section">
-        <div class="about-unique-inner">
-
-            <h2 class="about-heading">What Makes Nova Unique</h2>
-            <p class="about-unique-lead">
-                NOVA feels like a new constellation — familiar enough to love instantly, distinct enough to remember.
-            </p>
-
-            <div class="unique-grid">
-
-                <div class="unique-point">
-                    <h3>Celestial Inspiration</h3>
-                    <p>Night skies, light bursts and constellations translated into perfume experiences.</p>
-                </div>
-
-                <div class="unique-point">
-                    <h3>Luxury, Made Accessible</h3>
-                    <p>Premium fragrance without the traditional luxury price barrier.</p>
-                </div>
-
-                <div class="unique-point">
-                    <h3>Minimalist, Futuristic Design</h3>
-                    <p>Precision, symmetry and modern silhouettes built for your shelf.</p>
-                </div>
-
-                <div class="unique-point">
-                    <h3>Art Meets Science</h3>
-                    <p>Creative vision blended with chemistry and meticulous formulation.</p>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
+  
 
     <!-- CRAFT -->
     <section class="about-craft-section">
@@ -243,61 +211,12 @@ require_once 'config.php';
             </div>
         </div>
     </section>
-    <!-- MEET OUR TEAM -->
-    <section class="about-team-section">
-
-        <div class="about-team-inner">
-
-            <!-- LEFT SIDE SLIDESHOW -->
-            <div class="team-slideshow">
-
-                <div class="team-slide active">
-                    <img src="alex.png" alt="Team Member">
-                    <h4>Alex</h4>
-                </div>
-
-            <div class="team-slide">
-                <img src="shreya.png" alt="Team Member">
-                <h4>Shreya Kathiria</h4>
-            </div>
-
-            <div class="team-slide">
-                <img src="malaika.jpg" alt="Team Member">
-                <h4>Malika</h4>
-            </div>
-
-        </div>
-
-
-        <!-- RIGHT SIDE TEXT -->
-        <div class="about-team-text">
-
-            <h2 class="about-heading">Meet Our Team</h2>
-
-            <p class="about-lead">
-                Behind NOVA is a passionate group of designers, developers and creators
-                who believe fragrance should feel personal and meaningful.
-            </p>
-
-            <p>
-                Our team combines creativity, science and craftsmanship to design
-                scents that express identity and emotion. From fragrance formulation
-                to bottle design, every detail is shaped by collaboration and
-                innovation.
-            </p>
-
-            <p>
-                Together we work to create modern fragrances that feel luminous,
-                confident and unforgettable.
-            </p>
-
-        </div>
-        </div>
-    </section>
+    
     
 </main>
 
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
 
         <!-- TOP: 3 columns + payment / rating column -->
@@ -372,17 +291,28 @@ require_once 'config.php';
         <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
         <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
 

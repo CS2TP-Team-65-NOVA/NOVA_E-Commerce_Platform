@@ -560,9 +560,13 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
     </div>
 </main>
 
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
+
+        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
+            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
@@ -575,6 +579,8 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 <a href="#">The App</a>
                 <a href="#">Complaints Policy</a>
             </div>
+
+            <!-- About Us -->
             <div class="footer-col">
                 <h4>About Us</h4>
                 <a href="about.php">Our Story</a>
@@ -584,6 +590,8 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 <a href="#">VIP Rewards</a>
                 <a href="#">Charity Partners</a>
             </div>
+
+            <!-- Legal -->
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a href="#">Terms &amp; Conditions</a>
@@ -596,38 +604,63 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
                 <a href="#">Modern Slavery Statement</a>
                 <a href="#">Corporate Governance</a>
             </div>
+
+            <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
-                    <img src="Pay_pal.png"     alt="PayPal">
-                    <img src="apple_pay.png"   alt="Apple Pay">
-                    <img src="Klarna.png"      alt="Klarna">
+                    <img src="Pay_pal.png" alt="PayPal">
+                    <img src="apple_pay.png" alt="Apple Pay">
+                    <img src="Klarna.png" alt="Klarna">
                 </div>
+
                 <div class="footer-rating-card">
                     <div class="rating-logo">TrustScore</div>
-                    <div class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="rating-stars">★★★★★</div>
                     <div class="rating-text">4.7 | 154,224 reviews</div>
                 </div>
-                <div class="footer-membership-logo"><span>Member of NOVA Group</span></div>
+
+                <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
+                    <span>Member of NOVA Group</span>
+                </div>
+
                 <div class="footer-app-badges">
-                    <img src="app_store.png"  alt="Download on App Store">
+                    <img src="app_store.png" alt="Download on App Store">
                     <img src="play_store.png" alt="Download on Google Play">
                 </div>
             </div>
         </div>
+
+        <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="#" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">&#9658;</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
+
+        <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright &copy; 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
+
     </div>
 </footer>
 <script src="theme.js"></script>

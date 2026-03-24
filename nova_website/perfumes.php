@@ -152,6 +152,16 @@ $productSql = "
     LIMIT {$perPage} OFFSET {$offset}
 ";
 $productRes = $conn->query($productSql);
+// Load wishlist IDs for logged-in user
+$wishlistIds = [];
+if (isset($_SESSION['user_id'])) {
+    $wRes = $conn->query("SELECT product_id FROM wishlist WHERE user_id = " . (int)$_SESSION['user_id']);
+    if ($wRes) {
+        while ($wRow = $wRes->fetch_assoc()) {
+            $wishlistIds[] = (int)$wRow['product_id'];
+        }
+    }
+}
 
 // -------------------------------------------------
 // 7. Helper for page URLs (keep category + sort + search)
@@ -358,33 +368,43 @@ function build_page_url($page, $category, $sort, $search)
                 ?>
                 <article class="product-card">
                     <div class="product-img-wrapper">
-                        <div class="product-actions">
-                            <!-- Favourite (localStorage-based) -->
-                            <button
-                                type="button"
-                                class="card-icon fav-toggle"
-                                data-product-id="<?php echo $productId; ?>"
-                                title="Add to favourites"
-                            >
-                                <span class="heart">&hearts;</span>
-                            </button>
+                       <div class="product-actions">
 
-                            <!-- Quick add to cart -->
-                            <form method="get" action="shopping_cart.php" class="cart-form">
-                                <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
-                                <?php if ($defaultSizeId): ?>
-                                    <input type="hidden" name="size_id" value="<?php echo $defaultSizeId; ?>">
-                                    <button type="submit" class="card-icon cart-btn" title="Add to basket">
-                                        &#128722;
-                                    </button>
-                                <?php else: ?>
-                                    <!-- No in-stock sizes – disable cart icon -->
-                                    <button type="button" class="card-icon cart-btn" title="Out of stock" disabled>
-                                        &#128722;
-                                    </button>
-                                <?php endif; ?>
-                            </form>
-                        </div>
+    <!-- Wishlist -->
+    <button
+        type="button"
+        class="card-icon fav-toggle <?php echo in_array($productId, $wishlistIds) ? 'fav-active' : ''; ?>"
+        data-product-id="<?php echo $productId; ?>"
+        title="Add to wishlist">
+
+        <img src="heart_icon.png" class="heart-img heart-default">
+        <img src="heart_icon_white.png" class="heart-img heart-white">
+        <img src="active_heart_icon.png" class="heart-img heart-active">
+    </button>
+
+    <!-- Cart -->
+    <form method="get" action="<?php echo isset($_SESSION['user_id']) ? 'shopping_cart.php' : 'login.php'; ?>" class="cart-form">
+        <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
+
+        <?php if ($defaultSizeId): ?>
+            <input type="hidden" name="size_id" value="<?php echo $defaultSizeId; ?>">
+
+            <button type="submit" class="card-icon cart-btn" title="Add to basket">
+                <img src="basket_icon.png" class="basket-img basket-default">
+                <img src="basket_icon_white.png" class="basket-img basket-white">
+                <img src="active_basket_icon.png" class="basket-img basket-active">
+            </button>
+
+       <?php else: ?>
+    <button type="button" class="card-icon cart-btn" title="Out of stock" disabled>
+        <img src="basket_icon.png" class="basket-img basket-default" alt="Out of stock">
+        <img src="basket_icon_white.png" class="basket-img basket-white" alt="Out of stock">
+        <img src="active_basket_icon.png" class="basket-img basket-active" alt="Out of stock">
+    </button>
+<?php endif; ?>
+    </form>
+
+</div>
 
                         <?php
                             // Image display (from Version 2):
@@ -461,10 +481,13 @@ function build_page_url($page, $category, $sort, $search)
 
 </main>
 
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
 
+        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
+            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
@@ -478,6 +501,7 @@ function build_page_url($page, $category, $sort, $search)
                 <a href="#">Complaints Policy</a>
             </div>
 
+            <!-- About Us -->
             <div class="footer-col">
                 <h4>About Us</h4>
                 <a href="about.php">Our Story</a>
@@ -488,6 +512,7 @@ function build_page_url($page, $category, $sort, $search)
                 <a href="#">Charity Partners</a>
             </div>
 
+            <!-- Legal -->
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a href="#">Terms &amp; Conditions</a>
@@ -501,8 +526,10 @@ function build_page_url($page, $category, $sort, $search)
                 <a href="#">Corporate Governance</a>
             </div>
 
+            <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
                     <img src="Pay_pal.png" alt="PayPal">
                     <img src="apple_pay.png" alt="Apple Pay">
@@ -516,6 +543,7 @@ function build_page_url($page, $category, $sort, $search)
                 </div>
 
                 <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
                     <span>Member of NOVA Group</span>
                 </div>
 
@@ -526,25 +554,76 @@ function build_page_url($page, $category, $sort, $search)
             </div>
         </div>
 
+        <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
+        <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
 
     </div>
 </footer>
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.fav-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
 
+            const productId = this.dataset.productId;
+            const self = this;
+
+            fetch('wishlist_toggle.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'product_id=' + encodeURIComponent(productId)
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.success) {
+                    if (data.action === 'added') {
+                        self.classList.add('fav-active');
+                    } else if (data.action === 'removed') {
+                        self.classList.remove('fav-active');
+                    }
+                } else if (data.message === 'not_logged_in') {
+                    window.location.href = 'login.php';
+                } else {
+                    console.log(data);
+                }
+            })
+            .catch(function (error) {
+                console.error('Wishlist error:', error);
+            });
+        });
+    });
+});
+</script>
 <script src="theme.js"></script>
 </body>
 </html>

@@ -2869,35 +2869,12 @@ body {
 
 .product-actions {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  z-index: 2;
-}
-
-.card-icon {
-  border-radius: 999px;
-  border: 1px solid #dddddd;
-  background: rgba(255, 255, 255, 0.95);
-  width: 32px;
-  height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.card-icon:hover {
-  background: var(--nova-purple-soft);
-  border-color: var(--nova-purple);
-}
-
-.fav-toggle.is-active .heart {
-  color: #e53935;
+  gap: 8px;
+  z-index: 3;
 }
 
 .cart-form {
@@ -2905,12 +2882,101 @@ body {
   padding: 0;
 }
 
-.cart-btn {
-  all: unset;
-  width: 100%;
-  height: 100%;
-  text-align: center;
+.card-icon {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+  background: rgba(255, 255, 255, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Light mode (default) */
+.card-icon {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+}
+
+/* Dark mode */
+body.dark-mode .card-icon {
+  background: #1e1e1e;
+  border: 1px solid #333;
+}
+
+.card-icon:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.heart-img,
+.basket-img {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* -------------------------
+   DEFAULT STATE
+-------------------------- */
+
+/* Light mode → black icons */
+body:not(.dark-mode) .heart-default,
+body:not(.dark-mode) .basket-default {
+  opacity: 1;
+}
+
+/* Dark mode → white icons */
+body.dark-mode .heart-white,
+body.dark-mode .basket-white {
+  opacity: 1;
+}
+
+/* -------------------------
+   HOVER = PURPLE ICON
+-------------------------- */
+
+.card-icon:hover .heart-default,
+.card-icon:hover .heart-white,
+.card-icon:hover .basket-default,
+.card-icon:hover .basket-white {
+  opacity: 0;
+}
+
+.card-icon:hover .heart-active,
+.card-icon:hover .basket-active {
+  opacity: 1;
+}
+
+/* Wishlist active state = purple icon shown even without hover */
+.fav-active .heart-default,
+.fav-active .heart-white {
+  opacity: 0;
+}
+
+.fav-active .heart-active {
+  opacity: 1;
+}
+
+/* Keep active icon on hover too */
+.fav-active:hover .heart-active {
+  opacity: 1;
+}
+
+/* IMPORTANT: do not reset the button styling */
+.cart-btn {
+  border: 1px solid #d9d9d9;
+  background: rgba(255, 255, 255, 0.96);
 }
 
 /* Product card text */
@@ -3781,150 +3847,166 @@ body {
 /* FOOTER STYLING */
 
 .nova-footer {
-  background: #000000;
-  color: #ffffff;
-  margin-top: 80px;
+    background: #000000;
+    color: #ffffff;
+    margin-top: 80px;
 }
 
 /* Increased padding */
 .nova-footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 20px 40px;
-  box-sizing: border-box;
-  font-size: 15px; /* larger base text */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 40px;
+    box-sizing: border-box;
+    font-size: 15px; /* larger base text */
 }
 
 /* wider columns + bigger spacing */
 .footer-top-row {
-  display: grid;
-  grid-template-columns: 1.2fr 1.2fr 1.2fr 1.5fr;
-  gap: 60px;
-  border-bottom: 1px solid #333333;
-  padding-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 1.2fr 1.5fr;
+    gap: 60px;
+    border-bottom: 1px solid #333333;
+    padding-bottom: 40px;
 }
 
 /* Bigger section headings */
 .footer-col h4 {
-  font-size: 17px;
-  margin-bottom: 14px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+    font-size: 17px;
+    margin-bottom: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 /* Bigger link text */
 .footer-col a {
-  display: block;
-  color: #cccccc;
-  font-size: 15px;
-  margin-bottom: 8px;
-  text-decoration: none;
-  transition: color 0.2s ease;
+    display: block;
+    color: #cccccc;
+    font-size: 15px; 
+    margin-bottom: 8px;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .footer-col a:hover {
-  color: var(--nova-purple);
+    color: var(--nova-purple);
 }
 
 .footer-link-highlight {
-  color: #ff4d4d;
-  font-weight: 600;
+    color: #ff4d4d;
+    font-weight: 600;
 }
 
 /* right column with payments + rating */
 .footer-col-right {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* more spacing */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* more spacing */
 }
 
 /* Larger payment logos */
 .footer-payments img {
-  height: 34px; /* was 26px */
-  background: #ffffff;
-  padding: 5px 8px;
-  border-radius: 10px;
+    height: 34px; /* was 26px */
+    background: #ffffff;
+    padding: 5px 8px;
+    border-radius: 10px;
 }
 
 /* Larger rating box */
 .footer-rating-card {
-  background: #111111;
-  border-radius: 12px;
-  padding: 14px 18px;
-  display: inline-block;
-  text-align: center;
+    background: #111111;
+    border-radius: 12px;
+    padding: 14px 18px; 
+    display: inline-block;
+    text-align: center;
 }
 
 .footer-rating-card .rating-logo {
-  font-size: 13px;
-  margin-bottom: 4px;
+    font-size: 13px;
+    margin-bottom: 4px;
 }
 
 .footer-rating-card .rating-stars {
-  font-size: 20px;
-  color: #22c55e;
+    font-size: 20px;
+    color: #22c55e;
 }
 
 .footer-rating-card .rating-text {
-  font-size: 13px;
-  margin-top: 3px;
+    font-size: 13px;
+    margin-top: 3px;
 }
 
 /* membership text */
 .footer-membership-logo span {
-  font-size: 13px;
-  color: #dcdcdc;
+    font-size: 13px;
+    color: #dcdcdc;
 }
 
 /* larger app badges */
 .footer-app-badges img {
-  height: 44px; /* was 34px */
-  border-radius: 10px;
+    height: 44px; /* was 34px */
+    border-radius: 10px;
 }
 
 /* bigger social icons */
-.footer-middle-row {
-  border-bottom: 1px solid #333333;
-  padding: 20px 0;
-  display: flex;
-  justify-content: center;
-}
 
 .footer-social {
-  display: flex;
-  gap: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
 }
 
-.social-circle {
-  width: 42px; /* bigger */
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid #555555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 18px;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+/* ===== FOOTER SOCIAL ICON IMAGE LINKS ===== */
+.social-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    transition: transform 0.2s ease;
 }
 
-.social-circle:hover {
-  background: var(--nova-purple);
-  border-color: var(--nova-purple);
-  transform: translateY(-1px);
+.social-icon-link:hover {
+    transform: translateY(-3px);
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    position: absolute;
+    transition: opacity 0.2s ease;
+}
+
+.social-icon-default {
+    opacity: 1;
+}
+
+.social-icon-active {
+    opacity: 0;
+}
+
+.social-icon-link:hover .social-icon-default {
+    opacity: 0;
+}
+
+.social-icon-link:hover .social-icon-active {
+    opacity: 1;
 }
 
 /* bottom text larger + more spacing */
 .footer-bottom-row {
-  padding-top: 20px;
-  text-align: center;
-  color: #b5b5b5;
-  font-size: 14px;
+    padding-top: 20px;
+    text-align: center;
+    color: #b5b5b5;
+    font-size: 14px;
 }
 
 .footer-bottom-row p {
-  margin: 5px 0;
+    margin:5px 0;
 }
 
 /* admin_style.css */
@@ -4566,11 +4648,7 @@ body {
 
 .cp-body #main-header {
   margin-bottom: 0 !important;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgb(242, 242, 242);
-  border-bottom: 0px solid #e8e8e8;
+  position: static !important;
 }
 
 /* ============================================================
@@ -4599,10 +4677,9 @@ body {
   );
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 88px;
-  height: calc(100vh - 88px);
-  overflow-y: auto;
+  position: static;
+  height: auto;
+  overflow: visible;
   flex-shrink: 0;
 }
 
@@ -8565,4 +8642,543 @@ body:not(.dark-mode) .theme-toggle:hover .theme-icon-moon.theme-icon-active {
 /* DARK MODE HOVER → purple sun only */
 body.dark-mode .theme-toggle:hover .theme-icon-sun.theme-icon-active {
     display: block;
+}
+
+/* CUSTOMER PROFILE - WISHLIST */
+.cp-wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.cp-wishlist-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #ece8fa;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cp-wishlist-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.09);
+}
+
+.cp-wishlist-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  background: #f8f8f8;
+}
+
+.cp-wishlist-remove {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #111111;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+}
+
+.cp-wishlist-remove:hover {
+  background: #5e17eb;
+  color: #ffffff;
+}
+
+.cp-wishlist-info {
+  padding: 16px;
+}
+
+.cp-wishlist-name {
+  display: block;
+  color: #111111;
+  text-decoration: none;
+  font-family: "Belleza", Arial, sans-serif;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.cp-wishlist-name:hover {
+  color: #5e17eb;
+}
+
+.cp-wishlist-cat {
+  margin: 0 0 8px;
+  color: #777777;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cp-wishlist-price {
+  margin: 0 0 14px;
+  color: #5e17eb;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cp-wishlist-view-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #5e17eb;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  transition: all 0.25s ease;
+}
+
+.cp-wishlist-view-btn:hover {
+  background: #4a12c9;
+  transform: translateY(-1px);
+}
+
+/* ======================================
+   FIX NAVBAR ONLY FOR CUSTOMER PROFILE
+   ====================================== */
+
+.cp-body #main-header,
+.cp-body #navbar {
+  position: static !important;
+}
+
+/* ================================
+   WHAT MAKES NOVA UNIQUE (UPDATED)
+   ================================ */
+
+.about-unique-section {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.about-unique-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-heading {
+  font-family: "Belleza", sans-serif;
+  font-size: 56px;
+  margin-bottom: 12px;
+}
+
+.about-unique-lead {
+  font-size: 18px;
+  color: #a8a8c2;
+  margin-bottom: 50px;
+}
+
+.unique-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.unique-point {
+  padding: 28px 24px;
+  border-radius: 22px;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+.unique-point:hover {
+  transform: translateY(-6px);
+}
+
+.unique-point h3 {
+  font-family: "Belleza", sans-serif;
+  font-size: 20px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+/* LIGHT MODE TEXT */
+.unique-point p {
+  color: #555;
+}
+
+/* DARK MODE TEXT */
+body.dark-mode .unique-point p {
+  color: #bfbfd6;
+}
+
+/* =========================================
+   ADMIN CODE CARD - DARK MODE OVERRIDE ONLY
+   ========================================= */
+
+/* DARK MODE CARD */
+body.dark-mode .code-card {
+  background: rgba(20, 20, 35, 0.85) !important;
+  border: 1px solid rgba(120, 90, 255, 0.2);
+  color: #eaeaf0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* DARK MODE TEXT */
+body.dark-mode .code-label,
+body.dark-mode .code-helper,
+body.dark-mode .code-timer {
+  color: #bfbfd6 !important;
+}
+
+body.dark-mode .code-value {
+  color: #ffffff !important;
+}
+
+/* =========================================
+   COPY ICON - CORRECT DARK MODE BEHAVIOUR
+   ========================================= */
+
+/* DEFAULT STATE */
+.copy-default {
+  display: inline-block;
+}
+
+.copy-active {
+  display: none;
+}
+
+/* HOVER / CLICK (ALL MODES) */
+.copy-icon:hover .copy-default,
+.copy-icon:active .copy-default {
+  display: none;
+}
+
+.copy-icon:hover .copy-active,
+.copy-icon:active .copy-active {
+  display: inline-block;
+}
+
+/* DARK MODE → ONLY CHANGE DEFAULT ICON */
+body.dark-mode .copy-default {
+  content: url("copy_icon_white.png");
+}
+
+/* =========================================
+   CONTACT PAGE (NOVA STYLE)
+   ========================================= */
+
+.contact-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 40px;
+}
+
+.contact-left-card,
+.contact-right-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* LEFT SIDE */
+.contact-left-card h1 {
+  font-family: "Belleza", Arial, sans-serif;
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.contact-intro {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.contact-response-time {
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.contact-detail-item {
+  margin-bottom: 20px;
+}
+
+.contact-detail-item h3 {
+  font-size: 14px;
+  color: #5e17eb;
+  margin-bottom: 5px;
+}
+
+.contact-detail-item p {
+  color: #333;
+  font-size: 14px;
+}
+
+/* RIGHT SIDE FORM */
+.contact-right-card h2 {
+  font-family: "Belleza", Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.contact-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #5e17eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-submit-btn:hover {
+  background: #4a12c9;
+}
+
+/* MAP */
+.contact-map-section {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 40px;
+}
+
+.contact-map-card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.contact-map-embed {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* DARK MODE */
+body.dark-mode .contact-left-card,
+body.dark-mode .contact-right-card,
+body.dark-mode .contact-map-card {
+  background: rgba(20,20,35,0.9);
+  color: #eaeaf0;
+}
+
+body.dark-mode .contact-detail-item p,
+body.dark-mode .contact-intro,
+body.dark-mode .contact-response-time {
+  color: #bfbfd6;
+}
+
+/* ================================
+   BASKET IMAGE FIX
+   ================================ */
+
+/* Remove background box */
+.basket-item div:first-child {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Fix image sizing */
+.basket-item img {
+  width: 90px;
+  height: 90px;
+
+  object-fit: contain !important; /* THIS FIXES ZOOM */
+  background: transparent !important;
+
+  border-radius: 12px;
+}
+
+/* =========================================
+   PRODUCT PAGE IMAGE BOX (LIGHT + DARK MODE)
+   ========================================= */
+
+/* LIGHT MODE (default) */
+.product-main-image {
+  background: #f2f2f2; /* light grey like your current */
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DARK MODE */
+body.dark-mode .product-main-image {
+  background: rgba(20, 20, 35, 0.9); /* same vibe as your cards */
+  border: 1px solid rgba(120, 90, 255, 0.15);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* IMAGE FIT (important so it doesn't look weird) */
+.product-main-image img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  background: transparent; /* ensures PNG stays clean */
+}
+
+/* =========================
+   ABOUT PAGE FIXES (FINAL)
+   ========================= */
+
+/* =========================
+   OUR STORY FIX
+   ========================= */
+
+.about-story-section .about-heading {
+    text-align: left !important;
+    margin-bottom: 20px;
+}
+
+.about-story-main {
+    margin-top: -20px; /* pushes section slightly higher */
+}
+
+.about-story-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.about-story-main {
+    flex: 1;
+}
+
+.about-story-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.about-story-image img {
+    max-width: 420px;
+    border-radius: 20px;
+}
+
+
+/* =========================
+   TEAM SECTION FIX
+   ========================= */
+
+.about-team-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+/* LEFT = IMAGE */
+.team-slideshow {
+    position: relative;
+    width: 260px;
+    height: 320px;
+}
+
+/* SLIDES */
+.team-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ACTIVE SLIDE */
+.team-slide.active {
+    opacity: 1;
+    position: relative;
+}
+
+/* IMAGE */
+.team-slide img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+/* NAME UNDER IMAGE */
+.team-slide h4 {
+    color: #ffffff;
+    font-size: 16px;
+    margin: 0;
+    font-family: 'Belleza', Arial, sans-serif;
+    text-align: center;
+}
+
+/* RIGHT SIDE TEXT */
+.about-team-text {
+    flex: 1;
+}
+
+/* =========================
+   FORCE TEXT TO RIGHT SIDE
+   ========================= */
+
+.about-team-section {
+    display: flex;
+    justify-content: center;
+}
+
+.about-team-section > .about-team-inner {
+    width: 100%;
+}
+
+
+/* =========================
+   CRAFT SUBTITLE CENTER FIX
+   ========================= */
+
+.about-craft-lead {
+    text-align: center;
+    margin: 0 auto 40px auto;
+}
+
+
+/* =========================
+   GENERAL ALIGNMENT CLEANUP
+   ========================= */
+
+.about-heading {
+    margin-bottom: 20px;
+}
+
+.about-lead {
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE FIX
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .about-story-inner,
+    .about-team-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-story-image {
+        justify-content: center;
+    }
+
+    .about-story-section .about-heading {
+        text-align: center !important;
+    }
 }

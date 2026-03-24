@@ -255,15 +255,107 @@ if ($access_granted && isset($_POST['submitted'])) {
 
 </main>
 
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
+
+        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
+            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
-                <a href="#">Accessibility Statement</a>
+                <a href="#" class="footer-link-highlight">Accessibility Statement</a>
+                <a href="#">Delivery Information</a>
+                <a href="#">Customer Service</a>
+                <a href="#">Returns Policy</a>
+                <a href="#">FAQs</a>
+                <a href="#">Store Finder</a>
+                <a href="#">The App</a>
+                <a href="#">Complaints Policy</a>
+            </div>
+
+            <!-- About Us -->
+            <div class="footer-col">
+                <h4>About Us</h4>
+                <a href="about.php">Our Story</a>
+                <a href="#">Our Social Purpose</a>
+                <a href="#">Careers</a>
+                <a href="#">Student Discount</a>
+                <a href="#">VIP Rewards</a>
+                <a href="#">Charity Partners</a>
+            </div>
+
+            <!-- Legal -->
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Terms &amp; Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Customer Reviews Policy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">CNF or Portal Enquiries</a>
+                <a href="#">Tax Strategy</a>
+                <a href="#">Gender Pay Gap</a>
+                <a href="#">Modern Slavery Statement</a>
+                <a href="#">Corporate Governance</a>
+            </div>
+
+            <!-- Right side: payments + rating + app badges -->
+            <div class="footer-col footer-col-right">
+                <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
+                    <img src="master_card.png" alt="Mastercard">
+                    <img src="Pay_pal.png" alt="PayPal">
+                    <img src="apple_pay.png" alt="Apple Pay">
+                    <img src="Klarna.png" alt="Klarna">
+                </div>
+
+                <div class="footer-rating-card">
+                    <div class="rating-logo">TrustScore</div>
+                    <div class="rating-stars">★★★★★</div>
+                    <div class="rating-text">4.7 | 154,224 reviews</div>
+                </div>
+
+                <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
+                    <span>Member of NOVA Group</span>
+                </div>
+
+                <div class="footer-app-badges">
+                    <img src="app_store.png" alt="Download on App Store">
+                    <img src="play_store.png" alt="Download on Google Play">
+                </div>
             </div>
         </div>
+
+        <!-- MIDDLE: social icons -->
+        <div class="footer-middle-row">
+            <div class="footer-social">
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
+            </div>
+        </div>
+
+        <!-- BOTTOM: small print -->
+        <div class="footer-bottom-row">
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
+            <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
+        </div>
+
     </div>
 </footer>
 <script src="theme.js"></script>
