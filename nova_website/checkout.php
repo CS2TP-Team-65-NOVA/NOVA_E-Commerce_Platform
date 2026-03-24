@@ -2,6 +2,25 @@
 session_start();
  require_once 'config.php';
 
+ // PROMO CHECK
+
+$promoResult = null;
+$promocheckSql = "
+    SELECT discount_type, discount_value
+    FROM promotions
+    WHERE status = 'active'
+      AND CURDATE() BETWEEN start_date AND end_date
+      AND discount_type = 'percentage'
+    ORDER BY discount_value DESC
+    LIMIT 1
+";
+
+$promoquery = $conn->query($promocheckSql);
+
+if ($promoquery && $promoquery->num_rows > 0) {
+    $promoResult = $promoquery->fetch_assoc();
+}
+
  /* Require User To Be Logged in */
   if(!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -67,6 +86,11 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart']) && !empty($_SESSION[
         $image      = !empty($p['image']) ? $p['image'] : 'placeholder.jpg';
         $size_label = $variant ? ((int)$variant['size_ml'] . ' ml') : 'Standard size';
         $unitPrice  = $variant ? (float)$variant['price'] : (float)$p['price'];
+
+        if ($promoResult) {
+            $unitPrice = round($unitPrice *(1- ((float) $promoResult['discount_value'] /100)), 2);
+        }
+
         $qty        = (int)$item['qty'];
         $lineTotal  = $unitPrice * $qty;
 
@@ -402,7 +426,7 @@ $chosenPayment = $_POST['payment_method'] ?? 'card';
         </div>
     <?php elseif ($error_message !== ''): ?>
         <div class="error-message">
-            <?php echo htmlspecialchars($error_message); ?>
+            <?php echo ($error_message); ?>
         </div>
     <?php endif; ?>
 

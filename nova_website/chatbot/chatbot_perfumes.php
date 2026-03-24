@@ -9,6 +9,42 @@
  *   vague:bool
  * }
  */
+
+function nova_get_current_promo(mysqli $conn): ?array 
+{
+     // PROMO CHECK
+
+    $promoResult = null;
+    $promocheckSql = "
+        SELECT discount_type, discount_value
+        FROM promotions
+        WHERE status = 'active'
+            AND CURDATE() BETWEEN start_date AND end_date
+            AND discount_type = 'percentage'
+        ORDER BY discount_value DESC
+        LIMIT 1
+";
+
+$promoquery = $conn->query($promocheckSql);
+
+if ($promoquery && $promoquery->num_rows > 0) {
+    $promoResult = $promoquery->fetch_assoc();
+}
+
+return $promoResult;
+}
+
+function nova_apply_discounted_price (float $thePrice, ?array $theResult): float
+{
+
+        //PROMO
+        if ($theResult) {
+            return round($thePrice *(1- ((float) $theResult['discount_value'] /100)), 2);
+            }
+        return $thePrice;
+
+}
+
 function nova_parse_perfume_intent(string $t, mysqli $conn): array
 {
     $t = mb_strtolower($t, 'UTF-8');
@@ -230,15 +266,10 @@ function nova_try_perfumes(string $message, mysqli $conn, array $defaultSuggesti
     if (!empty($categoryIds)) {
         $where[] = 'p.category_id IN (' . implode(',', $categoryIds) . ')';
     }
-    if ($priceMin !== null) {
-        $where[] = 'p.price >= ' . (float) $priceMin;
-    }
-    if ($priceMax !== null) {
-        $where[] = 'p.price <= ' . (float) $priceMax;
-    }
 
     $products = [];
     $matchedRule = null;
+    $promoResult = nova_get_current_promo($conn);
 
     $sql = "
         SELECT
@@ -256,10 +287,25 @@ function nova_try_perfumes(string $message, mysqli $conn, array $defaultSuggesti
 
     if ($res = $conn->query($sql)) {
         while ($row = $res->fetch_assoc()) {
+            $typicalPrice = (float) $row['price'];
+            $reducePrice = nova_apply_discounted_price($typicalPrice, $promoResult);
+
+            if ($priceMin !== null && $reducePrice < $priceMin) {
+                continue;
+            }
+            if ($priceMax !== null && $reducePrice > $priceMax) {
+                continue;
+            }
+
             $products[] = [
                 'product_id' => (int) $row['product_id'],
                 'name' => $row['name'],
-                'price' => (float) $row['price'],
+
+                'price' => $reducePrice,
+                'original_price' => $typicalPrice,
+                'is_promo' => $promoResult ? true : false,
+                'promo_percentage' => $promoResult ? (float) $promoResult ['discount_value'] : 0,
+
                 'image' => $row['image'],
                 'category_name' => $row['category_name'],
                 'product_url' => 'product_page.php?id=' . (int) $row['product_id'],

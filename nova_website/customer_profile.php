@@ -10,6 +10,22 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = (int) $_SESSION['user_id'];
 
+$promoResult = null;
+$promocheckSql = "
+    SELECT discount_type, discount_value
+    FROM promotions
+    WHERE status = 'active'
+      AND CURDATE() BETWEEN start_date AND end_date
+      AND discount_type = 'percentage'
+    ORDER BY discount_value DESC
+    LIMIT 1
+";
+
+$promoquery = $conn->query($promocheckSql);
+
+if ($promoquery && $promoquery->num_rows > 0) {
+    $promoResult = $promoquery->fetch_assoc();
+}
 
 $currentData = [];
 $stmt = $conn->prepare("SELECT user_id, full_name, email, created_at FROM users WHERE user_id = ?");
