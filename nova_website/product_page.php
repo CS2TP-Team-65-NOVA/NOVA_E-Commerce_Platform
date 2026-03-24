@@ -517,57 +517,78 @@ if ($stmt = $conn->prepare($relatedSql)) {
                             $stmtSize->close();
                         }
                     ?>
-                    <article class="product-card">
-                        <div class="product-img-wrapper">
-                            <div class="product-actions">
-                                <button
-                                    type="button"
-                                    class="card-icon fav-toggle"
-                                    data-product-id="<?php echo $relProductId; ?>"
-                                    title="Add to favourites"
-                                >
-                                    <span class="heart">&hearts;</span>
-                                </button>
+          <article class="product-card">
 
-                                <form method="get" action="shopping_cart.php" class="cart-form">
-                                    <input type="hidden" name="action" value="add">
-                                    <input type="hidden" name="product_id" value="<?php echo $relProductId; ?>">
-                                    <?php if ($relDefaultSizeId): ?>
-                                        <input type="hidden" name="size_id" value="<?php echo $relDefaultSizeId; ?>">
-                                        <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="card-icon cart-btn" title="Add to basket">
-                                            &#128722;
-                                        </button>
-                                    <?php else: ?>
-                                        <button type="button" class="card-icon cart-btn" title="Out of stock" disabled>
-                                            &#128722;
-                                        </button>
-                                    <?php endif; ?>
-                                </form>
-                            </div>
+    <div class="product-img-wrapper">
 
-                            <?php
-                                // Image from Version 2: uploads/products/ with nova_default.jpg fallback
-                                $relatedImage = !empty($rp['image']) ? $rp['image'] : 'nova_default.jpg';
-                            ?>
-                            <img src="uploads/products/<?php echo htmlspecialchars($relatedImage); ?>"
-                                 alt="<?php echo htmlspecialchars($rp['name']); ?>">
-                        </div>
+        <div class="product-actions">
 
-                        <div class="product-info">
-                            <h3><?php echo htmlspecialchars($rp['name']); ?></h3>
+            <!-- Wishlist -->
+            <button
+                type="button"
+                class="card-icon fav-toggle"
+                data-product-id="<?php echo $relProductId; ?>"
+                title="Add to wishlist">
 
-                            <p class="product-category">
-                                From £<?php echo number_format($p_shown, 2); ?>
-                            </p>
+                <img src="heart_icon.png" class="heart-img heart-default">
+                <img src="heart_icon_white.png" class="heart-img heart-white">
+                <img src="active_heart_icon.png" class="heart-img heart-active">
+            </button>
 
-                            <div class="card-footer-line">
-                                <a href="product_page.php?id=<?php echo $relProductId; ?>" class="view-btn">
-                                    View
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+            <!-- Cart -->
+            <form method="get" action="<?php echo isset($_SESSION['user_id']) ? 'shopping_cart.php' : 'login.php'; ?>" class="cart-form">
+                <input type="hidden" name="product_id" value="<?php echo $relProductId; ?>">
+
+                <?php if ($relDefaultSizeId): ?>
+                    <input type="hidden" name="size_id" value="<?php echo $relDefaultSizeId; ?>">
+
+                    <button type="submit" class="card-icon cart-btn" title="Add to basket">
+                        <img src="basket_icon.png" class="basket-img basket-default">
+                        <img src="basket_icon_white.png" class="basket-img basket-white">
+                        <img src="active_basket_icon.png" class="basket-img basket-active">
+                    </button>
+
+                <?php else: ?>
+                    <button type="button" class="card-icon cart-btn" disabled>
+                        <img src="basket_icon.png" class="basket-img basket-default">
+                        <img src="basket_icon_white.png" class="basket-img basket-white">
+                        <img src="active_basket_icon.png" class="basket-img basket-active">
+                    </button>
+                <?php endif; ?>
+            </form>
+
+        </div>
+
+        <?php
+        $relatedImage = !empty($rp['image']) ? $rp['image'] : 'nova_default.jpg';
+        ?>
+
+        <img src="uploads/products/<?php echo htmlspecialchars($relatedImage); ?>"
+             alt="<?php echo htmlspecialchars($rp['name']); ?>">
+
+    </div>
+
+    <div class="product-info">
+
+        <h3><?php echo htmlspecialchars($rp['name']); ?></h3>
+
+        <p class="product-category">
+            Exclusive Perfumes
+        </p>
+
+        <p class="product-price">
+            £<?php echo number_format($p_shown, 2); ?>
+        </p>
+
+        <div class="card-footer-line">
+            <a href="product_page.php?id=<?php echo $relProductId; ?>" class="view-btn">
+                View
+            </a>
+        </div>
+
+    </div>
+
+</article>
                 <?php endforeach; ?>
             </div>
         </section>
@@ -627,10 +648,13 @@ if ($stmt = $conn->prepare($relatedSql)) {
 
 </main>
 
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
 
+        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
+            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
@@ -644,6 +668,7 @@ if ($stmt = $conn->prepare($relatedSql)) {
                 <a href="#">Complaints Policy</a>
             </div>
 
+            <!-- About Us -->
             <div class="footer-col">
                 <h4>About Us</h4>
                 <a href="about.php">Our Story</a>
@@ -654,6 +679,7 @@ if ($stmt = $conn->prepare($relatedSql)) {
                 <a href="#">Charity Partners</a>
             </div>
 
+            <!-- Legal -->
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a href="#">Terms &amp; Conditions</a>
@@ -667,8 +693,10 @@ if ($stmt = $conn->prepare($relatedSql)) {
                 <a href="#">Corporate Governance</a>
             </div>
 
+            <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
                     <img src="Pay_pal.png" alt="PayPal">
                     <img src="apple_pay.png" alt="Apple Pay">
@@ -682,6 +710,7 @@ if ($stmt = $conn->prepare($relatedSql)) {
                 </div>
 
                 <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
                     <span>Member of NOVA Group</span>
                 </div>
 
@@ -692,18 +721,31 @@ if ($stmt = $conn->prepare($relatedSql)) {
             </div>
         </div>
 
+        <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
+        <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
 

@@ -6,6 +6,16 @@ error_reporting(E_ALL);
 
 session_start();
 require_once 'config.php';
+// Load wishlist IDs (same as perfumes.php)
+$wishlistIds = [];
+if (isset($_SESSION['user_id'])) {
+    $wRes = $conn->query("SELECT product_id FROM wishlist WHERE user_id = " . (int)$_SESSION['user_id']);
+    if ($wRes) {
+        while ($wRow = $wRes->fetch_assoc()) {
+            $wishlistIds[] = (int)$wRow['product_id'];
+        }
+    }
+}
 
 $promoResult = null;
 $promocheckSql = "
@@ -249,39 +259,50 @@ $featuredRes = $conn->query($featuredSql);
                         ?>
                         <article class="product-card">
                             <div class="product-img-wrapper">
-                                <div class="product-actions">
-                                    <!-- Favourite (localStorage-based) -->
-                                    <button
-                                        type="button"
-                                        class="card-icon fav-toggle"
-                                        data-product-id="<?php echo $productId; ?>"
-                                        title="Add to favourites"
-                                    >
-                                        <span class="heart">&hearts;</span>
-                                    </button>
+                            <div class="product-actions">
 
-                                    <!-- Quick add to cart -->
-                                    <form method="get" action="shopping_cart.php" class="cart-form">
-                                        <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
-                                        <?php if ($defaultSizeId): ?>
-                                            <input type="hidden" name="size_id" value="<?php echo $defaultSizeId; ?>">
-                                            <button type="submit" class="card-icon cart-btn" title="Add to basket">
-                                                &#128722;
-                                            </button>
-                                        <?php else: ?>
-                                            <button type="button" class="card-icon cart-btn" title="Out of stock" disabled>
-                                                &#128722;
-                                            </button>
-                                        <?php endif; ?>
-                                    </form>
-                                </div>
+    <!-- Wishlist -->
+    <button
+        type="button"
+        class="card-icon fav-toggle <?php echo in_array($productId, $wishlistIds) ? 'fav-active' : ''; ?>"
+        data-product-id="<?php echo $productId; ?>"
+        title="Add to wishlist">
 
-                                <?php if (!empty($p['image'])): ?>
-                                    <img src="images/<?php echo htmlspecialchars($p['image']); ?>"
-                                         alt="<?php echo htmlspecialchars($p['name']); ?>">
-                                <?php else: ?>
-                                    <span class="placeholder-text">Image coming soon</span>
-                                <?php endif; ?>
+        <img src="heart_icon.png" class="heart-img heart-default">
+        <img src="heart_icon_white.png" class="heart-img heart-white">
+        <img src="active_heart_icon.png" class="heart-img heart-active">
+    </button>
+
+    <!-- Cart -->
+    <form method="get" action="<?php echo isset($_SESSION['user_id']) ? 'shopping_cart.php' : 'login.php'; ?>" class="cart-form">
+        <input type="hidden" name="product_id" value="<?php echo $productId; ?>">
+
+        <?php if ($defaultSizeId): ?>
+            <input type="hidden" name="size_id" value="<?php echo $defaultSizeId; ?>">
+
+            <button type="submit" class="card-icon cart-btn" title="Add to basket">
+                <img src="basket_icon.png" class="basket-img basket-default">
+                <img src="basket_icon_white.png" class="basket-img basket-white">
+                <img src="active_basket_icon.png" class="basket-img basket-active">
+            </button>
+
+        <?php else: ?>
+            <button type="button" class="card-icon cart-btn" disabled>
+                <img src="basket_icon.png" class="basket-img basket-default">
+                <img src="basket_icon_white.png" class="basket-img basket-white">
+                <img src="active_basket_icon.png" class="basket-img basket-active">
+            </button>
+        <?php endif; ?>
+    </form>
+
+</div>
+
+                                <?php
+$image = !empty($p['image']) ? $p['image'] : 'nova_default.jpg';
+?>
+
+<img src="uploads/products/<?php echo htmlspecialchars($image); ?>"
+     alt="<?php echo htmlspecialchars($p['name']); ?>">
                             </div>
 
                             <div class="product-info">
@@ -326,7 +347,7 @@ $featuredRes = $conn->query($featuredSql);
                 <h2 class="about-heading">What Makes Nova Unique</h2>
 
                 <p class="about-unique-lead">
-                    NOVA feels like a new constellation — familiar enough to love instantly, distinct enough to remember.
+                    NOVA feels like a new constellation, familiar enough to love instantly, distinct enough to remember.
                 </p>
 
                 <div class="unique-grid">
@@ -359,9 +380,7 @@ $featuredRes = $conn->query($featuredSql);
         <section class="home-reviews">
             <div class="home-section-header">
                 <h2>Customer Reviews</h2>
-                <p class="reviews-subtitle">
-                    Real impressions from NOVA wearers.
-                </p>
+                
             </div>
 
             <div class="reviews-grid">
@@ -467,17 +486,28 @@ $featuredRes = $conn->query($featuredSql);
         <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">▶</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
 
         <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright © 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
 
@@ -544,5 +574,37 @@ $featuredRes = $conn->query($featuredSql);
 </script>
 
 <?php require_once __DIR__ . '/chatbot_include.php'; ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.fav-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const productId = this.dataset.productId;
+            const self = this;
+
+            fetch('wishlist_toggle.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'product_id=' + encodeURIComponent(productId)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.action === 'added') {
+                        self.classList.add('fav-active');
+                    } else if (data.action === 'removed') {
+                        self.classList.remove('fav-active');
+                    }
+                } else if (data.message === 'not_logged_in') {
+                    window.location.href = 'login.php';
+                }
+            });
+        });
+    });
+});
+</script>
 </body>
 </html>

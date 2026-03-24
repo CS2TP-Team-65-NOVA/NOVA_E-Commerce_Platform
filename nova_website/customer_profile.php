@@ -99,6 +99,31 @@ if ($stmt) {
     $stmt->close();
 }
 
+// ---------- WISHLIST FETCH ----------
+$userWishlist = [];
+$stmt = $conn->prepare("
+    SELECT p.product_id, p.name, p.image,
+           c.category,
+           p.price AS min_price
+    FROM wishlist w
+    JOIN products p ON p.product_id = w.product_id
+    LEFT JOIN categories c ON c.category_id = p.category_id
+    WHERE w.user_id = ?
+    ORDER BY w.added_at DESC
+");
+
+if ($stmt) {
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $userWishlist[] = $row;
+    }
+    $stmt->close();
+}
+
+$totalWishlist = count($userWishlist);
+
 // ---------- 5. COUNTS ----------
 $totalOrders  = 0;
 $totalReviews = 0;
@@ -214,7 +239,7 @@ function formatStatus($status) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile – NOVA</title>
+    <title>My Profile</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Belleza&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -273,20 +298,24 @@ function formatStatus($status) {
             </div>
             <p class="cp-name"><?php echo safe($userName); ?></p>
             <p class="cp-role"><?php echo ucfirst($userRole); ?></p>
-            <div class="cp-sb-stats">
-                <div class="cp-sb-stat">
-                    <span class="cp-sb-stat-value"><?php echo $totalOrders; ?></span>
-                    <span class="cp-sb-stat-label">Orders</span>
-                </div>
-                <div class="cp-sb-stat">
-                    <span class="cp-sb-stat-value"><?php echo $totalReviews; ?></span>
-                    <span class="cp-sb-stat-label">Reviews</span>
-                </div>
-                <div class="cp-sb-stat">
-                    <span class="cp-sb-stat-value active">&#10003;</span>
-                    <span class="cp-sb-stat-label">Active</span>
-                </div>
-            </div>
+           <div class="cp-sb-stats">
+    <div class="cp-sb-stat">
+        <span class="cp-sb-stat-value"><?php echo $totalOrders; ?></span>
+        <span class="cp-sb-stat-label">Orders</span>
+    </div>
+    <div class="cp-sb-stat">
+        <span class="cp-sb-stat-value"><?php echo $totalWishlist; ?></span>
+        <span class="cp-sb-stat-label">Wishlist</span>
+    </div>
+    <div class="cp-sb-stat">
+        <span class="cp-sb-stat-value"><?php echo $totalReviews; ?></span>
+        <span class="cp-sb-stat-label">Reviews</span>
+    </div>
+    <div class="cp-sb-stat">
+        <span class="cp-sb-stat-value active">&#10003;</span>
+        <span class="cp-sb-stat-label">Active</span>
+    </div>
+</div>
         </div>
 
         <nav class="cp-nav">
@@ -295,10 +324,14 @@ function formatStatus($status) {
                 My Profile
             </a>
             <a href="#section-orders" class="cp-nav-link">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-                My Orders
-            </a>
-            <a href="#section-password" class="cp-nav-link">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+    My Orders
+</a>
+<a href="#section-wishlist" class="cp-nav-link">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"/></svg>
+    My Wishlist
+</a>
+<a href="#section-password" class="cp-nav-link">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
                 Change Password
             </a>
@@ -471,7 +504,73 @@ function formatStatus($status) {
                 <?php endforeach; ?>
             </div>
         </section>
+                <?php endif; ?>
+
+        <!-- MY WISHLIST -->
+        <section class="cp-card" id="section-wishlist">
+            <div class="cp-card-header">
+                <h2>My Wishlist</h2>
+                <span class="cp-badge"><?php echo $totalWishlist; ?> item<?php echo $totalWishlist !== 1 ? 's' : ''; ?></span>
+            </div>
+            <?php if (empty($userWishlist)): ?>
+                <div class="cp-empty">
+                    <p>You haven't added any perfumes to your wishlist yet.</p>
+                    <a href="perfumes.php" class="cp-empty-link">Browse Perfumes &rarr;</a>
+                </div>
+            <?php else: ?>
+                <div class="products-grid cp-wishlist-grid">
+                    <?php foreach ($userWishlist as $w): ?>
+                 <article class="product-card cp-wishlist-card" id="wcard-<?php echo (int)$w['product_id']; ?>">
+
+    <div class="product-img-wrapper">
+
+        <!-- REMOVE BUTTON -->
+        <button class="cp-wishlist-remove"
+                data-product-id="<?php echo (int)$w['product_id']; ?>"
+                title="Remove">✕</button>
+
+        <?php
+            $image = !empty($w['image']) ? $w['image'] : 'nova_default.jpg';
+        ?>
+
+        <a href="product_page.php?id=<?php echo (int)$w['product_id']; ?>">
+            <img src="uploads/products/<?php echo htmlspecialchars($image); ?>"
+                 alt="<?php echo safe($w['name']); ?>">
+        </a>
+
+    </div>
+
+    <div class="product-info">
+
+        <h3><?php echo safe($w['name']); ?></h3>
+
+        <p class="product-category">
+            <?php echo safe($w['category'] ?: 'Exclusive Perfumes'); ?>
+        </p>
+
+        <?php if ($w['min_price']): ?>
+            <p class="product-price">
+                from £<?php echo number_format($w['min_price'], 2); ?>
+            </p>
         <?php endif; ?>
+
+        <div class="card-footer-line">
+            <div></div>
+
+            <a href="product_page.php?id=<?php echo (int)$w['product_id']; ?>"
+               class="view-btn">
+                View
+            </a>
+        </div>
+
+    </div>
+
+</article>
+                        
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </section>
 
         <!-- DANGER ZONE -->
         <section class="cp-card cp-danger-card">
@@ -490,10 +589,13 @@ function formatStatus($status) {
     </main>
 </div><!-- /cp-page-wrap -->
 
-<!-- FOOTER -->
-<footer class="nova-footer">
+    <!-- FOOTER (unchanged) -->
+   <footer class="nova-footer">
     <div class="nova-footer-inner">
+
+        <!-- TOP: 3 columns + payment / rating column -->
         <div class="footer-top-row">
+            <!-- Help -->
             <div class="footer-col">
                 <h4>Help</h4>
                 <a href="contact.php">Contact Us</a>
@@ -506,6 +608,8 @@ function formatStatus($status) {
                 <a href="#">The App</a>
                 <a href="#">Complaints Policy</a>
             </div>
+
+            <!-- About Us -->
             <div class="footer-col">
                 <h4>About Us</h4>
                 <a href="about.php">Our Story</a>
@@ -515,6 +619,8 @@ function formatStatus($status) {
                 <a href="#">VIP Rewards</a>
                 <a href="#">Charity Partners</a>
             </div>
+
+            <!-- Legal -->
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a href="#">Terms &amp; Conditions</a>
@@ -527,38 +633,63 @@ function formatStatus($status) {
                 <a href="#">Modern Slavery Statement</a>
                 <a href="#">Corporate Governance</a>
             </div>
+
+            <!-- Right side: payments + rating + app badges -->
             <div class="footer-col footer-col-right">
                 <div class="footer-payments">
+                    <!-- payment logos (swap src to your images) -->
                     <img src="master_card.png" alt="Mastercard">
-                    <img src="Pay_pal.png"     alt="PayPal">
-                    <img src="apple_pay.png"   alt="Apple Pay">
-                    <img src="Klarna.png"      alt="Klarna">
+                    <img src="Pay_pal.png" alt="PayPal">
+                    <img src="apple_pay.png" alt="Apple Pay">
+                    <img src="Klarna.png" alt="Klarna">
                 </div>
+
                 <div class="footer-rating-card">
                     <div class="rating-logo">TrustScore</div>
-                    <div class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="rating-stars">★★★★★</div>
                     <div class="rating-text">4.7 | 154,224 reviews</div>
                 </div>
-                <div class="footer-membership-logo"><span>Member of NOVA Group</span></div>
+
+                <div class="footer-membership-logo">
+                    <!-- membership / group logo -->
+                    <span>Member of NOVA Group</span>
+                </div>
+
                 <div class="footer-app-badges">
-                    <img src="app_store.png"  alt="Download on App Store">
+                    <img src="app_store.png" alt="Download on App Store">
                     <img src="play_store.png" alt="Download on Google Play">
                 </div>
             </div>
         </div>
+
+        <!-- MIDDLE: social icons -->
         <div class="footer-middle-row">
             <div class="footer-social">
-                <a href="#" class="social-circle">f</a>
-                <a href="#" class="social-circle">x</a>
-                <a href="#" class="social-circle">&#9658;</a>
-                <a href="#" class="social-circle">in</a>
-                <a href="#" class="social-circle">P</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="facebook_icon_white.png" class="social-icon social-icon-default" alt="Facebook">
+                    <img src="active_facebook_icon.png" class="social-icon social-icon-active" alt="Facebook active">
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="instagram_icon_white.png" class="social-icon social-icon-default" alt="Instagram">
+                    <img src="active_instagram_icon.png" class="social-icon social-icon-active" alt="Instagram active">
+                </a>
+                <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="twitter_icon_white.png" class="social-icon social-icon-default" alt="X">
+                    <img src="active_twitter_icon.png" class="social-icon social-icon-active" alt="X active">
+                </a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon-link">
+                    <img src="youtube_icon_white.png" class="social-icon social-icon-default" alt="YouTube">
+                    <img src="active_youtube_icon.png" class="social-icon social-icon-active" alt="YouTube active">
+                </a>
             </div>
         </div>
+
+        <!-- BOTTOM: small print -->
         <div class="footer-bottom-row">
-            <p>Copyright &copy; 2025 NOVA Fragrance Ltd</p>
+            <p>Copyright © 2026 NOVA Fragrance Ltd</p>
             <p>NOVA Fragrance Ltd is registered in England &amp; Wales. This website is for educational use as part of a university project.</p>
         </div>
+
     </div>
 </footer>
 
@@ -585,6 +716,41 @@ document.querySelectorAll('.cp-nav-link[href^="#"]').forEach(function(link) {
             document.querySelectorAll('.cp-nav-link').forEach(l => l.classList.remove('cp-nav-active'));
             this.classList.add('cp-nav-active');
         }
+    });
+});
+document.querySelectorAll('.cp-wishlist-remove').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        const productId = this.dataset.productId;
+        const card = document.getElementById('wcard-' + productId);
+
+        fetch('wishlist_toggle.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'product_id=' + productId
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.action === 'removed') {
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.95)';
+
+                setTimeout(() => {
+                    card.remove();
+
+                    const badge = document.querySelector('#section-wishlist .cp-badge');
+                    if (badge) {
+                        const n = (parseInt(badge.textContent) || 1) - 1;
+                        badge.textContent = n + ' item' + (n !== 1 ? 's' : '');
+                    }
+
+                    const grid = document.querySelector('.cp-wishlist-grid');
+                    if (grid && grid.children.length === 0) {
+                        grid.outerHTML = '<div class="cp-empty"><p>Your wishlist is empty.</p><a href="perfumes.php" class="cp-empty-link">Browse Perfumes &rarr;</a></div>';
+                    }
+                }, 300);
+            }
+        });
     });
 });
 </script>
